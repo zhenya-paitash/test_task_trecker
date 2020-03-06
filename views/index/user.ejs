@@ -5,10 +5,10 @@
 <section data-aos="fade" data-aos-delay="450" id="page-content">
     <div id="user-info">
         <div class="container">
-            <div class="row">
+            <div class="row text-capitalize">
                 <div class="col-sm-12 col-md-6 col-lg-4" data-aos="fade-right" data-aos-delay="550" id="col-user-name">
                     <i class="far fa-user"></i>
-                    <h4>Zhenya Paitash, 26</h4>
+                    <h4><%= user.firstname %> <%= user.lastname %>, <%= user.age %></h4>
                     <div class="user-social">
                         <a href="#"><i class="fab fa-github"></i></a>
                         <a href="#"><i class="fab fa-telegram"></i></a>
@@ -20,16 +20,16 @@
                 <div class="col" data-aos="fade-left" data-aos-delay="550" id="col-user-information">
                     <h4>user information</h4>
                     <div class="user-information">
-                        <p><strong>Id: </strong>000001</p>
-                        <p><strong>Firstuser: </strong>Zhenya</p>
-                        <p><strong>Seconduser: </strong>Paitash</p>
-                        <p><strong>Age: </strong>26</p>
-                        <p><strong>Role: </strong>Developer</p>
-                        <p><strong>Phone: </strong>+ 375 (33) 351 35 59</p>
+                        <p><strong>Id: </strong><%= user.id %></p>
+                        <p><strong>Firstname: </strong><%= user.firstname %></p>
+                        <p><strong>Lastname: </strong><%= user.lastname %></p>
+                        <p><strong>Age: </strong><%= user.age %></p>
+                        <p><strong>Role: </strong><%= role.rolename %></p>
+                        <p><strong>Phone: </strong><%= user.phone %></p>
                         <hr>
-                        <p><strong>Projects: </strong>1</p>
-                        <p><strong>Tasks: 2</strong></p>
-                        <p><strong>Comments: </strong>26</p>
+                        <p><strong>Projects: </strong><%= userProjects.length %></p>
+                        <p><strong>Tasks: </strong><%= userTasks.length %></p>
+                        <p><strong>Comments: </strong><%= userComments.length %></p>
                     </div>
                 </div>
             </div>

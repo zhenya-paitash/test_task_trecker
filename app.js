@@ -20,8 +20,8 @@ let
 // TEST PostgeSQL CONNECTION
 db.authenticate()
   .then(() => console.log("\x1b[32m%s\x1b[0m", "DB connected..."))
-  // .then(db.sync({force: false}))
-  .then(database_init.create())
+  .then(db.sync({force: false}))
+  // .then(database_init.create())
   .catch(err => console.error(err));
 
 
@@ -31,7 +31,7 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(exSession({
-  secret: "123",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -39,17 +39,16 @@ app.use(flash());
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
   res.locals.currentUser  = req.user;
-  res.locals.done         = req.flash("done");
+  res.locals.success      = req.flash("success");
   res.locals.error        = req.flash("error");
+  res.locals.info         = req.flash("info");
   next();
 });
 
 
 // ROUTES
-app.use("/",                                          router.index);
-app.use("/project",                                   router.project);
-app.use("/project/",                                  router.task);
-app.use("/project/:id_project",                       router.comment);
+app.use("/",        router.index);
+app.use("/project", router.project);
 
 
 

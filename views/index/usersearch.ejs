@@ -1,0 +1,90 @@
+<%- include("../partials/header") -%>
+<%- include("../partials/navbar") -%>
+<%- include("../partials/parallax") -%>
+<%- include("../partials/alert") -%>
+<section data-aos="fade" data-aos-delay="450" id="page-content">
+    <div id="user-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-12" data-aos="fade-left" data-aos-delay="550" id="col-user-search">
+                    <div class="search-user-page">
+                        <form class="mr-auto" action="/user" method="GET">
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <input class="form-control form-control-sm nav-search" type="search"
+                                           placeholder="search user ..." name="search" minlength="3"
+                                           value="<%= search %>" required>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col" data-aos="fade-right" data-aos-delay="650" id="col-user-information">
+                    <h4>results search ...</h4>
+                    <div class="user-information">
+                        <div id="search-results">
+                            <div class="row">
+                                <% if (firstnameResult.length == 0 && lastnameResult.length == 0) { %>
+                                    <h4>Users not found!</h4>
+                                <% } else { %>
+
+                                    <% if (firstnameResult.length > 0) { %>
+                                        <% firstnameResult.forEach(finduser => { %>
+                                            <div class="col-sm-12 col-md-6" id="col-user-name">
+                                                <a href="/user/<%= finduser.id %>"><i class="far fa-user"></i></a>
+                                                <div class="user-social">
+                                                    <a href="#"><i class="fab fa-github"></i></a>
+                                                    <a href="#"><i class="fab fa-telegram"></i></a>
+                                                    <a href="#"><i class="fab fa-vk"></i></a>
+                                                    <a href="#"><i class="fab fa-facebook"></i></a>
+                                                    <a href="#"><i class="fab fa-google"></i></a>
+                                                </div>
+                                                <h4><%= finduser.firstname %> <%= finduser.lastname %>
+                                                    , <%= finduser.age %></h4>
+                                            </div>
+                                        <% }) %>
+                                    <% } %>
+                                    <% if (lastnameResult.length > 0) { %>
+                                        <% lastnameResult.forEach(finduser => { %>
+                                            <div class="col-sm-12 col-md-6" id="col-user-name">
+                                                <a href="/user/<%= finduser.id %>"><i class="far fa-user"></i></a>
+                                                <div class="user-social">
+                                                    <a href="#"><i class="fab fa-github"></i></a>
+                                                    <a href="#"><i class="fab fa-telegram"></i></a>
+                                                    <a href="#"><i class="fab fa-vk"></i></a>
+                                                    <a href="#"><i class="fab fa-facebook"></i></a>
+                                                    <a href="#"><i class="fab fa-google"></i></a>
+                                                </div>
+                                                <h4><%= finduser.firstname %> <%= finduser.lastname %>
+                                                    , <%= finduser.age %></h4>
+                                            </div>
+                                        <% }) %>
+                                    <% } %>
+
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 all-users-list" data-aos="fade-left" data-aos-delay="800"
+                     id="col-user-name">
+                    <div class="div-users">
+                        <h4>all users:</h4>
+                        <ul class="list-unstyled text-capitalize">
+                            <% users.forEach(user => { %>
+                                <li><a href="/user/<%= user.id %>"><%= user.lastname %> <%= user.firstname %></a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include("../partials/footer-visual") -%>
+<%- include("../partials/footer") -%>

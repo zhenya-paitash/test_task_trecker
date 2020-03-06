@@ -1,14 +1,17 @@
 let faker = require("faker");
-faker.locale = "en";
+// let x;
+//
+// console.log(x);
+//
+// x ? console.log(1)
+//   : console.log(2)
+// ;
+// faker.locale = "en";
+// console.log(faker.phone.phoneNumber());
+// console.log(faker.random.number(55));
+//
+//
+// console.log(Math.floor(18 + Math.random() * 37));
+// console.log(Math.floor(Math.random() * 4));
 
-
-// for (let i = 1; i < 10; i++) {
-//   // i === 1 ? console.log("1,2") : console.log("---");
-//   console.log(faker.date.future())
-// }
-
-
-// console.log(faker.lorem.sentences());
-// console.log(faker.lorem.text());
-
-console.log(Math.ceil(Math.random() * 5));
+console.log(String(1_000_000 + 1).slice(1,));

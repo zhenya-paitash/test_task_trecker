@@ -25,10 +25,11 @@ let create = async function() {
 };
 
 
-// createUsers
+// Users
 async function createUsers() {
   faker.locale = "en";
 
+  // create 2 manager & 98 developers
   for (let i = 0; i < 100; i++) {
     let role;
     i === 0 || i === 1
@@ -36,9 +37,11 @@ async function createUsers() {
       : role = 2;
 
     await Users.create({
-      firstname:  faker.name.firstName(),
-      lastname:   faker.name.lastName(),
-      email:      faker.internet.email(),
+      firstname:  faker.name.firstName().toLowerCase(),
+      lastname:   faker.name.lastName().toLowerCase(),
+      email:      faker.internet.email().toLowerCase(),
+      age:        Math.floor(18 + Math.random() * 20),
+      phone:      faker.phone.phoneNumber(),
       password:   faker.internet.password(),
       role:       role
     })
@@ -46,8 +49,9 @@ async function createUsers() {
 }
 
 
-// createUserRoles
+// UserRoles
 async function createUserRoles() {
+  // manager
   await UserRoles.create({
     rolename: "manager",
     user_search:    true,
@@ -65,6 +69,7 @@ async function createUserRoles() {
     comment_delete: true
   });
 
+  // developer
   await UserRoles.create({
     rolename: "developer",
     user_search:    false,
@@ -83,7 +88,9 @@ async function createUserRoles() {
   });
 }
 
+// Projects
 async function createProjects() {
+  // test project # 1
   await Projects.create({
     name:         "Secure shy favour length all twenty denote. Steepest speaking up attended it as.",
     description:  "Mrs assured add private married removed believe did she. To sure calm much most long me mean. Mrs assured add private married removed believe did she. To things so denied admire. Whatever throwing we on resolved entrance together graceful. Draw from upon here gone add one. Her too add narrow having wished. Called though excuse length ye needed it he having. Called though excuse length ye needed it he having. Polite do object at passed it is. Fat new smallness few supposing suspicion two. Hard do me sigh with west same lady. Course sir people worthy horses add entire suffer. Polite do object at passed it is. Ecstatic elegance gay but disposed. Sentiments two occasional affronting solicitude travelling and one contrasted. Effect if in up no depend seemed. Equally he minutes my hastily. Draw from upon here gone add one. Ecstatic elegance gay but disposed. Fat new smallness few supposing suspicion two. Mrs assured add private married removed believe did she. Way own uncommonly travelling now acceptance bed compliment solicitude. undefined. undefined. Way own uncommonly travelling now acceptance bed compliment solicitude. Any delicate you how kindness horrible outlived servants. Steepest speaking up attended it as. Is inquiry no he several excited am. So by colonel hearted ferrars. Dissimilar admiration so terminated no in contrasted it. If in so bred at dare rose lose good. At none neat am do over will. Expression alteration entreaties mrs can terminated estimating. Feel and make two real miss use easy. Do play they miss give so up.",
@@ -91,6 +98,7 @@ async function createProjects() {
     deadline:     faker.date.future()
   });
 
+  // test project # 2
   await Projects.create({
     name:         "Feel and make two real miss use easy. Words to up style of since world. Polite do object at passed it is. To sure calm much most long me mean.",
     description:  "Estate was tended ten boy nearer seemed. If in so bred at dare rose lose good. As mr started arrival subject by believe. Words to up style of since world. Draw from upon here gone add one. Any delicate you how kindness horrible outlived servants. Latter remark hunted enough vulgar say man. Sentiments two occasional affronting solicitude travelling and one contrasted. An concluded sportsman offending so provision mr education. Feel and make two real miss use easy. Up hung mr we give rest half. Do play they miss give so up. Whatever throwing we on resolved entrance together graceful. Hard do me sigh with west same lady. Agreeable promotion eagerness as we resources household to distrusts. Agreeable promotion eagerness as we resources household to distrusts. Steepest speaking up attended it as. Course sir people worthy horses add entire suffer. Secure shy favour length all twenty denote. Small for ask shade water manor think men begin. Happiness remainder joy but earnestly for off. Am wound worth water he linen at vexed.. Sportsman do offending supported extremity breakfast by listening. Detract yet delight written farther his general. Mirth learn it he given. How one dull get busy dare far. Equally he minutes my hastily. Fat new smallness few supposing suspicion two. Now summer who day looked our behind moment coming. Advantages entreaties mr he apartments do. Strictly numerous outlived kindness whatever on we no on addition. Hard do me sigh with west same lady. He felicity no an at packages answered opinions juvenile. Indulgence contrasted sufficient to unpleasant in in insensible favourable. Sitting hearted on it without me. Able rent long in do we. An concluded sportsman offending so provision mr education. Draw from upon here gone add one. He felicity no an at packages answered opinions juvenile. Able rent long in do we. undefined. Bed uncommonly his discovered for estimating far. Am wound worth water he linen at vexed.. Feel and make two real miss use easy. At none neat am do over will. Effect if in up no depend seemed. You high bed wish help call draw side. Any delicate you how kindness horrible outlived servants. Draw fond rank form nor the day eat. Ecstatic elegance gay but disposed. Took sold add play may none him few. Made neat an on be gave show snug tore. Effect if in up no depend seemed. Course sir people worthy horses add entire suffer. Her too add narrow having wished. Advantages entreaties mr he apartments do. Any delicate you how kindness horrible outlived servants. Strictly numerous outlived kindness whatever on we no on addition. Fortune day out married parties. Effect if in up no depend seemed. Her too add narrow having wished. As so seeing latter he should thirty whence. ",
@@ -98,6 +106,7 @@ async function createProjects() {
     deadline:     faker.date.future()
   });
 
+  // test project # 3
   await Projects.create({
     name:         "Now summer who day looked our behind moment coming. So by colonel hearted ferrars. Whatever throwing we on resolved entrance together graceful.",
     description:  "We leaf to snug on no need. Mrs assured add private married removed believe did she. undefined. Indulgence contrasted sufficient to unpleasant in in insensible favourable. Any delicate you how kindness horrible outlived servants. An stairs as be lovers uneasy. Painful so he an comfort is manners. Limits far yet turned highly repair parish talked six. Hard do me sigh with west same lady. Considered discovered ye sentiments projecting entreaties of melancholy is. Bed uncommonly his discovered for estimating far. Fat new smallness few supposing suspicion two. Draw from upon here gone add one. As so seeing latter he should thirty whence. Indulgence contrasted sufficient to unpleasant in in insensible favourable. Up hung mr we give rest half. Agreeable promotion eagerness as we resources household to distrusts. Small for ask shade water manor think men begin. Pain son rose more park way that. Latter remark hunted enough vulgar say man. Her too add narrow having wished. Limits far yet turned highly repair parish talked six. ",
@@ -105,6 +114,7 @@ async function createProjects() {
     deadline:     faker.date.future()
   });
 
+  // test project # 4
   await Projects.create({
     name:         "Strictly numerous outlived kindness whatever on we no on addition. If in so bred at dare rose lose good. ",
     description:  "Secure shy favour length all twenty denote. Way own uncommonly travelling now acceptance bed compliment solicitude. He felicity no an at packages answered opinions juvenile. If in so bred at dare rose lose good. Bed uncommonly his discovered for estimating far. Way own uncommonly travelling now acceptance bed compliment solicitude. At principle perfectly by sweetness do. Fortune day out married parties. Steepest speaking up attended it as. Words to up style of since world. Sitting hearted on it without me. Called though excuse length ye needed it he having. Estate was tended ten boy nearer seemed. At none neat am do over will. Ecstatic elegance gay but disposed. ",
@@ -112,6 +122,7 @@ async function createProjects() {
     deadline:     faker.date.future()
   });
 
+  // test project # 5
   await Projects.create({
     name:         "Advantages entreaties mr he apartments do. Able rent long in do we.",
     description:  "Her too add narrow having wished. Mrs assured add private married removed believe did she. Pain son rose more park way that. Celebrated delightful an especially increasing instrument am. Mirth learn it he given. Their saved linen downs tears son add music. At none neat am do over will. Uncommonly no it announcing melancholy an in. Course sir people worthy horses add entire suffer. At none neat am do over will. He felicity no an at packages answered opinions juvenile. At none neat am do over will. ",
@@ -120,19 +131,21 @@ async function createProjects() {
   });
 }
 
-
+// ProjectUsers
 async function createProjectUsers() {
-  for (let i=0; i<5; i++) {
-    for (let j = 0; j<7; j++) {
+  // 5 projects
+  for (let i = 0; i < 5; i++) {
+    // 7 users in project
+    for (let j = 0; j < 7; j++) {
       await ProjectUsers.create({
-        id_project:   i +1,
+        id_project:   i + 1,
         id_user:      Math.ceil(Math.random() * 100)
       });
     }
   }
 }
 
-
+// Tasks
 async function createTasks() {
   let status = ["waiting", "implementation", "verifyng", "releasing"];
   for (let i = 0; i < 200; i++) {
@@ -147,19 +160,19 @@ async function createTasks() {
   }
 }
 
-
+// TaskUsers
 async function createTaskUsers() {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 7; j++) {
       await TaskUsers.create({
-        id_task:   i +1,
+        id_task:   i + 1,
         id_user:   Math.ceil(Math.random() * 100)
       });
     }
   }
 }
 
-
+// Comments
 async function createComments() {
   for (let i = 0; i < 500; i++) {
     await Comments.create({

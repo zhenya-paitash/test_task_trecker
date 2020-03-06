@@ -15,3 +15,8 @@
     background-color: rgba(231, 76, 60, 0.25);
     color: #c0392b;
 }
+
+.alert.alert-info.beautiful {
+    background-color: rgba(52, 152, 219, 0.25);
+    color: #2980b9;
+}

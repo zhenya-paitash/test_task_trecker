@@ -50,11 +50,12 @@
   border: 0.5px solid rgba(0,0,0,0.1);
   border-radius: 10px;
   margin: 10px;
+  height: 100%;
 }
 
 #col-user-information h4 {
   text-align: center;
-  text-transform: uppercase;
+  text-transform: capitalize;
   padding-bottom: 50px;
   font-weight: 400;
 }
@@ -65,7 +66,7 @@
   font-weight: 100;
 }
 
+
 #col-user-information hr {
   width: 50%;
 }
-

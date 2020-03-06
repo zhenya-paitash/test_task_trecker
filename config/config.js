@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
+  require("dotenv").config()  // {PORT, SECRET, DB_NAME, DB_USER, DB_PASS}
 }
 
 let status = () => {
