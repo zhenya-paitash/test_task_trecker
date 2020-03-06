@@ -1,0 +1,28 @@
+<% if (done && done.length > 0) { %>
+    <section id="alert">
+        <div class="alert alert-success beautiful" role="alert">
+            <div>
+                <button class="close" type="button" data-dismiss="alert">
+                    <span>x</span>
+                </button>
+                <strong>Success: </strong>
+                <%= done %>.
+            </div>
+        </div>
+    </section>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+    <section id="alert">
+        <div class="alert alert-danger beautiful" role="alert">
+            <div>
+                <button class="close" type="button" data-dismiss="alert">
+                    <span>x</span>
+                </button>
+                <strong>Error: </strong>
+                <%= error %>.
+            </div>
+        </div>
+    </section>
+<% } %>
+</section>

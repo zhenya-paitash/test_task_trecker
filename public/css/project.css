@@ -1,0 +1,97 @@
+#page-tasks .card {
+  color: white;
+  margin: 5px;
+  border-radius: 10px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  -webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.4);
+  box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.4);
+
+  transition: all .25s;
+}
+
+#page-tasks .card-hover:hover {
+  transform: translateX(10px) translateY(10px);
+  box-shadow: none;
+  transition: all .25s;
+}
+
+#page-tasks .card hr {
+  background-color: white;
+}
+
+#page-tasks .add-developer .fas.fa-plus {
+  color: white;
+  opacity: 0.5;
+}
+
+#page-tasks .add-developer .fas.fa-plus:hover {
+  opacity: 1;
+}
+
+#page-tasks .waiting {
+  background: #FF416C;
+  background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+  background: linear-gradient(to right, #FF4B2B, #FF416C);
+}
+
+#page-tasks .implementation {
+  background: #00b4db;
+  background: -webkit-linear-gradient(to left, #00b4db, #0083b0);
+  background: linear-gradient(to left, #00b4db, #0083b0);
+}
+
+#page-tasks .verifyng {
+  background: #fdc830;
+  background: -webkit-linear-gradient(to left, #fdc830, #f37335);
+  background: linear-gradient(to left, #fdc830, #f37335);
+}
+
+#page-tasks .releasing {
+  background: #11998e;
+  background: -webkit-linear-gradient(to right, #11998e, #38ef7d);
+  background: linear-gradient(to right, #11998e, #38ef7d);
+}
+
+.filtr-waiting {
+  color: #FF416C;
+}
+
+.filtr-implementation {
+  color: #00b4db;
+}
+
+.filtr-releasing {
+  color: #11998e;
+}
+
+.filtr-verifyng {
+  color: #fdc830;
+}
+
+#page-single-project .card-title {
+  font-weight: 200;
+}
+
+#page-single-project .card-text {
+  font-weight: 100;
+  width: 100%;
+}
+
+#page-tasks .card-link {
+  outline: none;
+  color: white;
+  text-decoration: none;
+}
+
+#page-tasks .card-link:hover {
+  color: rgb(56,56,56);
+}
+
+#page-tasks #add-project-btn {
+  padding-top: 150px;
+}
+

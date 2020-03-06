@@ -1,0 +1,51 @@
+#page-footer {
+  color: black;
+  padding: 38px 0;
+}
+
+#page-footer .social {
+  text-align: center;
+}
+
+#page-footer .social:hover {
+  opacity: 1;
+}
+
+#page-footer .social > a {
+  font-size: 32px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  margin: 0 5px;
+  color: inherit;
+  opacity: 0.75;
+}
+
+#page-footer .social > a:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
+.fab.fa-github {
+  color: rgb(45,45,45);
+}
+
+.fab.fa-telegram {
+  color: rgb(41,160,220);
+}
+
+.fab.fa-google {
+  color: rgb(219,73,60);
+}
+
+#page-footer .copyright {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 0;
+}
+

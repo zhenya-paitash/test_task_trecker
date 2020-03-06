@@ -1,0 +1,27 @@
+<section id="page-navbar">
+    <nav class="navbar navbar-light navbar-expand-md fixed-top">
+        <div class="container-fluid">
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fas fa-angle-down"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+
+                <form class="form-inline mr-auto" action="/user" method="GET">
+                    <input class="form-control form-control-sm nav-search" type="search"
+                           placeholder="search user ..." name="search" required>
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="/user/000001">Zhenya Paitash</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>

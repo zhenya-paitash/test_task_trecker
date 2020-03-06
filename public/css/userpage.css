@@ -1,0 +1,71 @@
+#user-info {
+  padding-top: 100px;
+  padding-bottom: 250px;
+}
+
+#col-user-name {
+  text-align: center;
+  padding: 25px;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin: 10px;
+  height: 100%;
+}
+
+#col-user-name h4 {
+  font-weight: 400;
+}
+
+#col-user-name .user-social {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+#col-user-name .far.fa-user {
+  font-size: 64px;
+}
+
+#col-user-name .user-social a {
+  padding: 0 2.5px;
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+#col-user-name .user-social a:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.5);
+  transition: all 0.2s;
+}
+
+#col-user-name .user-social i:hover {
+  transform: scale(1.15);
+}
+
+#col-user-information {
+  text-align: left;
+  padding: 25px;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin: 10px;
+}
+
+#col-user-information h4 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 50px;
+  font-weight: 400;
+}
+
+#col-user-information .user-information p {
+  margin: 0;
+  padding: 0;
+  font-weight: 100;
+}
+
+#col-user-information hr {
+  width: 50%;
+}
+

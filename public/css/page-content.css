@@ -1,0 +1,94 @@
+#page-content .img-thumbnail {
+  -webkit-box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+  -moz-box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+}
+
+#page-content .inner {
+  overflow: hidden;
+}
+
+#page-content .inner img {
+  transition: all 1.5s;
+}
+
+#page-content .inner:hover img {
+  transform: scale(1.25);
+  padding: 1px;
+}
+
+#page-content .badge {
+  margin: 0 4px;
+}
+
+.add-developer {
+  padding-left: 50%;
+  font-size: 24px;
+}
+
+#developers .fas.fa-plus {
+  color: rgb(108,117,125);
+}
+
+#developers .fas.fa-plus:hover {
+  color: rgb(225,225,225);
+}
+
+#page-content .read-btn {
+  padding-top: 12px;
+}
+
+#project-item p {
+  font-weight: 100;
+}
+
+#project-info p {
+  font-size: 14px;
+  font-weight: 100;
+  margin: 0px;
+}
+
+.filtr-item {
+  padding-top: 30px;
+}
+
+.filtr-controls span {
+  cursor: pointer;
+}
+
+.filtr-controls span:after {
+  content: ' ';
+  width: 0;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  background: transparent;
+  -webkit-transition: all .6s ease;
+  transition: all .6s ease;
+}
+
+.filtr-controls span.active:after {
+  width: 100%;
+  left: 0;
+  background: #000;
+}
+
+.filtr-loading {
+  border: 5px solid #333;
+  position: relative;
+  border-radius: 40px;
+  height: 40px;
+  left: 50%;
+  margin: 80px 0;
+  opacity: 0;
+  top: 0;
+  width: 40px;
+  z-index: 2;
+  -webkit-animation: pulsate 0.2s ease-out infinite;
+  animation: pulsate 0.2s ease-out infinite;
+}
+
+@keyframes pulsate {
+}
+

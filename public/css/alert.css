@@ -1,0 +1,17 @@
+.beautiful.alert {
+    border-width: 1px;
+    background-image: none;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.alert.alert-success.beautiful {
+    background-color: rgba(46, 204, 113, 0.25);
+    color: #27ae60;
+}
+
+.alert.alert-danger.beautiful {
+    background-color: rgba(231, 76, 60, 0.25);
+    color: #c0392b;
+}

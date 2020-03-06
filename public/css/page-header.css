@@ -1,0 +1,24 @@
+#page-parallax {
+  height: 425px;
+  background-image: url("../img/walpy_6tSPtbCshRc.jpeg");
+  background-position: center;
+  background-size: auto;
+  background-repeat: no-repeat;
+}
+
+#page-header hr {
+  border-color: white;
+  width: 250px;
+}
+
+#page-header .container {
+  text-align: center;
+  padding: 100px 5%;
+  max-width: 60%;
+  color: white;
+}
+
+#page-header .container h1 {
+  text-transform: uppercase;
+}
+

@@ -1,0 +1,51 @@
+.status-badge {
+  color: black;
+}
+
+#page-comments .container {
+  font-weight: 100;
+}
+
+#page-comments .btn-group i {
+  font-size: 16px;
+  color: black;
+}
+
+#page-comments .btn.btn-success {
+  background-color: #badc58;
+  border: none;
+  outline: none;
+  border-radius: 50% 0 0 50%;
+}
+
+#page-comments .btn.btn-success:hover {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+#page-comments .btn.btn-success:focus:not([readonly]) {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+#page-comments .btn.btn-danger {
+  background-color: #ff7979;
+  border: none;
+  outline: none;
+  border-radius: 0 50% 50% 0;
+}
+
+#page-comments .btn.btn-danger:hover {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+#page-comments .btn.btn-danger:focus:not([readonly]) {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+

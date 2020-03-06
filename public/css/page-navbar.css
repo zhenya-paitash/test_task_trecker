@@ -1,0 +1,72 @@
+#page-navbar .navbar {
+  background-color: rgba(0,0,0,0.25);
+  font-size: 12px;
+}
+
+#page-navbar .nav-item a {
+  color: white;
+  text-align: center;
+  border-radius: 25px;
+  transition: all 0.5s;
+}
+
+#page-navbar .nav-item a:hover {
+  text-align: center;
+  background-color: rgba(56,112,255,0.5);
+  transition: all 0.5s;
+}
+
+.fas.fa-angle-down {
+  font-size: 40px;
+  border: none;
+  color: #ffffff;
+}
+
+input.form-control[type=search] {
+  border: none;
+  border-radius: 0;
+  text-align: center;
+  text-transform: lowercase;
+  outline: none;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.5);
+  background-color: rgba(0,0,0,0);
+  color: white;
+}
+
+input.form-control[type=search]:focus:not([readonly]) {
+  border-bottom: 1px solid rgba(56,112,255,0.5);
+  box-shadow: 0 1px 0 0 rgba(56,112,255,0.5);
+}
+
+#page-navbar .btn {
+  border: none;
+  margin: 0;
+}
+
+#page-navbar .btn:focus:not([readonly]) {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0);
+}
+
+#page-navbar .fas.fa-search {
+  font-size: 24px;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+#page-navbar .fas.fa-search:hover {
+  color: #3870ff;
+}
+
+@media (max-width: 768px) {
+  #page-navbar .btn {
+    width: 15%;
+  }
+}
+
+@media (max-width: 768px) {
+  #page-navbar .nav-search {
+    width: 85%;
+  }
+}
+

@@ -1,0 +1,47 @@
+#userlist-in-item {
+  padding-top: 100px;
+  padding-bottom: 250px;
+}
+
+#page-content #users-in-item .badge {
+  font-size: 26px;
+  margin: 5px;
+}
+
+#add-user-in-item {
+  padding: 15px;
+  margin: 15px;
+  border: 0.5px solid rgba(0,0,0,0.2);
+  border-radius: 10px;
+  height: 100%;
+}
+
+#add-user-in-item form button {
+  width: 100%;
+  border-color: #2980ef;
+}
+
+#users-in-item {
+  padding: 15px;
+  margin: 15px;
+  border: 0.5px solid rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+#add-user-in-item form .form-control {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #434a52;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+}
+
+#users-in-item h4 {
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding-bottom: 20px;
+}
+

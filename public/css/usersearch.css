@@ -1,0 +1,73 @@
+#search-results .row {
+  padding: 0;
+  margin: 0;
+}
+
+#search-results #col-user-name {
+  margin: 0;
+  border: none;
+}
+
+#col-user-search .search-user-page input {
+  color: black;
+  height: 100%;
+  border: 0.5px solid rgba(0,0,0,0.25);
+}
+
+#col-user-search .btn:focus:not([readonly]) {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0);
+}
+
+#col-user-search .btn {
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 0;
+  margin: 0;
+  color: rgba(56,112,255,0.5);
+}
+
+#user-info .all-users-list h4 {
+  text-transform: uppercase;
+  font-weight: 400;
+  padding-bottom: 50px;
+}
+
+#user-info .all-users-list a {
+  outline: none;
+  text-decoration: none;
+  color: white;
+  letter-spacing: 2px;
+}
+
+#user-info .all-users-list a:hover {
+  color: rgba(0,0,0,0.75);
+}
+
+#user-info .all-users-list li:nth-child(2n) {
+  background-color: rgba(255,255,255,0.15);
+}
+
+.all-users-list .list-unstyled {
+  text-align: left;
+  font-weight: 100;
+}
+
+.all-users-list {
+  background: #00c6ff;
+  background: -webkit-linear-gradient(to left, #00c6ff, #0072ff);
+  background: linear-gradient(to left, #00c6ff, #0072ff);
+  color: white;
+}
+
+#search-results a {
+  color: rgb(0,0,0);
+  outline: none;
+}
+
+#search-results a:hover {
+  color: rgba(56,112,255,0.75);
+}
+
+#user-info .fas.fa-search:hover {
+  color: #3870ff;
+}
+
