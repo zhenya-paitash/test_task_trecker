@@ -1,8 +1,11 @@
 let
   projectRouter = require("express").Router(),
   Users         = require("../models/user-model"),
+  Projects      = require("../models/project-model"),
   ProjectUsers  = require("../models/projectuser-model"),
-  Projects      = require("../models/project-model");
+  Tasks         = require("../models/task-model"),
+  TaskUsers     = require("../models/taskuser-model"),
+  Comments      = require("../models/comment-model");
 
 
 // GET
@@ -24,20 +27,62 @@ projectRouter.projectAllPage = (req, res) => {
 };
 
 projectRouter.projectSinglePage = (req, res) => {
-  console.log(req.params.id_project);
-  Projects.findOne({where: {id: Number(req.params.id_project)}})
-    .then(project => {
-      res.render("project/project", {project})
-    })
-    .catch(err => {
-      console.error(err);
-      req.flash("error", err.message);
-      res.redirect("back")
-    });
+  let id_project = Number(req.params.id_project);
+  if (id_project && !isNaN(id_project)) {
+    Projects.findOne({where: {id: id_project}})
+      .then(async project => {
+        if (project) {
+          let userList = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
+          let projectUsers = await ProjectUsers.findAll();
+          let tasks = await Tasks.findAll({where: {id_project: id_project}});
+          let taskUsers = await TaskUsers.findAll();
+
+          res.render("project/project", {project, userList, projectUsers, tasks, taskUsers})
+        } else {
+          req.flash("error", "Project with such ID not found");
+          res.redirect("/project")
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        req.flash("error", err.message);
+        res.redirect("back")
+      });
+
+  } else {
+    // TODO при нажатии в браузере <-- выполняет эту строчку и флешит ошибку, пока хз как поправить
+    req.flash("error", "Invalid query");
+    res.redirect("/project")
+  }
 };
 
 projectRouter.projectTaskPage = (req, res) => {
-  res.render("project/task")
+  let id_project = Number(req.params.id_project);
+  let id_task = Number(req.params.id_task);
+  if (id_project && !isNaN(id_project) && id_task && !isNaN(id_task)) {
+    Tasks.findOne({where: {id: id_task, id_project: id_project}})
+      .then(async task => {
+        if (task) {
+          let project = await Projects.findOne({where: {id: id_project}});
+          let taskAuthor = await Users.findOne({where: {id: task.author}});
+
+          res.render("project/task", {task, project, taskAuthor})
+        } else {
+          req.flash("error", "Task with such ID not found");
+          res.redirect("/project")
+        }
+
+      })
+      .catch(err => {
+        console.error(err);
+        req.flash("error", err.message);
+        res.redirect("back")
+      });
+
+  } else {
+    req.flash("error", "Invalid query");
+    res.redirect("/project")
+  }
 };
 
 

@@ -13,6 +13,7 @@ let
 
 // ============================ CREATE and FILL in a NEW DATABASE =================================
 let create = async function() {
+  faker.locale = "en";
   await db.sync({force: true});
   await createUsers();
   await createUserRoles();
@@ -27,10 +28,8 @@ let create = async function() {
 
 // Users
 async function createUsers() {
-  faker.locale = "en";
-
-  // create 2 manager & 98 developers
-  for (let i = 0; i < 100; i++) {
+  // create 2 manager & 28 developers
+  for (let i = 0; i < 30; i++) {
     let role;
     i === 0 || i === 1
       ? role = 1
@@ -144,7 +143,7 @@ async function createProjectUsers() {
     for (let j = 0; j < 7; j++) {
       await ProjectUsers.create({
         id_project:   i + 1,
-        id_user:      Math.ceil(Math.random() * 100)
+        id_user:      Math.ceil(Math.random() * 30)
       });
     }
   }
@@ -153,13 +152,13 @@ async function createProjectUsers() {
 // Tasks
 async function createTasks() {
   let status = ["waiting", "implementation", "verifyng", "releasing"];
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 30; i++) {
     await Tasks.create({
-      name: faker.lorem.words(),
+      name: faker.commerce.productName(),
       description: faker.lorem.text(),
       status: status[Math.floor(Math.random() * 4)],
-      author: Math.ceil(Math.random() * 100),
-      deadline: faker.date.future(),
+      author: Math.ceil(Math.random() * 30),
+      // deadline: faker.date.future(),
       id_project: Math.ceil(Math.random() * 5)
     });
   }
@@ -167,11 +166,11 @@ async function createTasks() {
 
 // TaskUsers
 async function createTaskUsers() {
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 7; j++) {
+  for (let i = 0; i < 30; i++) {
+    for (let j = 0; j < Math.floor(Math.random()*3); j++) {
       await TaskUsers.create({
         id_task:   i + 1,
-        id_user:   Math.ceil(Math.random() * 100)
+        id_user:   Math.ceil(Math.random() * 30)
       });
     }
   }
@@ -179,11 +178,11 @@ async function createTaskUsers() {
 
 // Comments
 async function createComments() {
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 50; i++) {
     await Comments.create({
-      author: Math.ceil(Math.random() * 100),
+      author: Math.ceil(Math.random() * 30),
       text: faker.lorem.text(),
-      id_task: Math.ceil(Math.random() * 50)
+      id_task: Math.ceil(Math.random() * 30)
     })
   }
 }

@@ -1,4 +1,4 @@
-// let faker = require("faker");
+let faker = require("faker");
 // let x;
 //
 // console.log(x);
@@ -28,30 +28,39 @@
 
 // console.log(res);
 
-let developers = [];
-let id = [
-  {
-    id_project: 1,
-    id_user: 1
-  },
-  {
-    id_project: 1,
-    id_user: 2
-  },
-  {
-    id_project: 2,
-    id_user: 3
-  },
-  {
-    id_project: 2,
-    id_user: 4
-  },
-];
+// let developers = [];
+// let id = [
+//   {
+//     id_project: 1,
+//     id_user: 1
+//   },
+//   {
+//     id_project: 1,
+//     id_user: 2
+//   },
+//   {
+//     id_project: 2,
+//     id_user: 3
+//   },
+//   {
+//     id_project: 2,
+//     id_user: 4
+//   },
+// ];
+//
+// id.some(i => {
+//   if (i.id_project === 1) {
+//     developers.push(i)
+//   }
+// });
+//
+// console.log(developers);
 
-id.some(i => {
-  if (i.id_project === 1) {
-    developers.push(i)
-  }
-});
+// let x = [1,3,5,7,9];
+//
+// for (let i =0; i<20;i++){
+//   x.indexOf(i) !== -1 ? console.log(`${i} ЕСТЬ в х`) : console.log("===");
+// }
 
-console.log(developers);
+
+// console.log(faker.commerce.productName());

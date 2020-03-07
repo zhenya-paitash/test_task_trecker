@@ -33,7 +33,7 @@
                                                     <a href="/user/<%= project.author %>">
                                                         <span class="badge badge-dark">
                                                             <% let manager %>
-                                                            <% userList.some(i => {if (i.id == project.author) {return manager = `${i.firstname} ${i.lastname}`}}) %>
+                                                            <% userList.some(i => {if (i.id == project.author) {return manager = `${i.lastname} ${i.firstname}`}}) %>
                                                             <%= manager %>
                                                         </span>
                                                     </a>
@@ -44,7 +44,7 @@
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i.id_user %>">
                                                             <% let user %>
-                                                            <% userList.some(j => { if(j.id === i.id_user){return user = `${j.firstname} ${j.lastname}`} }) %>
+                                                            <% userList.some(j => { if(j.id === i.id_user){return user = `${j.lastname} ${j.firstname}`} }) %>
                                                             <span class="badge badge-primary"><%= user %></span>
                                                         </a>
                                                     <% }) %>
@@ -99,7 +99,7 @@
                                                 <p>Manager:&nbsp;
                                                     <a href="/user/<%= project.author %>">
                                                         <span class="badge badge-dark">
-                                                            <% let manager; userList.some(i => {if (i.id == project.author) {return manager = `${i.firstname} ${i.lastname}`}}) %>
+                                                            <% let manager; userList.some(i => {if (i.id == project.author) {return manager = `${i.lastname} ${i.firstname}`}}) %>
                                                             <%= manager %>
                                                         </span>
                                                     </a>
@@ -110,7 +110,7 @@
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i.id_user %>">
                                                             <% let user %>
-                                                            <% userList.some(usr => { if(usr.id === i.id_user){return user = `${usr.firstname} ${usr.lastname}`} }) %>
+                                                            <% userList.some(usr => { if(usr.id === i.id_user){return user = `${usr.lastname} ${usr.firstname}`} }) %>
                                                             <span class="badge badge-primary"><%= user %></span>
                                                         </a>
                                                     <% }) %>
