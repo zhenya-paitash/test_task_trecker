@@ -12,7 +12,8 @@
                             <div class="img-thumbnail">
                                 <div class="inner">
                                     <a>
-                                        <img class="img-fluid" src="/img/walpy_6tSPtbCshRc.jpeg" alt="image not found">
+                                        <img class="img-fluid" src="<%= project.image %>" alt="image not found"
+                                             onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
                                     </a>
                                 </div>
                             </div>
@@ -20,11 +21,8 @@
                         <div class="col-sm-12 col-md-7 col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Secure shy favour length all twenty denote.</h4>
-                                    <p class="card-text">He felicity no an at packages answered opinions juvenile.
-                                        Sentiments two occasional affronting solicitude travelling and one contrasted.
-                                        Advantages entreaties mr he apartments do. Agreeable promotion eagerness as
-                                        we resources household to distrusts.</p>
+                                    <h4 class="card-title"><%= project.name %></h4>
+                                    <p class="card-text"><%= project.description %></p>
                                     <hr>
                                     <div id="project-info">
                                         <p>Date:&nbsp;<span class="badge badge-light">21.02.2020 - 28.02.2020</span><br>

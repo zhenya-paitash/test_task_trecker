@@ -7,7 +7,8 @@ let Projects = db.define("projects", {
   name: {type: Sequelize.STRING, allowNull: false},
   description: {type: Sequelize.TEXT, allowNull: false},
   image: {type: Sequelize.TEXT},
-  deadline: {type: Sequelize.DATE}
+  deadline: {type: Sequelize.DATE},
+  author: {type: Sequelize.STRING, allowNull: false}
 });
 
 // Projects.sync({force: true});

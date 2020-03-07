@@ -10,124 +10,128 @@
                 <span class="d-inline-block mx-3 py-1 position-relative" data-filter="1">only my</span>
             </div>
             <div class="row filtr-container">
-                <div class="col-12 filtr-item" id="project-item" data-category="2">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-7 col-lg-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Secure shy favour length all twenty denote.</h4>
-                                    <p class="card-text">He felicity no an at packages answered opinions juvenile.
-                                        Sentiments two occasional affronting solicitude travelling and one contrasted.
-                                        Advantages entreaties mr he apartments do. Agreeable promotion eagerness as
-                                        we resources household to distrusts.&nbsp;</p>
-                                    <hr>
-                                    <div id="project-info">
-                                        <p>Date:&nbsp;
-                                            <span class="badge badge-light">21.02.2020 - 28.02.2020</span><br>
-                                        </p>
-                                        <p>Manager:&nbsp;
-                                            <a href="#">
-                                                <span class="badge badge-dark">Zhenya Paitash</span>
-                                            </a>
-                                        </p>
-                                        <p>Developers:&nbsp;
-                                            <a class="dev-user" href="#">
-                                                <span class="badge badge-warning">Zhenya Paitash</span>
-                                            </a>
-                                            <a class="dev-user" href="#">
-                                                <span class="badge badge-primary">Dima Dimovich</span>
-                                            </a>
-                                            <a class="dev-user" href="#">
-                                                <span class="badge badge-primary">Yana Yanova</span>
-                                            </a>
-                                        </p>
-                                    </div>
-                                    <div class="d-flex justify-content-end read-btn">
-                                        <a href="project.html">
-                                            <button class="button" type="button" data-hover="...on project page">
-                                                <span>Read More...</span>
-                                            </button>
-                                        </a>
+
+                <% projects.forEach(project => { %>
+                    <% if (projects.indexOf(project) % 2 === 0) { %>
+
+                        <!--first project - img right-->
+                        <div class="col-12 filtr-item" id="project-item" data-category="2">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-7 col-lg-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><%= project.name %></h4>
+                                            <p class="card-text"><%= project.description %></p>
+                                            <hr>
+                                            <div id="project-info" class="text-capitalize">
+                                                <p>Date:&nbsp;
+                                                    <span class="badge badge-light">
+                                                        <%= project.createdAt.toLocaleDateString() %> - <%= project.deadline.toLocaleDateString() %>
+                                                    </span><br>
+                                                </p>
+                                                <p>Manager:&nbsp;
+                                                    <a href="/user/<%= project.author %>">
+                                                        <span class="badge badge-dark">
+                                                            <% let manager %>
+                                                            <% userList.some(i => {if (i.id == project.author) {return manager = `${i.firstname} ${i.lastname}`}}) %>
+                                                            <%= manager %>
+                                                        </span>
+                                                    </a>
+                                                </p>
+                                                <p class="dev-list">Developers:
+                                                    <% let developers = [] %>
+                                                    <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
+                                                    <% developers.forEach(i => { %>
+                                                        <a class="dev-user" href="/user/<%= i.id_user %>">
+                                                            <% let user %>
+                                                            <% userList.some(j => { if(j.id === i.id_user){return user = `${j.firstname} ${j.lastname}`} }) %>
+                                                            <span class="badge badge-primary"><%= user %></span>
+                                                        </a>
+                                                    <% }) %>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex justify-content-end read-btn">
+                                                <a href="/project/<%= project.id %>">
+                                                    <button class="button" type="button" data-hover="...on project page">
+                                                        <span>Read More...</span>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-5 col-lg-4">
-                            <div class="img-thumbnail">
-                                <div class="inner">
-                                    <a href="#">
-                                        <img class="img-fluid" src="/img/walpy_6tSPtbCshRc.jpeg" alt="image not found">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 filtr-item" id="project-item" data-category="1, 2">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-5 col-lg-4">
-                            <div class="img-thumbnail">
-                                <div class="inner">
-                                    <a href="#">
-                                        <img class="img-fluid" src="/img/walpy_fwlEfOEpd_E.jpeg" alt="image not found">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-7 col-lg-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Draw from upon here gone add one. Latter remark hunted enough
-                                        vulgar say man. Sportsman do offending supported extremity breakfast by
-                                        listening.</h4>
-                                    <p class="card-text">Their saved linen downs tears son add music. Able rent
-                                        long in do we. Celebrated delightful an especially increasing instrument am. You
-                                        high bed wish help call draw side. Happiness remainder joy but earnestly for
-                                        off. Feel and make two real miss use easy. Do play they miss give so up.
-                                        Sportsman do offending supported extremity breakfast by listening. Any delicate
-                                        you how kindness horrible outlived servants. Painful so
-                                        he an comfort is manners. Advantages entreaties mr he apartments do. Polite do
-                                        object at passed it is. Draw from upon here gone add one. Way own uncommonly
-                                        travelling now acceptance bed compliment solicitude.
-                                        You high bed wish help call draw side. Equally he minutes my hastily. We leaf to
-                                        snug on no need. Whatever throwing we on resolved entrance together graceful.
-                                        Strictly numerous outlived kindness whatever on
-                                        we no on addition. Painful so he an comfort is manners. So by colonel hearted
-                                        ferrars.<br></p>
-                                    <hr>
-                                    <div id="project-info">
-                                        <p>Date:&nbsp;
-                                            <span class="badge badge-light">21.02.2020 - 28.02.2020</span><br>
-                                        </p>
-                                        <p>Manager:&nbsp;
-                                            <a href="#">
-                                                <span class="badge badge-dark">Zhenya Paitash</span>
+                                <div class="col-sm-12 col-md-5 col-lg-4">
+                                    <div class="img-thumbnail">
+                                        <div class="inner">
+                                            <a href="/project/<%= project.id %>">
+                                                <img class="img-fluid" src="<%= project.image %>" alt="image not found"
+                                                     onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
                                             </a>
-                                        </p>
-                                        <p class="dev-list">Developers:&nbsp;
-                                            <a href="#">
-                                                <span class="badge badge-warning">Zhenya Paitash</span>
-                                            </a>
-                                            <a href="#">
-                                                <span class="badge badge-primary">Dima Dimovich</span>
-                                            </a>
-                                            <a href="#">
-                                                <span class="badge badge-primary">Yana Yanova</span>
-                                            </a>
-                                        </p>
-                                    </div>
-                                    <div class="d-flex justify-content-start read-btn">
-                                        <a href="project.html">
-                                            <button class="button" type="button" data-hover="...on project page">
-                                                <span>Read More...</span>
-                                            </button>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    <% } else { %>
+                        <!--second project - img left-->
+                        <div class="col-12 filtr-item" id="project-item" data-category="1, 2">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5 col-lg-4">
+                                    <div class="img-thumbnail">
+                                        <div class="inner">
+                                            <a href="/project/<%= project.id %>">
+                                                <img class="img-fluid" src="<%= project.image %>" alt="image not found"
+                                                     onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 col-lg-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><%= project.name %></h4>
+                                            <p class="card-text"><%= project.description %></p>
+                                            <hr>
+                                            <div id="project-info" class="text-capitalize">
+                                                <p>Date:&nbsp;
+                                                    <span class="badge badge-light"><%= project.createdAt.toLocaleDateString() %> - <%= project.deadline.toLocaleDateString() %></span><br>
+                                                </p>
+                                                <p>Manager:&nbsp;
+                                                    <a href="/user/<%= project.author %>">
+                                                        <span class="badge badge-dark">
+                                                            <% let manager; userList.some(i => {if (i.id == project.author) {return manager = `${i.firstname} ${i.lastname}`}}) %>
+                                                            <%= manager %>
+                                                        </span>
+                                                    </a>
+                                                </p>
+                                                <p class="dev-list">Developers:
+                                                    <% let developers = [] %>
+                                                    <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
+                                                    <% developers.forEach(i => { %>
+                                                        <a class="dev-user" href="/user/<%= i.id_user %>">
+                                                            <% let user %>
+                                                            <% userList.some(usr => { if(usr.id === i.id_user){return user = `${usr.firstname} ${usr.lastname}`} }) %>
+                                                            <span class="badge badge-primary"><%= user %></span>
+                                                        </a>
+                                                    <% }) %>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex justify-content-start read-btn">
+                                                <a href="/project/<%= project.id %>">
+                                                    <button class="button" type="button" data-hover="...on project page">
+                                                        <span>Read More...</span>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <% } %>
+                <% }) %>
+
             </div>
         </div>
     </section>
