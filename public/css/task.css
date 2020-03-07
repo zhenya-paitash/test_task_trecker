@@ -2,6 +2,12 @@
   color: black;
 }
 
+.card-header-ellipsis {
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 #page-comments .container {
   font-weight: 100;
 }
@@ -49,3 +55,10 @@
   box-shadow: none;
 }
 
+#page-comments .com-user-name a, #page-comments .com-user-name a:hover {
+  text-transform: capitalize;
+  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+  color: black;
+}
