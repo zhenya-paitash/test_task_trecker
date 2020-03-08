@@ -20,9 +20,17 @@ index.post("/login",          indexRouter.login);
 
 // ======================================== PROJECT ===============================================
 // "/project"
-project.get("/",                      projectRouter.projectAllPage);
-project.get("/:id_project",           projectRouter.projectSinglePage);
-project.get("/:id_project/:id_task",  projectRouter.projectTaskPage);
+project.get("/",                                            projectRouter.projectAllPage);
+project.get("/:id_project",                                 projectRouter.projectSinglePage);
+project.get("/:id_project/:id_task",                        projectRouter.projectTaskPage);
+project.post("/createproject",                              projectRouter.createProject);
+project.post("/:id_project/adduser",                        projectRouter.addUserProject);
+project.post("/:id_project/createtask",                     projectRouter.createTask);
+project.post("/:id_project/:id_task/adduser",               projectRouter.addUserTask);
+project.post("/:id_project/:id_task/createcomment",         projectRouter.createComment);
+project.put("/:id_project/:id_task/status",                 projectRouter.changeStatusTask);
+project.put("/:id_project/:id_task/:id_comment/edit",       projectRouter.editComment);
+// project.delete("/:id_project/:id_task/:id_comment/delete",  projectRouter.deleteComment);
 
 
 

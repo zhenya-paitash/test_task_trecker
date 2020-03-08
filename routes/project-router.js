@@ -89,4 +89,108 @@ projectRouter.projectTaskPage = (req, res) => {
 };
 
 
+// POST
+// TODO добавить проверки
+projectRouter.createProject = (req, res) => {
+  let project = req.body.project;
+  Projects.create(project)
+    .then(project => {
+      req.flash("success", "Post has been created");
+      res.redirect("/project")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("/project")
+    });
+};
+
+// TODO добавить проверки
+projectRouter.addUserProject = (req, res) => {
+  let user = req.body.user;
+  ProjectUsers.create(user)
+    .then(user => {
+      req.flash("info", "User has added in project");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
+};
+
+// TODO добавить проверки
+projectRouter.createTask = (req, res) => {
+  let task = req.body.task;
+  Tasks.create(task)
+    .then(task => {
+      req.flash("success", "Task has been created");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    })
+};
+
+// TODO добавить проверки
+projectRouter.addUserTask = (req, res) => {
+  let user = req.body.user;
+  TaskUsers.create(user)
+    .then(user => {
+      req.flash("info", "User has added in task");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
+};
+
+// TODO добавить проверки
+projectRouter.createComment = (req, res) => {
+  let comment = req.body.comment;
+  Comments.create(comment)
+    .then(com => {
+      req.flash("success", "Comment has been created");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
+};
+
+// TODO добавить проверки
+projectRouter.changeStatusTask = (req, res) => {
+  let newStatus = req.body.status;
+  console.log(newStatus);
+  Tasks.findOne({where: {id: req.params.id_task} })
+    .then(async task => {
+      console.log(task);
+      await task.update(newStatus);
+      req.flash("info", "Status task has been changed");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
+};
+
+// TODO добавить проверки
+projectRouter.editComment = (req, res) => {
+  let editComment = req.body.comment;
+  Comments.findOne({where: {id: req.params.id_comment}})
+    .then(async com => {
+      await com.update(editComment);
+      req.flash("info", "Comment has been edit");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
+};
+
+
 module.exports = projectRouter;

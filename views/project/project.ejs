@@ -63,8 +63,9 @@
                                                         <div class="modal-content">
                                                             <div class="modal-body">
                                                                 <form action="/project/<%= project.id %>/adduser" method="POST">
+                                                                    <input class="form-control" type="hidden" value="<%= project.id %>" name="user[id_project]">
                                                                     <select class="form-control form-control-sm mdb-select text-capitalize"
-                                                                            name="user[role]" required>
+                                                                            name="user[id_user]" required>
                                                                         <% userList.forEach(i => { if (developers.indexOf(i.id) === -1) { %>
                                                                             <option value="<%= i.id %>"><%= i.lastname %> <%= i.firstname %></option>
                                                                         <% } }) %>
@@ -151,20 +152,21 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <form>
-                                    <input class="form-control" type="hidden" value="222" name="id_post">
+                                <form action="/project/<%= project.id %>/createtask" method="POST">
+                                    <input class="form-control" type="hidden" value="<%= 1 %>" name="task[author]">
+                                    <input class="form-control" type="hidden" value="<%= project.id %>" name="task[id_project]">
                                     <label>Name:</label>
-                                    <input class="form-control form-control-sm" type="text" required=""
-                                           placeholder="Name task">
+                                    <input class="form-control form-control-sm" type="text" name="task[name]"
+                                           placeholder="Name task" required>
                                     <label>Description:</label>
-                                    <textarea class="form-control form-control-sm" placeholder="Description task"
-                                              rows="6" required=""></textarea>
+                                    <textarea class="form-control form-control-sm" name="task[description]"
+                                              placeholder="Description task" rows="6" required></textarea>
 <!--                                    <label>Deadline:</label>-->
 <!--                                    <input class="form-control form-control-sm" type="date">-->
                                     <label>Status:</label>
-                                    <select class="form-control form-control-sm mdb-select" required=""
-                                            name="user[role]">
-                                        <option value="waiting" selected="">Waiting</option>
+                                    <select class="form-control form-control-sm mdb-select"
+                                            name="task[status]" required>
+                                        <option value="waiting" selected>Waiting</option>
                                         <option value="implementation">Implementation</option>
                                         <option value="verifyng">Verifyng</option>
                                         <option value="releasing">Releasing</option>

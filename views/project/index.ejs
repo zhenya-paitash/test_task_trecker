@@ -147,19 +147,20 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
-                            <input class="form-control" type="hidden" value="222" name="id_post">
+                        <form action="/project/createproject" method="POST">
+                            <input class="form-control" type="hidden" value="<%= 1 %>" name="project[author]">
                             <label>Name:</label>
-                            <input class="form-control form-control-sm" type="text" required=""
-                                   placeholder="Name project">
+                            <input class="form-control form-control-sm" placeholder="Name project"
+                                   type="text" name="project[name]" required>
                             <label>Description:</label>
                             <textarea class="form-control form-control-sm" placeholder="Description project" rows="6"
-                                      required></textarea>
+                                      name="project[description]" required></textarea>
                             <label>Project image:</label>
-                            <input class="form-control form-control-sm" type="url" placeholder="http://">
+                            <input class="form-control form-control-sm" type="url" placeholder="http://"
+                                   name="project[image]">
                             <label>Deadline:</label>
-                            <input class="form-control form-control-sm"
-                                   type="date">
+                            <input class="form-control form-control-sm" name="project[deadline]"
+                                   type="date" required>
                             <button class="button" type="submit" data-hover="Are you sure?">
                                 <span>Create project</span>
                             </button>

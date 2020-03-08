@@ -27,13 +27,11 @@
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-body">
-                                                                <form>
+                                                                <form action="/project/<%= project.id %>/<%= task.id %>/status?_method=PUT" method="POST">
                                                                     <select class="form-control form-control-sm mdb-select"
-                                                                            required="" name="user[role]">
-                                                                        <option value="waiting">Waiting
-                                                                        </option>
-                                                                        <option value="implementation">Implementation
-                                                                        </option>
+                                                                            required="" name="status[status]">
+                                                                        <option value="waiting">Waiting</option>
+                                                                        <option value="implementation">Implementation</option>
                                                                         <option value="verifyng">Verifyng</option>
                                                                         <option value="releasing">Releasing</option>
                                                                     </select>
@@ -76,8 +74,9 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-body">
                                                                         <form action="/project/<%= project.id %>/<%= task.id %>/adduser" method="POST">
+                                                                            <input class="form-control" type="hidden" value="<%= task.id %>" name="user[id_task]">
                                                                             <select class="form-control form-control-sm mdb-select text-capitalize"
-                                                                                    required="" name="user[role]">
+                                                                                    name="user[id_user]" required>
                                                                                 <% projectUsers.forEach(usr => { %>
                                                                                     <% userList.some(user => { if(user.id === usr.id_user){ %>
                                                                                         <% let idUsersInTask = [] %>
@@ -145,7 +144,8 @@
                     <h4 class="com-user-name">
                         <a href="/user/<%= user.id %>"><%= user.lastname %> <%= user.firstname %></a>
                     </h4>
-                    <p><%= com.text %><br></p>
+                        <p class="time-comment"><%= com.createdAt.toLocaleString() %></p>
+                        <p><%= com.text %><br></p>
                     <section id="comment-function">
                         <div class="btn-group btn-group-sm" role="group">
                             <button class="btn btn-success" type="button" data-toggle="modal" data-target="#comment-edit-<%= com.id%>">
@@ -160,11 +160,11 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <form>
-                                            <input class="form-control" type="hidden" value="222" name="id_post">
+                                        <form action="/project/<%= project.id %>/<%= task.id %>/<%= com.id %>/edit?_method=PUT"
+                                              method="POST">
                                             <label>Message:</label>
                                             <textarea class="form-control form-control-sm" placeholder="Enter your comment"
-                                                    rows="8"><%= com.text %></textarea>
+                                                    rows="8" name="comment[text]"><%= com.text %></textarea>
                                             <button class="button" type="submit" data-hover="Are you sure?">
                                                 <span>Edit comment</span>
                                             </button>
@@ -177,10 +177,10 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <form>
+                                        <form action="/project/<%= project.id %>/<%= task.id %>/<%= com.id %>/delete?_method=DELETE"
+                                              method="POST">
                                             <label>User:</label>
                                             <input class="form-control form-control-sm" type="text" value="<%= user.lastname %> <%= user.firstname %>" disabled>
-                                            <input class="form-control" type="hidden" value="222" name="id_post">
                                             <label>Message:</label>
                                             <textarea class="form-control form-control-sm" placeholder="Enter your comment"
                                                       rows="8" disabled><%= com.text %></textarea>
@@ -214,11 +214,12 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form>
-                            <input class="form-control" type="hidden" value="222" name="id_post">
-                            <label>Message:</label>
-                            <textarea class="form-control" placeholder="Enter your comment"
-                                      name="comment" rows="3"></textarea>
+                        <form action="/project/<%= project.id %>/<%= task.id %>/createcomment" method="POST">
+                            <input class="form-control" type="hidden" value="<%= 1 %>" name="comment[author]">
+                            <input class="form-control" type="hidden" value="<%= task.id %>" name="comment[id_task]">
+                            <label for="text">Message:</label>
+                            <textarea class="form-control" id="text" placeholder="Enter your comment"
+                                      name="comment[text]" rows="3" required></textarea>
                             <button class="button" type="submit" data-hover="Are you sure?">
                                 <span>Create comment</span>
                             </button>

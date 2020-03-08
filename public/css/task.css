@@ -62,3 +62,13 @@
   box-shadow: none;
   color: black;
 }
+
+#page-comments .time-comment {
+  font-size: 10px;
+  padding: 0;
+  opacity: .25;
+}
+
+#page-comments .time-comment:hover {
+  opacity: 1;
+}
