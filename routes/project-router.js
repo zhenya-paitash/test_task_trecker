@@ -67,7 +67,7 @@ projectRouter.projectTaskPage = (req, res) => {
           let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
           let projectUsers  = await ProjectUsers.findAll({where: {id_project: id_project}});
           let taskUsers     = await TaskUsers.findAll({where: {id_task: id_task}});
-          let comments      = await Comments.findAll({where: {id_task: id_task}});
+          let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "ASC"] ]});
 
           res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments})
         } else {
@@ -190,6 +190,23 @@ projectRouter.editComment = (req, res) => {
       req.flash("error", err.message);
       res.redirect("back")
     });
+};
+
+
+// DELETE
+// TODO добавить проверки
+projectRouter.deleteComment = (req, res) => {
+  Comments.findOne({where: {id: req.params.id_comment} })
+    .then(async com => {
+      console.log(com);
+      await com.destroy();
+      req.flash("success", "Comment has been removed");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    })
 };
 
 

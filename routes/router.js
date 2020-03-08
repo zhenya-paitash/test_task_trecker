@@ -30,7 +30,7 @@ project.post("/:id_project/:id_task/adduser",               projectRouter.addUse
 project.post("/:id_project/:id_task/createcomment",         projectRouter.createComment);
 project.put("/:id_project/:id_task/status",                 projectRouter.changeStatusTask);
 project.put("/:id_project/:id_task/:id_comment/edit",       projectRouter.editComment);
-// project.delete("/:id_project/:id_task/:id_comment/delete",  projectRouter.deleteComment);
+project.delete("/:id_project/:id_task/:id_comment/delete",  projectRouter.deleteComment);
 
 
 
