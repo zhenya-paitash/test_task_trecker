@@ -10,6 +10,7 @@ let
   flash           = require("connect-flash"),
   methodOverride  = require("method-override"),
   config          = require("./config/config"),
+  passportInit    = require("./config/passport"),
   db              = require("./config/database"),
   router          = require("./routes/router"),
   database_init   = require("./database_init"),
@@ -25,8 +26,7 @@ db.authenticate()
 
 
 // PASSPORT initialize
-const initializePassport = require("./config/passport");
-initializePassport(passport);
+passportInit(passport);
 
 
 // SETUP APP

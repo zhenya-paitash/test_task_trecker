@@ -78,6 +78,10 @@
   border-color: #2980ef;
 }
 
+#validation-email {
+  text-transform: lowercase;
+}
+
 #validation-text {
   padding: 0;
   margin: 0;

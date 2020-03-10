@@ -32,9 +32,8 @@
                                                 <p>Manager:&nbsp;
                                                     <a href="/user/<%= project.author %>">
                                                         <span class="badge badge-dark">
-                                                            <% let manager %>
-                                                            <% userList.some(i => {if (i.id == project.author) {return manager = `${i.lastname} ${i.firstname}`}}) %>
-                                                            <%= manager %>
+                                                            <% let mng = userList.find(i => i.id == project.author) %>
+                                                            <%= mng.lastname %> <%= mng.firstname %>
                                                         </span>
                                                     </a>
                                                 </p>
@@ -99,8 +98,8 @@
                                                 <p>Manager:&nbsp;
                                                     <a href="/user/<%= project.author %>">
                                                         <span class="badge badge-dark">
-                                                            <% let manager; userList.some(i => {if (i.id == project.author) {return manager = `${i.lastname} ${i.firstname}`}}) %>
-                                                            <%= manager %>
+                                                            <% let mng = userList.find(i => i.id == project.author) %>
+                                                            <%= mng.lastname %> <%= mng.firstname %>
                                                         </span>
                                                     </a>
                                                 </p>

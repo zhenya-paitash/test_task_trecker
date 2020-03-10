@@ -85,9 +85,9 @@ indexRouter.signup = async (req, res) => {
   try {
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     let newUser = {
-      email: req.body.email,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      email: req.body.email.toLowerCase(),
+      firstname: req.body.firstname.toLowerCase(),
+      lastname: req.body.lastname.toLowerCase(),
       password: hashPassword,
       role: req.body.role
     };
@@ -97,9 +97,10 @@ indexRouter.signup = async (req, res) => {
         // console.log(user);
         res.redirect("/login")
       })
-      // .catch(err => {
-      //
-      // });
+      .catch(err => {
+        req.flash("error", "User with this email is already registered");
+        res.redirect("/signup")
+      });
   } catch (e) {
     res.redirect("/signup")
   }

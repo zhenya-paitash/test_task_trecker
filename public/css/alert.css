@@ -4,6 +4,21 @@
     border-color: transparent;
     border-radius: 0;
     box-shadow: none;
+    font-weight: 100;
+}
+
+.beautiful.alert .fa-window-close {
+    color: rgba(0, 0, 0, 0.50);
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.beautiful.alert button:active,
+.beautiful.alert button:focus {
+    outline: none;
+    text-decoration: none;
+    border: none;
+    box-shadow: rgba(255, 255, 255, 0);
 }
 
 .alert.alert-success.beautiful {

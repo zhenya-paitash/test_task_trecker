@@ -32,9 +32,8 @@
                                         <p>Manager:&nbsp;
                                             <a href="/user/<%= project.author %>">
                                                 <span class="badge badge-dark">
-                                                    <% let manager %>
-                                                    <% userList.some(usr => {if (usr.id == project.author) {return manager = `${usr.lastname} ${usr.firstname}`}}) %>
-                                                    <%= manager %>
+                                                    <% let mng = userList.find(i => i.id == project.author) %>
+                                                    <%= mng.lastname %> <%= mng.firstname %>
                                                 </span>
                                             </a>
                                         </p>
@@ -45,9 +44,8 @@
                                                     <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i.id_user)}}) %>
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i %>">
-                                                            <% let user %>
-                                                            <% userList.some(j => { if(j.id === i){return user = `${j.lastname} ${j.firstname}`} }) %>
-                                                            <span class="badge badge-primary"><%= user %></span>
+                                                            <% let user = userList.find(usr => usr.id == i) %>
+                                                            <span class="badge badge-primary"><%= user.lastname %> <%= user.firstname %></span>
                                                         </a>
                                                     <% }) %>
                                                 </p>
@@ -118,9 +116,8 @@
                                             <%= task.createdAt.toLocaleString() %>
                                         </span><br></p>
                                     <p>Created:&nbsp;<a href="/user/<%= Number(task.author) %>"><span class="badge badge-dark">
-                                                <% let author %>
-                                                <% userList.some(usr => {if (usr.id == task.author) {return author = `${usr.lastname} ${usr.firstname}`}}) %>
-                                                <%= author %>
+                                                <% let author = userList.find(i => i.id == task.author) %>
+                                                <%= author.lastname %> <%= author.firstname %>
                                             </span></a>
                                     </p>
                                     <p>Developers:&nbsp;
@@ -128,9 +125,8 @@
                                         <% taskUsers.some(row => {if (row.id_task === task.id) {developers.push(row.id_user)}}) %>
                                         <% developers.forEach(id => { %>
                                             <a class="dev-user" href="/user/<%= id %>">
-                                                <% let user %>
-                                                <% userList.some(usr => { if(usr.id === id){return user = `${usr.lastname} ${usr.firstname}`} }) %>
-                                                <span class="badge badge-primary"><%= user %></span>
+                                                <% let user = userList.find(i => i.id == id) %>
+                                                <span class="badge badge-primary"><%= user.lastname %> <%= user.firstname %></span>
                                             </a>
                                         <% }) %>
                                     </p>

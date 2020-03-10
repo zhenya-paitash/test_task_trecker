@@ -40,7 +40,7 @@ projectRouter.projectSinglePage = (req, res) => {
 
           res.render("project/project", {project, userList, projectUsers, tasks, taskUsers})
         } else {
-          req.flash("error", "Project with such ID not found");
+          req.flash("error", "Project with this ID was not found.");
           res.redirect("/project")
         }
       })
@@ -52,7 +52,7 @@ projectRouter.projectSinglePage = (req, res) => {
 
   } else {
     // TODO при нажатии в браузере <-- выполняет эту строчку и флешит ошибку, пока хз как поправить
-    req.flash("error", "Invalid query");
+    req.flash("error", "Invalid query.");
     res.redirect("/project")
   }
 };
@@ -73,7 +73,7 @@ projectRouter.projectTaskPage = (req, res) => {
 
           res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments})
         } else {
-          req.flash("error", "Task with such ID not found");
+          req.flash("error", "Task with this ID was not found.");
           res.redirect("/project")
         }
 
@@ -85,7 +85,7 @@ projectRouter.projectTaskPage = (req, res) => {
       });
 
   } else {
-    req.flash("error", "Invalid query");
+    req.flash("error", "Invalid query.");
     res.redirect("/project")
   }
 };
@@ -98,7 +98,7 @@ projectRouter.createProject = (req, res) => {
   let project = req.body.project;
   Projects.create(project)
     .then(project => {
-      req.flash("success", "Post has been created");
+      req.flash("success", "Project has been created.");
       res.redirect("/project")
     })
     .catch(err => {
@@ -111,7 +111,7 @@ projectRouter.addUserProject = (req, res) => {
   let user = req.body.user;
   ProjectUsers.create(user)
     .then(user => {
-      req.flash("info", "User has added in project");
+      req.flash("info", "User has been added to the project.");
       res.redirect("back")
     })
     .catch(err => {
@@ -124,7 +124,7 @@ projectRouter.createTask = (req, res) => {
   let task = req.body.task;
   Tasks.create(task)
     .then(task => {
-      req.flash("success", "Task has been created");
+      req.flash("success", "Task has been created.");
       res.redirect("back")
     })
     .catch(err => {
@@ -137,7 +137,7 @@ projectRouter.addUserTask = (req, res) => {
   let user = req.body.user;
   TaskUsers.create(user)
     .then(user => {
-      req.flash("info", "User has added in task");
+      req.flash("info", "User has been added to the task.");
       res.redirect("back")
     })
     .catch(err => {
@@ -150,7 +150,7 @@ projectRouter.createComment = (req, res) => {
   let comment = req.body.comment;
   Comments.create(comment)
     .then(com => {
-      req.flash("success", "Comment has been created");
+      req.flash("success", "Comment has been created.");
       res.redirect("back")
     })
     .catch(err => {
@@ -169,7 +169,7 @@ projectRouter.changeStatusTask = (req, res) => {
     .then(async task => {
       console.log(task);
       await task.update(newStatus);
-      req.flash("info", "Status task has been changed");
+      req.flash("info", "Status task has been changed.");
       res.redirect("back")
     })
     .catch(err => {
@@ -183,7 +183,7 @@ projectRouter.editComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment}})
     .then(async com => {
       await com.update(editComment);
-      req.flash("info", "Comment has been edit");
+      req.flash("info", "Comment has been edit.");
       res.redirect("back")
     })
     .catch(err => {
@@ -201,7 +201,7 @@ projectRouter.deleteComment = (req, res) => {
     .then(async com => {
       console.log(com);
       await com.destroy();
-      req.flash("success", "Comment has been removed");
+      req.flash("success", "Comment has been deleted.");
       res.redirect("back")
     })
     .catch(err => {

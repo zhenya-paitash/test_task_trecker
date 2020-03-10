@@ -15,7 +15,9 @@
 
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="/user/000001">Zhenya Paitash</a>
+                        <a class="nav-link" href="/user/<%= currentUser.id %>">
+                            <%= currentUser.firstname %> <%= currentUser.lastname %>
+                        </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" href="/logout">Logout</a>
