@@ -1,12 +1,11 @@
 // IMPORTS
 let
   express         = require("express"),
-  exSession       = require("express-session"),
+  session         = require("express-session"),
   Sequelize       = require("sequelize"),
   pg              = require("pg"),
   pgHstore        = require("pg-hstore"),
-  // passport        = require("passport"),
-  // LocalStrategy   = require("passport-local"),
+  passport        = require("passport"),
   bodyParser      = require("body-parser"),
   flash           = require("connect-flash"),
   methodOverride  = require("method-override"),
@@ -25,16 +24,26 @@ db.authenticate()
   .catch(err => console.error(err));
 
 
+// PASSPORT initialize
+const initializePassport = require("./config/passport");
+user = [];
+initializePassport(
+  passport,
+  email => user.email === email);
+
+
 // SETUP APP
 app.set("view engine", "ejs");
 app.set("views", `${__dirname}/views`);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(exSession({
-  secret: process.env.SECRET,
+app.use(session({
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {

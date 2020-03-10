@@ -8,7 +8,9 @@ let
   Comments      = require("../models/comment-model");
 
 
+
 // GET
+
 projectRouter.projectAllPage = (req, res) => {
   Projects.findAll( { order: [ [ 'id', 'DESC' ] ]} )
     .then(async projects => {
@@ -89,8 +91,9 @@ projectRouter.projectTaskPage = (req, res) => {
 };
 
 
+
 // POST
-// TODO добавить проверки
+
 projectRouter.createProject = (req, res) => {
   let project = req.body.project;
   Projects.create(project)
@@ -104,7 +107,6 @@ projectRouter.createProject = (req, res) => {
     });
 };
 
-// TODO добавить проверки
 projectRouter.addUserProject = (req, res) => {
   let user = req.body.user;
   ProjectUsers.create(user)
@@ -118,7 +120,6 @@ projectRouter.addUserProject = (req, res) => {
     });
 };
 
-// TODO добавить проверки
 projectRouter.createTask = (req, res) => {
   let task = req.body.task;
   Tasks.create(task)
@@ -132,7 +133,6 @@ projectRouter.createTask = (req, res) => {
     })
 };
 
-// TODO добавить проверки
 projectRouter.addUserTask = (req, res) => {
   let user = req.body.user;
   TaskUsers.create(user)
@@ -146,7 +146,6 @@ projectRouter.addUserTask = (req, res) => {
     });
 };
 
-// TODO добавить проверки
 projectRouter.createComment = (req, res) => {
   let comment = req.body.comment;
   Comments.create(comment)
@@ -160,7 +159,9 @@ projectRouter.createComment = (req, res) => {
     });
 };
 
-// TODO добавить проверки
+
+// PUT
+
 projectRouter.changeStatusTask = (req, res) => {
   let newStatus = req.body.status;
   console.log(newStatus);
@@ -177,7 +178,6 @@ projectRouter.changeStatusTask = (req, res) => {
     });
 };
 
-// TODO добавить проверки
 projectRouter.editComment = (req, res) => {
   let editComment = req.body.comment;
   Comments.findOne({where: {id: req.params.id_comment}})
@@ -193,8 +193,9 @@ projectRouter.editComment = (req, res) => {
 };
 
 
+
 // DELETE
-// TODO добавить проверки
+
 projectRouter.deleteComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment} })
     .then(async com => {

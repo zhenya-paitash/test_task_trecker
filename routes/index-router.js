@@ -12,7 +12,7 @@ let
 
 
 // GET
-indexRouter.mainPage = (req, res) => {res.redirect("/login")};
+indexRouter.mainPage = (req, res) => {res.redirect("/project")};
 indexRouter.signupPage = (req, res) => {res.render("index/signup")};
 indexRouter.loginPage = (req, res) => {res.render("index/login")};
 indexRouter.logout = (req, res) => {res.redirect("/login")};
