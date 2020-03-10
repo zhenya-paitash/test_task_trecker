@@ -66,24 +66,33 @@ let faker = require("faker");
 // console.log(faker.commerce.productName());
 
 
-let arr = [
-  {
-    id_project: 1,
-    id_user: 1
-  },
-  {
-    id_project: 1,
-    id_user: 2
-  },
-  {
-    id_project: 2,
-    id_user: 3
-  },
-  {
-    id_project: 2,
-    id_user: 4
-  },
-];
-
-let res = arr.find(i => i.id_user === 3);
-console.log(res.id_user);
+// let arr = [
+//   {
+//     id_project: 1,
+//     id_user: 1
+//   },
+//   {
+//     id_project: 1,
+//     id_user: 2
+//   },
+//   {
+//     id_project: 2,
+//     id_user: 3
+//   },
+//   {
+//     id_project: 2,
+//     id_user: 4
+//   },
+// ];
+//
+// let res = arr.find(i => i.id_user === 4);
+// console.log(res);
+//
+// res ? console.log("+") : console.log("-");
+//
+//
+//
+// let cat;
+// if (1+1===2) {cat = "hello"}
+//
+// console.log(cat);

@@ -6,8 +6,8 @@
     <section class="py-5">
         <div class="container">
             <div class="d-flex justify-content-start filtr-controls text-center lead text-uppercase mb-3">
-                <span class="active d-inline-block mx-3 py-1 position-relative" data-filter="all">all </span>
-                <span class="d-inline-block mx-3 py-1 position-relative" data-filter="1">only my</span>
+                <span class="active d-inline-block mx-3 py-1 position-relative" data-filter="all">all</span>
+                <span class="d-inline-block mx-3 py-1 position-relative" data-filter="i">only my</span>
             </div>
             <div class="row filtr-container">
 
@@ -15,7 +15,13 @@
                     <% if (projects.indexOf(project) % 2 === 0) { %>
 
                         <!--first project - img right-->
-                        <div class="col-12 filtr-item" id="project-item" data-category="2">
+                        <% let developers = [] %>
+                        <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
+
+                        <% let cat %>
+                        <% if (currentUser.id == project.author || developers.find(i => i.id_user == currentUser.id)) {cat = "i"} %>
+
+                        <div class="col-12 filtr-item" id="project-item" data-category="<%= cat %>">
                             <div class="row">
                                 <div class="col-sm-12 col-md-7 col-lg-8">
                                     <div class="card">
@@ -31,20 +37,20 @@
                                                 </p>
                                                 <p>Manager:&nbsp;
                                                     <a href="/user/<%= project.author %>">
-                                                        <span class="badge badge-dark">
+                                                        <span class="badge <%= currentUser.id == project.author ? "badge-warning" : "badge-dark" ; %>">
                                                             <% let mng = userList.find(i => i.id == project.author) %>
                                                             <%= mng.lastname %> <%= mng.firstname %>
                                                         </span>
                                                     </a>
                                                 </p>
                                                 <p class="dev-list">Developers:
-                                                    <% let developers = [] %>
-                                                    <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i.id_user %>">
                                                             <% let user %>
                                                             <% userList.some(j => { if(j.id === i.id_user){return user = `${j.lastname} ${j.firstname}`} }) %>
-                                                            <span class="badge badge-primary"><%= user %></span>
+                                                            <span class="badge <%= currentUser.id == i.id_user ? "badge-warning" : "badge-primary" ; %>">
+                                                                <%= user %>
+                                                            </span>
                                                         </a>
                                                     <% }) %>
                                                 </p>
@@ -73,7 +79,14 @@
                         </div>
                     <% } else { %>
                         <!--second project - img left-->
-                        <div class="col-12 filtr-item" id="project-item" data-category="1, 2">
+
+                        <% let developers = [] %>
+                        <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
+
+                        <% let cat %>
+                        <% if (currentUser.id == project.author || developers.find(i => i.id_user == currentUser.id)) {cat = "i"} %>
+
+                        <div class="col-12 filtr-item" id="project-item" data-category="<%= cat %>">
                             <div class="row">
                                 <div class="col-sm-12 col-md-5 col-lg-4">
                                     <div class="img-thumbnail">
@@ -97,20 +110,20 @@
                                                 </p>
                                                 <p>Manager:&nbsp;
                                                     <a href="/user/<%= project.author %>">
-                                                        <span class="badge badge-dark">
+                                                        <span class="badge <%= currentUser.id == project.author ? "badge-warning" : "badge-dark" ; %>">
                                                             <% let mng = userList.find(i => i.id == project.author) %>
                                                             <%= mng.lastname %> <%= mng.firstname %>
                                                         </span>
                                                     </a>
                                                 </p>
                                                 <p class="dev-list">Developers:
-                                                    <% let developers = [] %>
-                                                    <% projectUsers.some(i => {if (i.id_project === project.id) {developers.push(i)}}) %>
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i.id_user %>">
                                                             <% let user %>
                                                             <% userList.some(usr => { if(usr.id === i.id_user){return user = `${usr.lastname} ${usr.firstname}`} }) %>
-                                                            <span class="badge badge-primary"><%= user %></span>
+                                                            <span class="badge <%= currentUser.id == i.id_user ? "badge-warning" : "badge-primary" ; %>">
+                                                                <%= user %>
+                                                            </span>
                                                         </a>
                                                     <% }) %>
                                                 </p>
@@ -134,6 +147,9 @@
             </div>
         </div>
     </section>
+
+    <% if (prop.project_create) { %>
+
     <section id="add-project-btn">
         <p>Create new project</p>
         <a>
@@ -147,7 +163,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <form action="/project/createproject" method="POST">
-                            <input class="form-control" type="hidden" value="<%= 1 %>" name="project[author]">
+                            <input class="form-control" type="hidden" value="<%= currentUser.id %>" name="project[author]">
                             <label>Name:</label>
                             <input class="form-control form-control-sm" placeholder="Name project"
                                    type="text" name="project[name]" required>
@@ -169,6 +185,9 @@
             </div>
         </div>
     </section>
+
+    <% } %>
+
 </section>
 <%- include("../partials/footer-visual") -%>
 <%- include("../partials/footer") -%>

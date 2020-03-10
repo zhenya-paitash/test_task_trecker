@@ -28,6 +28,7 @@ function initialize(passport) {
   passport.deserializeUser((id, done) => {
     Users.findOne({where: {id: id}})
       .then(user => done(null, user))
+      .catch(err => done(err))
   });
 }
 

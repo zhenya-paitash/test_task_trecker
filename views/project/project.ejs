@@ -31,7 +31,7 @@
                                         </p>
                                         <p>Manager:&nbsp;
                                             <a href="/user/<%= project.author %>">
-                                                <span class="badge badge-dark">
+                                                <span class="badge <%= currentUser.id == project.author ? "badge-warning" : "badge-dark" ; %>">
                                                     <% let mng = userList.find(i => i.id == project.author) %>
                                                     <%= mng.lastname %> <%= mng.firstname %>
                                                 </span>
@@ -45,12 +45,17 @@
                                                     <% developers.forEach(i => { %>
                                                         <a class="dev-user" href="/user/<%= i %>">
                                                             <% let user = userList.find(usr => usr.id == i) %>
-                                                            <span class="badge badge-primary"><%= user.lastname %> <%= user.firstname %></span>
+                                                            <span class="badge <%= currentUser.id == i ? "badge-warning" : "badge-primary" ; %>">
+                                                                <%= user.lastname %> <%= user.firstname %>
+                                                            </span>
                                                         </a>
                                                     <% }) %>
                                                 </p>
                                             </div>
                                             <div class="col-2">
+
+                                                <% if (prop.project_users) { %>
+
                                                 <a class="add-developer" data-toggle="modal"
                                                    data-target="#add-developer-to-project">
                                                     <i class="fas fa-plus"></i>
@@ -77,6 +82,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <% } %>
+
                                             </div>
                                         </div>
                                     </div>
@@ -89,95 +97,114 @@
         </div>
     </section>
 </section>
-<section id="page-tasks">
-    <section class="py-5">
-        <div class="container">
-            <div class="filtr-controls text-center lead text-uppercase mb-3">
-                <span class="active d-inline-block mx-3 py-1 position-relative" data-filter="all">all </span>
-                <span class="d-inline-block mx-3 py-1 position-relative" data-filter="1">only my</span>
-                <span class="d-inline-block mx-3 py-1 position-relative filtr-waiting" data-filter="waiting">waiting</span>
-                <span class="d-inline-block mx-3 py-1 position-relative filtr-implementation" data-filter="implementation">implementation</span>
-                <span class="d-inline-block mx-3 py-1 position-relative filtr-verifyng" data-filter="verifyng">verifyng</span>
-                <span class="d-inline-block mx-3 py-1 position-relative filtr-releasing"
-                      data-filter="releasing">releasing</span>
-            </div>
-            <div class="row filtr-container">
 
-                <% tasks.forEach(task => { %>
-                    <div class="col-sm-12 col-md-6 col-lg-4 filtr-item" data-category="1, <%= task.status%>">
-                        <div class="card card-hover <%= task.status %>">
-                            <div class="card-body">
-                                <a class="card-link" href="/project/<%= task.id_project %>/<%= task.id %>">
-                                    <h4 class="card-header-ellipsis"><%= task.name %><br></h4>
-                                </a>
-                                <hr>
-                                <div id="project-info" class="text-capitalize">
-                                    <p>Date:&nbsp;<span class="badge badge-light">
-                                            <%= task.createdAt.toLocaleString() %>
-                                        </span><br></p>
-                                    <p>Created:&nbsp;<a href="/user/<%= Number(task.author) %>"><span class="badge badge-dark">
-                                                <% let author = userList.find(i => i.id == task.author) %>
-                                                <%= author.lastname %> <%= author.firstname %>
-                                            </span></a>
-                                    </p>
-                                    <p>Developers:&nbsp;
-                                        <% let developers = [] %>
-                                        <% taskUsers.some(row => {if (row.id_task === task.id) {developers.push(row.id_user)}}) %>
-                                        <% developers.forEach(id => { %>
-                                            <a class="dev-user" href="/user/<%= id %>">
-                                                <% let user = userList.find(i => i.id == id) %>
-                                                <span class="badge badge-primary"><%= user.lastname %> <%= user.firstname %></span>
-                                            </a>
-                                        <% }) %>
-                                    </p>
+<% if (prop.task_see) { %>
+
+    <section id="page-tasks">
+        <section class="py-5">
+            <div class="container">
+                <div class="filtr-controls text-center lead text-uppercase mb-3">
+                    <span class="active d-inline-block mx-3 py-1 position-relative" data-filter="all">all </span>
+                    <span class="d-inline-block mx-3 py-1 position-relative" data-filter="i">only my</span>
+                    <span class="d-inline-block mx-3 py-1 position-relative filtr-waiting" data-filter="waiting">waiting</span>
+                    <span class="d-inline-block mx-3 py-1 position-relative filtr-implementation" data-filter="implementation">implementation</span>
+                    <span class="d-inline-block mx-3 py-1 position-relative filtr-verifyng" data-filter="verifyng">verifyng</span>
+                    <span class="d-inline-block mx-3 py-1 position-relative filtr-releasing"
+                          data-filter="releasing">releasing</span>
+                </div>
+                <div class="row filtr-container">
+
+                    <% tasks.forEach(task => { %>
+
+                        <% let developers = [] %>
+                        <% taskUsers.some(row => {if (row.id_task === task.id) {developers.push(row.id_user)}}) %>
+
+                        <% let cat %>
+                        <% if (currentUser.id == task.author || developers.find(i => i == currentUser.id)) {cat = "i"} %>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4 filtr-item" data-category="<%= cat %>, <%= task.status%>">
+                            <div class="card card-hover <%= task.status %>">
+                                <div class="card-body">
+                                    <a class="card-link" href="/project/<%= task.id_project %>/<%= task.id %>">
+                                        <h4 class="card-header-ellipsis"><%= task.name %><br></h4>
+                                    </a>
+                                    <hr>
+                                    <div id="project-info" class="text-capitalize">
+                                        <p>Date:&nbsp;<span class="badge badge-light">
+                                                <%= task.createdAt.toLocaleString() %>
+                                            </span><br></p>
+                                        <p>Created:&nbsp;<a href="/user/<%= Number(task.author) %>">
+                                                <span class="badge <%= currentUser.id == task.author ? "badge-warning" : "badge-dark" ; %>">
+                                                    <% let author = userList.find(i => i.id == task.author) %>
+                                                    <%= author.lastname %> <%= author.firstname %>
+                                                </span></a>
+                                        </p>
+                                        <p>Developers:&nbsp;
+                                            <% developers.forEach(id => { %>
+                                                <a class="dev-user" href="/user/<%= id %>">
+                                                    <% let user = userList.find(i => i.id == id) %>
+                                                    <span class="badge <%= currentUser.id == id ? "badge-warning" : "badge-primary" ; %>">
+                                                        <%= user.lastname %> <%= user.firstname %>
+                                                    </span>
+                                                </a>
+                                            <% }) %>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <% }) %>
 
-            </div>
-            <section id="add-project-btn">
-                <p>Create new task</p>
-                <a>
-                    <button class="btn btn-secondary btn-plus" data-toggle="modal" data-target="#create-new-task">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </a>
-                <div class="modal fade" role="dialog" tabindex="-1" id="create-new-task">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <form action="/project/<%= project.id %>/createtask" method="POST">
-                                    <input class="form-control" type="hidden" value="<%= 1 %>" name="task[author]">
-                                    <input class="form-control" type="hidden" value="<%= project.id %>" name="task[id_project]">
-                                    <label>Name:</label>
-                                    <input class="form-control form-control-sm" type="text" name="task[name]"
-                                           placeholder="Name task" required>
-                                    <label>Description:</label>
-                                    <textarea class="form-control form-control-sm" name="task[description]"
-                                              placeholder="Description task" rows="6" required></textarea>
-<!--                                    <label>Deadline:</label>-->
-<!--                                    <input class="form-control form-control-sm" type="date">-->
-                                    <label>Status:</label>
-                                    <select class="form-control form-control-sm mdb-select"
-                                            name="task[status]" required>
-                                        <option value="waiting" selected>Waiting</option>
-                                        <option value="implementation">Implementation</option>
-                                        <option value="verifyng">Verifyng</option>
-                                        <option value="releasing">Releasing</option>
-                                    </select>
-                                    <button class="button" type="submit" data-hover="Are you sure?">
-                                        <span>Create task</span>
-                                    </button>
-                                </form>
+                    <% }) %>
+
+                </div>
+
+                <% if (prop.task_create) { %>
+                    <section id="add-project-btn">
+                        <p>Create new task</p>
+                        <a>
+                            <button class="btn btn-secondary btn-plus" data-toggle="modal" data-target="#create-new-task">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </a>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="create-new-task">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <form action="/project/<%= project.id %>/createtask" method="POST">
+                                            <input class="form-control" type="hidden" value="<%= currentUser.id %>" name="task[author]">
+                                            <input class="form-control" type="hidden" value="<%= project.id %>" name="task[id_project]">
+                                            <label>Name:</label>
+                                            <input class="form-control form-control-sm" type="text" name="task[name]"
+                                                   placeholder="Name task" required>
+                                            <label>Description:</label>
+                                            <textarea class="form-control form-control-sm" name="task[description]"
+                                                      placeholder="Description task" rows="6" required></textarea>
+        <!--                                    <label>Deadline:</label>-->
+        <!--                                    <input class="form-control form-control-sm" type="date">-->
+                                            <label>Status:</label>
+                                            <select class="form-control form-control-sm mdb-select"
+                                                    name="task[status]" required>
+                                                <option value="waiting" selected>Waiting</option>
+                                                <option value="implementation">Implementation</option>
+                                                <option value="verifyng">Verifyng</option>
+                                                <option value="releasing">Releasing</option>
+                                            </select>
+                                            <button class="button" type="submit" data-hover="Are you sure?">
+                                                <span>Create task</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+                    </section>
+                <% } %>
+
+            </div>
+        </section>
     </section>
-</section>
+
+<% } %>
+
 <%- include("../partials/footer-visual") -%>
 <%- include("../partials/footer") -%>

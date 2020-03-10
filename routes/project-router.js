@@ -1,6 +1,7 @@
 let
   projectRouter = require("express").Router(),
   Users         = require("../models/user-model"),
+  UserRoles     = require("../models/userrole-model"),
   Projects      = require("../models/project-model"),
   ProjectUsers  = require("../models/projectuser-model"),
   Tasks         = require("../models/task-model"),
@@ -14,17 +15,19 @@ let
 projectRouter.projectAllPage = (req, res) => {
   Projects.findAll( { order: [ [ 'id', 'DESC' ] ]} )
     .then(async projects => {
+      // TODO сделать middleware мб
+      let prop          = await UserRoles.findOne({where: { id: req.user.role }});
+
       let userList      = await Users.findAll();
       let projectUsers  = await ProjectUsers.findAll();
 
-      res.render("project/index", {projects, userList, projectUsers})
+      res.render("project/index", {projects, userList, projectUsers, prop})
     })
     .catch(err => {
       console.error(err);
       req.flash("error", err.message);
       res.redirect("back")
     });
-
 };
 
 projectRouter.projectSinglePage = (req, res) => {
@@ -33,12 +36,15 @@ projectRouter.projectSinglePage = (req, res) => {
     Projects.findOne({where: {id: id_project}})
       .then(async project => {
         if (project) {
+          // TODO сделать middleware мб
+          let prop          = await UserRoles.findOne({where: { id: req.user.role }});
+
           let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
           let projectUsers  = await ProjectUsers.findAll();  // TODO WHERE id_project: id_project
-          let tasks         = await Tasks.findAll({where: {id_project: id_project}});
+          let tasks         = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
           let taskUsers     = await TaskUsers.findAll();
 
-          res.render("project/project", {project, userList, projectUsers, tasks, taskUsers})
+          res.render("project/project", {project, userList, projectUsers, tasks, taskUsers, prop})
         } else {
           req.flash("error", "Project with this ID was not found.");
           res.redirect("/project")
@@ -64,14 +70,18 @@ projectRouter.projectTaskPage = (req, res) => {
     Tasks.findOne({where: {id: id_task, id_project: id_project}})
       .then(async task => {
         if (task) {
+
+          // TODO сделать middleware мб
+          let prop          = await UserRoles.findOne({where: { id: req.user.role }});
+
           let project       = await Projects.findOne({where: {id: id_project}});
           let taskAuthor    = await Users.findOne({where: {id: task.author}});
           let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
           let projectUsers  = await ProjectUsers.findAll({where: {id_project: id_project}});
           let taskUsers     = await TaskUsers.findAll({where: {id_task: id_task}});
-          let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "ASC"] ]});
+          let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "DESC"] ]});
 
-          res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments})
+          res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments, prop})
         } else {
           req.flash("error", "Task with this ID was not found.");
           res.redirect("/project")
@@ -207,6 +217,24 @@ projectRouter.deleteComment = (req, res) => {
     .catch(err => {
       req.flash("error", err.message);
       res.redirect("back")
+    })
+};
+
+
+projectRouter.userProp = function(req, res, next) {
+  let userRole = req.user.role;
+  UserRoles.findOne({where: {id: userRole}})
+    .then(prop => {
+      console.log(prop);
+      if (prop.project_create) {
+        res.send(prop)
+      } else {
+        res.send("NO")
+      }
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("/login")
     })
 };
 

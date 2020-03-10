@@ -4,16 +4,19 @@ const
   indexRouter     = require("./index-router"),
   projectRouter   = require("./project-router");
 
+const M           = require("../middleware/middleware");
+
 
 // ======================================== INDEX =================================================
 // "/"
-index.get("/",                indexRouter.mainPage);
+index.get("/",                M.login,indexRouter.mainPage);
 index.get("/signup",          indexRouter.signupPage);
 index.get("/login",           indexRouter.loginPage);
-index.get("/logout",          indexRouter.logout);
-index.get("/user",            indexRouter.userSearchPage);
-index.get("/user/:id_user",   indexRouter.userPage);
+index.get("/logout",          M.login,indexRouter.logout);
+index.get("/user",            M.login,indexRouter.userSearchPage);
+index.get("/user/:id_user",   M.login,indexRouter.userPage);
 index.get("/id", (req, res) => res.send(req.user));
+index.get("/prop", projectRouter.userProp);
 index.post("/signup",         indexRouter.signup);
 index.post("/login",          indexRouter.login);
 
@@ -21,9 +24,9 @@ index.post("/login",          indexRouter.login);
 
 // ======================================== PROJECT ===============================================
 // "/project"
-project.get("/",                                            projectRouter.projectAllPage);
-project.get("/:id_project",                                 projectRouter.projectSinglePage);
-project.get("/:id_project/:id_task",                        projectRouter.projectTaskPage);
+project.get("/",                                            M.login,projectRouter.projectAllPage);
+project.get("/:id_project",                                 M.login,projectRouter.projectSinglePage);
+project.get("/:id_project/:id_task",                        M.login,projectRouter.projectTaskPage);
 project.post("/createproject",                              projectRouter.createProject);
 project.post("/:id_project/adduser",                        projectRouter.addUserProject);
 project.post("/:id_project/createtask",                     projectRouter.createTask);
