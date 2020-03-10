@@ -13,6 +13,7 @@ index.get("/login",           indexRouter.loginPage);
 index.get("/logout",          indexRouter.logout);
 index.get("/user",            indexRouter.userSearchPage);
 index.get("/user/:id_user",   indexRouter.userPage);
+index.get("/id", (req, res) => res.send(req.user));
 index.post("/signup",         indexRouter.signup);
 index.post("/login",          indexRouter.login);
 

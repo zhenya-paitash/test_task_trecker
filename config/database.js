@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 
 
 // Passing parameters separately
-const db = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
-  host: 'localhost',
+const db = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGPASS, {
+  host: process.env.PGHOST,
   dialect: 'postgres',
   define: {},
   pool: {

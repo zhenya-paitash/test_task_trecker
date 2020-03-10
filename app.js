@@ -26,10 +26,7 @@ db.authenticate()
 
 // PASSPORT initialize
 const initializePassport = require("./config/passport");
-user = [];
-initializePassport(
-  passport,
-  email => user.email === email);
+initializePassport(passport);
 
 
 // SETUP APP

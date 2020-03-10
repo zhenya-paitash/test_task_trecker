@@ -3,6 +3,8 @@ let
   db            = require("../config/database"),
   Sequelize     = require("sequelize"),
   Op            = Sequelize.Op,
+  bcrypt        = require("bcrypt"),
+  passport      = require("passport"),
 
   Users         = require("../models/user-model"),
   UserRoles     = require("../models/userrole-model"),
@@ -15,7 +17,7 @@ let
 indexRouter.mainPage = (req, res) => {res.redirect("/project")};
 indexRouter.signupPage = (req, res) => {res.render("index/signup")};
 indexRouter.loginPage = (req, res) => {res.render("index/login")};
-indexRouter.logout = (req, res) => {res.redirect("/login")};
+indexRouter.logout = (req, res) => {req.logOut();res.redirect("/login")};
 
 // /user || /user?search=pedro
 indexRouter.userSearchPage = async (req, res) => {
@@ -79,8 +81,35 @@ indexRouter.userPage = (req, res) => {
 };
 
 // POST
-indexRouter.signup = (req, res) => {res.redirect("/project")};
-indexRouter.login = (req, res) => {res.redirect("/project")};
+indexRouter.signup = async (req, res) => {
+  try {
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    let newUser = {
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      password: hashPassword,
+      role: req.body.role
+    };
+    // console.log(newUser);
+    Users.create(newUser)
+      .then(user => {
+        // console.log(user);
+        res.redirect("/login")
+      })
+      // .catch(err => {
+      //
+      // });
+  } catch (e) {
+    res.redirect("/signup")
+  }
+};
+
+indexRouter.login = passport.authenticate("local", {
+  successRedirect: "/project",
+  failureRedirect: "/login",
+  failureFlash: true
+});
 
 
 module.exports = indexRouter;
