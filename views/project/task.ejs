@@ -50,7 +50,12 @@
                                                 <p>Date:&nbsp;<span
                                                             class="badge badge-light"><%= task.createdAt.toLocaleString() %></span><br>
                                                 </p>
-                                                <p>Created:&nbsp;<a href="/user/<%= taskAuthor.id %>"><span class="badge badge-dark"><%= taskAuthor.lastname %> <%= taskAuthor.firstname %></span></a>
+                                                <p>Created:&nbsp;
+                                                    <a href="/user/<%= taskAuthor.id %>">
+                                                        <span class="badge <%= currentUser.id == taskAuthor.id ? "badge-warning" : "badge-dark" ; %>">
+                                                            <%= taskAuthor.lastname %> <%= taskAuthor.firstname %>
+                                                        </span>
+                                                    </a>
                                                 </p>
                                                 <div class="row" id="developers">
                                                     <div class="col-10">
@@ -58,7 +63,9 @@
                                                             <% taskUsers.forEach(i => { %>
                                                                 <a class="dev-user" href="/user/<%= i.id_user %>">
                                                                     <% let user = userList.find(usr => usr.id == i.id_user) %>
-                                                                    <span class="badge badge-primary"><%= user.lastname %> <%= user.firstname %></span>
+                                                                    <span class="badge <%= currentUser.id == i.id_user ? "badge-warning" : "badge-primary" ; %>">
+                                                                        <%= user.lastname %> <%= user.firstname %>
+                                                                    </span>
                                                                 </a>
                                                             <% }) %>
                                                         </p>
