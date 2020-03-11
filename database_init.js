@@ -4,6 +4,7 @@ let
   faker         = require("faker"),
   Users         = require("./models/user-model"),
   UserRoles     = require("./models/userrole-model"),
+  UserSocials   = require("./models/usersocial-model"),
   Projects      = require("./models/project-model"),
   ProjectUsers  = require("./models/projectuser-model"),
   Tasks         = require("./models/task-model"),
@@ -39,10 +40,21 @@ async function createUsers() {
       firstname:  faker.name.firstName().toLowerCase(),
       lastname:   faker.name.lastName().toLowerCase(),
       email:      faker.internet.email().toLowerCase(),
-      age:        Math.floor(18 + Math.random() * 20),
-      phone:      faker.phone.phoneNumber(),
+      // age:        Math.floor(18 + Math.random() * 20),
+      // phone:      faker.phone.phoneNumber(),
       password:   faker.internet.password(),
       role:       role
+    });
+
+    await UserSocials.create({
+      // id_user: i + 1,
+      age: Math.floor(18 + Math.random() * 20),
+      phone: faker.phone.phoneNumber(),
+      // github: {type: Sequelize.STRING},
+      // telegram: {type: Sequelize.STRING},
+      // vk: {type: Sequelize.STRING},
+      // facebook: {type: Sequelize.STRING},
+      // gmail: {type: Sequelize.STRING},
     })
   }
 }

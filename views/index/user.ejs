@@ -2,34 +2,103 @@
 <%- include("../partials/navbar") -%>
 <%- include("../partials/parallax") -%>
 <%- include("../partials/alert") -%>
-<section data-aos="fade" data-aos-delay="450" id="page-content">
+<section id="page-content">
     <div id="user-info">
         <div class="container">
-            <div class="row text-capitalize">
-                <div class="col-sm-12 col-md-6 col-lg-4" data-aos="fade-right" data-aos-delay="550" id="col-user-name">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4" id="col-user-name">
                     <i class="far fa-user"></i>
-                    <h4><%= user.firstname %> <%= user.lastname %> <%= user.age %></h4>
+                    <h4><%= user.firstname %> <%= user.lastname %></h4>
                     <div class="user-social">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-google"></i></a>
+                        <% if (social.github) { %>
+                            <a href="<%= social.github %>"><i class="fab fa-github"></i></a>
+                        <% } if (social.telegram) { %>
+                            <a href="<%= social.telegram %>"><i class="fab fa-telegram"></i></a>
+                        <% } if (social.vk) { %>
+                            <a href="<%= social.vk %>"><i class="fab fa-vk"></i></a>
+                        <% } if (social.facebook) { %>
+                            <a href="<%= social.facebook %>"><i class="fab fa-facebook"></i></a>
+                        <% } if (social.gmail) { %>
+                            <a href="<%= social.gmail %>"><i class="fab fa-google"></i></a>
+                        <% } %>
+
                     </div>
                 </div>
-                <div class="col" data-aos="fade-left" data-aos-delay="550" id="col-user-information">
+                <div class="col" id="col-user-information">
                     <h4>user information</h4>
                     <div class="user-information">
                         <p><strong>Id: </strong><%= user.id %></p>
                         <p><strong>Firstname: </strong><%= user.firstname %></p>
                         <p><strong>Lastname: </strong><%= user.lastname %></p>
-                        <p><strong>Age: </strong><%= user.age %></p>
                         <p><strong>Role: </strong><%= role.rolename %></p>
-                        <p><strong>Phone: </strong><%= user.phone %></p>
+                        <p><strong>Age: </strong><%= social.age %></p>
+                        <p><strong>Phone: </strong><%= social.phone %></p>
                         <hr>
                         <p><strong>Projects: </strong><%= userProjects.length %></p>
                         <p><strong>Tasks: </strong><%= userTasks.length %></p>
                         <p><strong>Comments: </strong><%= userComments.length %></p>
+                        <hr>
+                        <p><i class="fab fa-github"></i> <%= social.github %></p>
+                        <p><i class="fab fa-telegram"></i> <%= social.telegram %></p>
+                        <p><i class="fab fa-vk"></i> <%= social.vk %></p>
+                        <p><i class="fab fa-facebook"></i> <%= social.facebook %></p>
+                        <p><i class="fab fa-google"></i> <%= social.gmail %></p>
+
+                        <% if (currentUser.id == user.id) { %>
+                            <hr>
+                            <a>
+                                <button class="button" type="button" data-hover="Edit profile"
+                                        data-toggle="modal" data-target="#edit-profile">
+                                    <span>Any data is not correct?</span>
+                                </button>
+                            </a>
+
+                            <div class="modal fade" role="dialog" tabindex="-1" id="edit-profile">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <form action="/user/<%= user.id %>?_method=PUT" method="POST">
+                                                <input class="form-control form-control-sm" type="hidden" value="<%= user.id %>"
+                                                       name="id">
+                                                <label>Firstname:</label>
+                                                <input class="form-control form-control-sm" placeholder="enter you firstname"
+                                                       type="text" name="user[firstname]" value="<%= user.firstname %>" required>
+                                                <label>Lastname:</label>
+                                                <input class="form-control form-control-sm" placeholder="enter you lastname"
+                                                       type="text" name="user[lastname]" value="<%= user.lastname %>" required>
+                                                <label>Age:</label>
+                                                <input class="form-control form-control-sm" placeholder="age"
+                                                       type="number" name="social[age]" value="<%= social.age %>" min="18" max="100">
+                                                <label>Contact phone:</label>
+                                                <input class="form-control form-control-sm" placeholder="contact phone"
+                                                       type="text" value="<%= social.phone %>" name="social[phone]">
+                                                <hr>
+                                                <label><i class="fab fa-github"></i> Github: </label>
+                                                <input class="form-control form-control-sm" placeholder="https://github.com/***"
+                                                       type="url" name="social[github]" value="<%= social.github %>">
+                                                <label><i class="fab fa-telegram"></i> Telegram: </label>
+                                                <input class="form-control form-control-sm" placeholder="https://t.me/***"
+                                                       type="url" name="social[telegram]" value="<%= social.telegram %>">
+                                                <label><i class="fab fa-vk"></i> VK: </label>
+                                                <input class="form-control form-control-sm" placeholder="https://vk.com/***"
+                                                       type="url" name="social[vk]" value="<%= social.vk %>">
+                                                <label><i class="fab fa-facebook"></i> Facebook: </label>
+                                                <input class="form-control form-control-sm" placeholder="https://www.facebook.com/***"
+                                                       type="url" name="social[facebook]" value="<%= social.facebook %>">
+                                                <label><i class="fab fa-google"></i> Gmail: </label>
+                                                <input class="form-control form-control-sm" placeholder="***@gmail.com"
+                                                       type="text" name="social[gmail]" value="<%= social.gmail %>">
+
+                                                <button class="button" type="submit" data-hover="Accept">
+                                                    <span>Have you definitely checked all the data?</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+
                     </div>
                 </div>
             </div>

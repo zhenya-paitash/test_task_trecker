@@ -8,6 +8,7 @@ let
 
   Users         = require("../models/user-model"),
   UserRoles     = require("../models/userrole-model"),
+  UserSocials   = require("../models/usersocial-model"),
   ProjectUsers  = require("../models/projectuser-model"),
   TaskUsers     = require("../models/taskuser-model"),
   Comments      = require("../models/comment-model");
@@ -46,6 +47,9 @@ indexRouter.userPage = (req, res) => {
     Users.findOne({ where: { id: req.params.id_user } })
       .then(async (user) => {
         if (user) {
+
+          let social        = await  UserSocials.findOne({where: {id_user: user.id}});
+
           let userProjects  = await ProjectUsers.findAll({where: {id_user: user.id}});
           let userTasks     = await TaskUsers.findAll({where: {id_user: user.id}});
           let userComments  = await Comments.findAll({where: {author: user.id}});
@@ -54,6 +58,7 @@ indexRouter.userPage = (req, res) => {
               res.render("index/user", {
                 user,
                 role,
+                social,
                 userProjects,
                 userTasks,
                 userComments
@@ -93,8 +98,11 @@ indexRouter.signup = async (req, res) => {
     };
     // console.log(newUser);
     Users.create(newUser)
-      .then(user => {
+      .then(async user => {
         // console.log(user);
+
+        await UserSocials.create({id_user: user.id});
+
         res.redirect("/login")
       })
       .catch(err => {
@@ -111,6 +119,21 @@ indexRouter.login = passport.authenticate("local", {
   failureRedirect: "/login",
   failureFlash: true
 });
+
+
+// PUT
+
+indexRouter.userUpdate = async (req, res) => {
+
+  //TODO проверки validator
+  let user    = await Users.findOne({where: {id: req.body.id}});
+  let social  = await UserSocials.findOne({where: {id_user: user.id}});
+
+  await user.update(req.body.user);
+  await social.update(req.body.social);
+
+  res.redirect("back")
+};
 
 
 module.exports = indexRouter;

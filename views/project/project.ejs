@@ -103,6 +103,8 @@
     <section id="page-tasks">
         <section class="py-5">
             <div class="container">
+
+                <% if (tasks && tasks.length > 0) { %>
                 <div class="filtr-controls text-center lead text-uppercase mb-3">
                     <span class="active d-inline-block mx-3 py-1 position-relative" data-filter="all">all </span>
                     <span class="d-inline-block mx-3 py-1 position-relative" data-filter="i">only my</span>
@@ -153,10 +155,10 @@
                                 </div>
                             </div>
                         </div>
-
                     <% }) %>
 
                 </div>
+                <% } %>
 
                 <% if (prop.task_create) { %>
                     <section id="add-project-btn">
