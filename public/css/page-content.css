@@ -9,11 +9,11 @@
 }
 
 #page-content .inner img {
-  transition: all 1.5s;
+  transition: all 0.5s;
 }
 
 #page-content .inner:hover img {
-  transform: scale(1.25);
+  transform: scale(1.1);
   padding: 1px;
 }
 
@@ -87,6 +87,36 @@
   z-index: 2;
   -webkit-animation: pulsate 0.2s ease-out infinite;
   animation: pulsate 0.2s ease-out infinite;
+}
+
+#page-content .card-title {
+  color: white;
+  font-size: 32px;
+  font-weight: 400;
+  border-radius: 10px;
+  padding: 5px;
+  -webkit-box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+  -moz-box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.4);
+
+  transition: all .5s;
+}
+
+#page-content .card-title:hover {
+  transform: translateX(5px) translateY(5px);
+  box-shadow: none;
+  transition: all .5s;
+}
+
+#page-content .card-head-block {
+  text-decoration: none;
+}
+
+#page-content .article-category {
+  margin: 0;
+  padding: 0;
+  font-weight: 100;
+  font-size: 12px;
 }
 
 @keyframes pulsate {

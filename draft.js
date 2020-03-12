@@ -96,3 +96,8 @@ let faker = require("faker");
 // if (1+1===2) {cat = "hello"}
 //
 // console.log(cat);
+
+// for (let i = 0; i < 1_000; i++ ) {
+//   let x = Math.floor(Math.random() * 28 + 3);
+//   x === 30 ? console.log( x ) : false ;
+// }

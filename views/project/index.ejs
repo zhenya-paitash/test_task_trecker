@@ -24,9 +24,15 @@
                         <div class="col-12 filtr-item" id="project-item" data-category="<%= cat %>">
                             <div class="row">
                                 <div class="col-sm-12 col-md-7 col-lg-8">
-                                    <div class="card">
+                                    <div class="card pjcat-<%= project.category %>">
                                         <div class="card-body">
-                                            <h4 class="card-title"><%= project.name %></h4>
+                                            <a class="card-head-block" href="/project/<%= project.id %>">
+                                                <h4 class="card-title">
+                                                    <span class="article-category">
+                                                        #<%= project.category %>
+                                                    </span> <%= project.name %>
+                                                </h4>
+                                            </a>
                                             <p class="card-text"><%= project.description %></p>
                                             <hr>
                                             <div id="project-info" class="text-capitalize">
@@ -55,13 +61,6 @@
                                                     <% }) %>
                                                 </p>
                                             </div>
-                                            <div class="d-flex justify-content-end read-btn">
-                                                <a href="/project/<%= project.id %>">
-                                                    <button class="button" type="button" data-hover="...on project page">
-                                                        <span>Read More...</span>
-                                                    </button>
-                                                </a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -69,8 +68,7 @@
                                     <div class="img-thumbnail">
                                         <div class="inner">
                                             <a href="/project/<%= project.id %>">
-                                                <img class="img-fluid" src="<%= project.image %>" alt="image not found"
-                                                     onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
+                                                <img class="img-fluid" src="/img/project-category/<%= project.category %>.jpg">
                                             </a>
                                         </div>
                                     </div>
@@ -92,16 +90,21 @@
                                     <div class="img-thumbnail">
                                         <div class="inner">
                                             <a href="/project/<%= project.id %>">
-                                                <img class="img-fluid" src="<%= project.image %>" alt="image not found"
-                                                     onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
+                                                <img class="img-fluid" src="/img/project-category/<%= project.category %>.jpg">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-7 col-lg-">
-                                    <div class="card">
+                                <div class="col-sm-12 col-md-7 col-lg-8">
+                                    <div class="card pjcat-<%= project.category %>">
                                         <div class="card-body">
-                                            <h4 class="card-title"><%= project.name %></h4>
+                                            <a class="card-head-block" href="/project/<%= project.id %>">
+                                                <h4 class="card-title">
+                                                    <span class="article-category">
+                                                        #<%= project.category %>
+                                                    </span> <%= project.name %>
+                                                </h4>
+                                            </a>
                                             <p class="card-text"><%= project.description %></p>
                                             <hr>
                                             <div id="project-info" class="text-capitalize">
@@ -127,13 +130,6 @@
                                                         </a>
                                                     <% }) %>
                                                 </p>
-                                            </div>
-                                            <div class="d-flex justify-content-start read-btn">
-                                                <a href="/project/<%= project.id %>">
-                                                    <button class="button" type="button" data-hover="...on project page">
-                                                        <span>Read More...</span>
-                                                    </button>
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -170,12 +166,31 @@
                             <label>Description:</label>
                             <textarea class="form-control form-control-sm" placeholder="Description project" rows="6"
                                       name="project[description]" required></textarea>
-                            <label>Project image:</label>
-                            <input class="form-control form-control-sm" type="url" placeholder="http://"
-                                   name="project[image]">
                             <label>Deadline:</label>
                             <input class="form-control form-control-sm" name="project[deadline]"
                                    type="date" required>
+                            <label>Project category:</label>
+                            <select class="form-control form-control-sm mdb-select" name="project[category]" required>
+                                <option value="business-card" selected>Business Card</option>
+                                <option value="company-site">Company Site</option>
+                                <option value="online-shop">Online Shop</option>
+                                <option value="landing-page">Landing Page</option>
+                                <option value="electronic-marketplace">Electronic Marketplace</option>
+                                <option value="informational-portal">Informational Portal</option>
+                                <option value="nonprofit-website">Non-profit Website</option>
+                                <option value="blog">Blog</option>
+                                <option value="social-network">Social Network</option>
+                                <option value="search-system">Search System</option>
+                                <option value="post-service">Post Service</option>
+                                <option value="theme-site">Theme Site</option>
+                                <option value="personal-site">Personal Site</option>
+                                <option value="storage-service">Storage Service</option>
+                                <option value="video-hosting">Video Hosting</option>
+                                <option value="bulletin-board">Bulletin Board</option>
+                                <option value="directory-site">Directory Site</option>
+                                <option value="online-encyclopedia">Online Encyclopedia</option>
+                                <option value="other">Other</option>
+                            </select>
                             <button class="button" type="submit" data-hover="Are you sure?">
                                 <span>Create project</span>
                             </button>

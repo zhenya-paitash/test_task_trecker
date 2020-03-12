@@ -1,21 +1,26 @@
 #nav-routes {
     font-weight: 100;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 #nav-routes a {
     color: white;
     margin-right: 10px;
     text-decoration: none;
-    opacity: 0.5;
+    opacity: 0.65;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 10px;
+    transition: all 1s;
+    height: 100%;
 }
 
 #nav-routes a:hover {
     opacity: 1;
+    color: white;
+    padding: 0 8px;
+    transition: all 1s;
 }
 
 #nav-routes i {

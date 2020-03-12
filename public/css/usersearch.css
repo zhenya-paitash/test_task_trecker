@@ -34,16 +34,16 @@
 #user-info .all-users-list a {
   outline: none;
   text-decoration: none;
-  color: white;
+  color: rgba(255, 255, 255, 0.75);
   letter-spacing: 2px;
 }
 
 #user-info .all-users-list a:hover {
-  color: rgba(0,0,0,0.75);
+  color: white;
 }
 
 #user-info .all-users-list li:nth-child(2n) {
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.05);
 }
 
 .all-users-list .list-unstyled {
@@ -52,10 +52,13 @@
 }
 
 .all-users-list {
-  background: #00c6ff;
-  background: -webkit-linear-gradient(to left, #00c6ff, #0072ff);
-  background: linear-gradient(to left, #00c6ff, #0072ff);
+  background: #232526;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white;
+  -webkit-box-shadow: -10px 10px 10px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: -10px 10px 10px 0px rgba(0,0,0,0.4);
+  box-shadow: -10px 10px 10px 0px rgba(0,0,0,0.4);
 }
 
 #search-results a {

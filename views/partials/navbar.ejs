@@ -21,13 +21,13 @@
                     <% if (typeof project !== "undefined") { %>
                     <a href="/project/<%= project.id %>">
                         <i class="fas fa-chevron-circle-right"></i>
-                        <%= project.name.slice(0,30) %>
+                        <%= project.name.slice(0,15) %>
                     </a>
                     <% } %>
                     <% if (typeof task !== "undefined") { %>
                     <a href="/project/<%= project.id %>/<%= task.id %>">
                         <i class="fas fa-chevron-circle-right"></i>
-                        <%= task.name.slice(0,30) %>
+                        <%= task.name.slice(0,15) %>
                     </a>
                     <% } %>
                 </span>

@@ -6,7 +6,8 @@ const
 let Projects = db.define("projects", {
   name: {type: Sequelize.STRING, allowNull: false},
   description: {type: Sequelize.TEXT, allowNull: false},
-  image: {type: Sequelize.TEXT},
+  // image: {type: Sequelize.TEXT},
+  category: {type: Sequelize.STRING, allowNull: false},
   deadline: {type: Sequelize.DATE},
   author: {type: Sequelize.STRING, allowNull: false}
 });

@@ -1,0 +1,133 @@
+/*---------- ALL CATEGORY ----------*/
+/*нитернет-визитка*/
+/*сайт-компании*/
+/*онлайн-магазин*/
+/*ландинг-страница*/
+/*электронная-торговая-площадка*/
+/*информационный-портал*/
+/*некоммерческий-сайт*/
+/*блог*/
+/*социальная-сеть*/
+/*поисковая-система*/
+/*почтовый-сервис*/
+/*тематический-сайт*/
+/*персональный-сайт*/
+/*сервис-хранения-фото*/
+/*видео-хостинг*/
+/*доска-объявленний*/
+/*каталог-сайтов*/
+/*онлайн-энциклопедия*/
+/*другое*/
+
+/* - 1  business-card*/
+/* - 2  company-site*/
+/* - 3  online-shop*/
+/* - 4  landing-page*/
+/* - 5  electronic-marketplace*/
+/* 6  informational-portal*/
+/* 7  nonprofit-website*/
+/* - 8  blog*/
+/* 9  social-network*/
+/* 10 search-system*/
+/* 11 post-service*/
+/* - 12 theme-site*/
+/* 13 personal-site*/
+/* 14 storage-service*/
+/* 15 video-hosting*/
+/* - 16 bulletin-board*/
+/* 17 directory-site*/
+/* 18 online-encyclopedia*/
+/* - 19 other*/
+
+/*========================================*/
+
+/*business-card*/
+.pjcat-business-card h4 {
+    background-color: #2ecc71;
+}
+
+/*company-site*/
+.pjcat-company-site h4 {
+    background-color: #74b9ff;
+}
+
+/*online-shop*/
+.pjcat-online-shop h4 {
+    background-color: #ff7675;
+}
+
+/*landing-page*/
+.pjcat-landing-page h4 {
+    background-color: #fdcb6e;
+}
+
+/*electronic-marketplace*/
+.pjcat-electronic-marketplace h4 {
+    background-color: rgba(0, 28, 145, 0.3);
+}
+
+/*informational-portal*/
+.pjcat-informational-portal h4 {
+    background-color: #0984e3;
+}
+
+/*nonprofit-website*/
+.pjcat-nonprofit-website h4 {
+    background-color: #a29bfe;
+}
+
+/*blog*/
+.pjcat-blog h4 {
+    background-color: #be2edd;
+}
+
+/*social-network*/
+.pjcat-social-network h4 {
+    background-color: #0984e3;
+}
+
+/*search-system*/
+.pjcat-search-system h4 {
+    background-color: #74b9ff;
+}
+
+/*post-service*/
+.pjcat-post-service h4 {
+    background-color: #d63031;
+}
+
+/*theme-site*/
+.pjcat-theme-site h4 {
+    background-color: #6c5ce7;
+}
+
+/*personal-site*/
+.pjcat-personal-site h4 {
+    background-color: #e84393;
+}
+
+/*video-hosting*/
+.pjcat-video-hosting h4 {
+    background-color: #eb4d4b;
+}
+
+/*bulletin-board*/
+.pjcat-bulletin-board h4 {
+    background-color: #81ecec;
+}
+
+/*directory-site*/
+.pjcat-directory-site h4 {
+    background-color: #fdcb6e;
+}
+
+/*online-encyclopedia*/
+.pjcat-online-encyclopedia h4 {
+    background-color: #dfe6e9;
+}
+
+/*other*/
+.pjcat-other h4 {
+    background-color: #636e72;
+}
+

@@ -6,13 +6,13 @@
 #page-navbar .nav-item a {
   color: white;
   text-align: center;
-  border-radius: 25px;
+  border-radius: 5px;
   transition: all 0.5s;
 }
 
 #page-navbar .nav-item a:hover {
   text-align: center;
-  background-color: rgba(56,112,255,0.5);
+  background-color: rgba(255, 255, 255, 0.25);
   transition: all 0.5s;
 }
 
@@ -35,8 +35,11 @@ input.form-control[type=search] {
 }
 
 input.form-control[type=search]:focus:not([readonly]) {
-  border-bottom: 1px solid rgba(56,112,255,0.5);
+  /*border-bottom: 1px solid rgba(56,112,255,0.5);*/
   box-shadow: 0 1px 0 0 rgba(56,112,255,0.5);
+  border: 0.5px solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+  /*transition: all 0.5s;*/
 }
 
 #page-navbar .btn {

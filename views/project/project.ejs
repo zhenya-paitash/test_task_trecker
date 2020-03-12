@@ -12,16 +12,19 @@
                             <div class="img-thumbnail">
                                 <div class="inner">
                                     <a>
-                                        <img class="img-fluid" src="<%= project.image %>" alt="image not found"
-                                             onerror="this.onerror=null;this.src='/img/default-project.jpeg';">
+                                        <img class="img-fluid" src="/img/project-category/<%= project.category %>.jpg">
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-7 col-lg-8">
-                            <div class="card">
+                            <div class="card pjcat-<%= project.category %>">
                                 <div class="card-body">
-                                    <h4 class="card-title"><%= project.name %></h4>
+                                    <h4 class="card-title">
+                                        <span class="article-category">
+                                            #<%= project.category %>
+                                        </span> <%= project.name %>
+                                    </h4>
                                     <p class="card-text"><%= project.description %></p>
                                     <hr>
                                     <div id="project-info" class="text-capitalize">
