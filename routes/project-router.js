@@ -174,10 +174,8 @@ projectRouter.createComment = (req, res) => {
 
 projectRouter.changeStatusTask = (req, res) => {
   let newStatus = req.body.status;
-  console.log(newStatus);
   Tasks.findOne({where: {id: req.params.id_task} })
     .then(async task => {
-      console.log(task);
       await task.update(newStatus);
       req.flash("info", "Status task has been changed.");
       res.redirect("back")
@@ -209,7 +207,6 @@ projectRouter.editComment = (req, res) => {
 projectRouter.deleteComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment} })
     .then(async com => {
-      console.log(com);
       await com.destroy();
       req.flash("success", "Comment has been deleted.");
       res.redirect("back")
@@ -217,24 +214,6 @@ projectRouter.deleteComment = (req, res) => {
     .catch(err => {
       req.flash("error", err.message);
       res.redirect("back")
-    })
-};
-
-
-projectRouter.userProp = function(req, res, next) {
-  let userRole = req.user.role;
-  UserRoles.findOne({where: {id: userRole}})
-    .then(prop => {
-      console.log(prop);
-      if (prop.project_create) {
-        res.send(prop)
-      } else {
-        res.send("NO")
-      }
-    })
-    .catch(err => {
-      req.flash("error", err.message);
-      res.redirect("/login")
     })
 };
 

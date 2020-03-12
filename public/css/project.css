@@ -33,31 +33,32 @@
 }
 
 #page-tasks .waiting {
-  background: #FF416C;
-  background: -webkit-linear-gradient(to left, #FF4B2B, #FF416C);
-  background: linear-gradient(to left, #FF4B2B, #FF416C);
+  background: #FC4E59;
+  background: -webkit-linear-gradient(to left, #fcafaa, #FC4E59);
+  background: linear-gradient(to left, #fcafaa, #FC4E59);
 }
 
 #page-tasks .implementation {
-  background: #74b9ff;
-  background: -webkit-linear-gradient(to left, #74b9ff, #0984e3);
-  background: linear-gradient(to left, #74b9ff, #0984e3);
+  background: #0984e3;
+  background: -webkit-linear-gradient(to left, #89c7ff, #0984e3);
+  background: linear-gradient(to left, #89c7ff, #0984e3);
 }
 
 #page-tasks .verifyng {
-  background: #fed330;
+  background: #fd9644;
   background: -webkit-linear-gradient(to left, #fed330, #fd9644);
   background: linear-gradient(to left, #fed330, #fd9644);
 }
 
 #page-tasks .releasing {
   background: #11998e;
-  background: -webkit-linear-gradient(to left, #11998e, #38ef7d);
-  background: linear-gradient(to left, #11998e, #38ef7d);
+  background: -webkit-linear-gradient(to left, #38ef7d, #11998e);
+  background: linear-gradient(to left, #38ef7d, #11998e);
+
 }
 
 .filtr-waiting {
-  color: #FF416C;
+  color: #FC4E59;
 }
 
 .filtr-implementation {

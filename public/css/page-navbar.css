@@ -36,7 +36,7 @@ input.form-control[type=search] {
 
 input.form-control[type=search]:focus:not([readonly]) {
   /*border-bottom: 1px solid rgba(56,112,255,0.5);*/
-  box-shadow: 0 1px 0 0 rgba(56,112,255,0.5);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0);
   border: 0.5px solid white;
   background-color: rgba(0, 0, 0, 0.5);
   /*transition: all 0.5s;*/
@@ -58,7 +58,7 @@ input.form-control[type=search]:focus:not([readonly]) {
 }
 
 #page-navbar .fas.fa-search:hover {
-  color: #3870ff;
+  color: #FC4E59;
 }
 
 @media (max-width: 768px) {

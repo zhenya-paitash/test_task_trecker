@@ -1,5 +1,5 @@
 #nav-routes {
-    font-weight: 100;
+    font-weight: 300;
     font-size: 18px;
 }
 
@@ -7,20 +7,20 @@
     color: white;
     margin-right: 10px;
     text-decoration: none;
-    opacity: 0.65;
+    opacity: 0.8;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 10px;
-    transition: all 1s;
+    transition: all 0.5s;
     height: 100%;
 }
 
 #nav-routes a:hover {
+    color: #484848;
     opacity: 1;
-    color: white;
     padding: 0 8px;
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 #nav-routes i {

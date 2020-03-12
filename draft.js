@@ -101,3 +101,8 @@ let faker = require("faker");
 //   let x = Math.floor(Math.random() * 28 + 3);
 //   x === 30 ? console.log( x ) : false ;
 // }
+
+
+// let x = "1";
+// let y = "2";
+// x.equals(y);

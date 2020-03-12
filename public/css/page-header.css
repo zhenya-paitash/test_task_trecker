@@ -1,13 +1,13 @@
 #page-parallax {
   height: 500px;
-  background-image: url("../img/parallax.jpeg");
+  background-image: url("../img/project-category/theme-site.jpg");
   background-position: center;
   background-size: auto;
   background-repeat: no-repeat;
 }
 
 #page-header hr {
-  border-color: white;
+  border-color: #ffffff;
   width: 250px;
 }
 
@@ -15,10 +15,14 @@
   text-align: center;
   padding: 100px 5%;
   max-width: 60%;
-  color: white;
+  color: #484848;
 }
 
 #page-header .container h1 {
   text-transform: uppercase;
+}
+
+#page-header .title-text {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 

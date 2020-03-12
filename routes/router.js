@@ -9,20 +9,15 @@ const M           = require("../middleware/middleware");
 
 // ======================================== INDEX =================================================
 // "/"
-index.get("/",                M.login,indexRouter.mainPage);
-index.get("/signup",          indexRouter.signupPage);
-index.get("/login",           indexRouter.loginPage);
-index.get("/logout",          M.login,indexRouter.logout);
-index.get("/user",            M.login,indexRouter.userSearchPage);
-index.get("/user/:id_user",   M.login,indexRouter.userPage);
-
-index.get("/id", (req, res) => res.send(req.user));
-index.get("/prop", projectRouter.userProp);
-
-index.post("/signup",         indexRouter.signup);
-index.post("/login",          indexRouter.login);
-
-index.put("/user/:id_user",   M.login,indexRouter.userUpdate);
+index.get("/",              M.login,  indexRouter.mainPage);
+index.get("/signup",        M.logout, indexRouter.signupPage);
+index.get("/login",         M.logout, indexRouter.loginPage);
+index.get("/logout",        M.login,  indexRouter.logout);
+index.get("/user",          M.login,  indexRouter.userSearchPage);
+index.get("/user/:id_user", M.login,  indexRouter.userPage);
+index.post("/signup",       M.logout, indexRouter.signup);
+index.post("/login",        M.logout, indexRouter.login);
+index.put("/user/:id_user", M.profile,indexRouter.userUpdate);
 
 
 
@@ -31,7 +26,6 @@ index.put("/user/:id_user",   M.login,indexRouter.userUpdate);
 project.get("/",                                            M.login, projectRouter.projectAllPage);
 project.get("/:id_project",                                 M.login, projectRouter.projectSinglePage);
 project.get("/:id_project/:id_task",                        M.login, projectRouter.projectTaskPage);
-
 project.post("/createproject",                              projectRouter.createProject);
 project.post("/:id_project/adduser",                        projectRouter.addUserProject);
 project.post("/:id_project/createtask",                     projectRouter.createTask);
