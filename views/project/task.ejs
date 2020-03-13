@@ -30,7 +30,7 @@
                                                             <div class="modal-body">
                                                                 <form action="/project/<%= project.id %>/<%= task.id %>/status?_method=PUT" method="POST">
                                                                     <select class="form-control form-control-sm mdb-select"
-                                                                            required="" name="status[status]">
+                                                                            name="status[status]" required>
                                                                         <option value="waiting">Waiting</option>
                                                                         <option value="implementation">Implementation</option>
                                                                         <option value="verifyng">Verifyng</option>

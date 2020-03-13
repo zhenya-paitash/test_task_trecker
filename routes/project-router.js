@@ -6,7 +6,8 @@ let
   ProjectUsers  = require("../models/projectuser-model"),
   Tasks         = require("../models/task-model"),
   TaskUsers     = require("../models/taskuser-model"),
-  Comments      = require("../models/comment-model");
+  Comments      = require("../models/comment-model"),
+  validator     = require("validator");
 
 
 
@@ -15,9 +16,7 @@ let
 projectRouter.projectAllPage = (req, res) => {
   Projects.findAll( { order: [ [ 'id', 'DESC' ] ]} )
     .then(async projects => {
-      // TODO сделать middleware мб
       let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-
       let userList      = await Users.findAll();
       let projectUsers  = await ProjectUsers.findAll();
 
@@ -36,9 +35,7 @@ projectRouter.projectSinglePage = (req, res) => {
     Projects.findOne({where: {id: id_project}})
       .then(async project => {
         if (project) {
-          // TODO сделать middleware мб
           let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-
           let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
           let projectUsers  = await ProjectUsers.findAll();  // TODO WHERE id_project: id_project
           let tasks         = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
@@ -57,11 +54,12 @@ projectRouter.projectSinglePage = (req, res) => {
       });
 
   } else {
-    // TODO при нажатии в браузере <-- выполняет эту строчку и флешит ошибку, пока хз как поправить
+    // TODO ошибка при возврате назад
     req.flash("error", "Invalid query.");
     res.redirect("/project")
   }
 };
+
 
 projectRouter.projectTaskPage = (req, res) => {
   let id_project = Number(req.params.id_project);
@@ -70,10 +68,7 @@ projectRouter.projectTaskPage = (req, res) => {
     Tasks.findOne({where: {id: id_task, id_project: id_project}})
       .then(async task => {
         if (task) {
-
-          // TODO сделать middleware мб
           let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-
           let project       = await Projects.findOne({where: {id: id_project}});
           let taskAuthor    = await Users.findOne({where: {id: task.author}});
           let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
@@ -106,15 +101,26 @@ projectRouter.projectTaskPage = (req, res) => {
 
 projectRouter.createProject = (req, res) => {
   let project = req.body.project;
-  Projects.create(project)
-    .then(project => {
-      req.flash("success", "Project has been created.");
-      res.redirect("/project")
-    })
-    .catch(err => {
-      req.flash("error", err.message);
-      res.redirect("/project")
-    });
+  if (req.user.id == project.author
+    && !validator.isEmpty(project.name) && project.name !== " "
+    && !validator.isEmpty(project.description) && project.description !== " "
+    && (!project.deadline || validator.isAfter(project.deadline))
+    && !validator.isEmpty(project.category) && project.category !== " "
+  ) {
+    Projects.create(project)
+      .then(project => {
+        req.flash("success", "Project has been created.");
+        res.redirect("/project")
+      })
+      .catch(err => {
+        req.flash("error", err.message);
+        res.redirect("/project")
+      });
+
+  } else {
+    req.flash("error", "Invalid form");
+    res.redirect("/project")
+  }
 };
 
 projectRouter.addUserProject = (req, res) => {
@@ -158,15 +164,23 @@ projectRouter.addUserTask = (req, res) => {
 
 projectRouter.createComment = (req, res) => {
   let comment = req.body.comment;
-  Comments.create(comment)
-    .then(com => {
-      req.flash("success", "Comment has been created.");
-      res.redirect("back")
-    })
-    .catch(err => {
-      req.flash("error", err.message);
-      res.redirect("back")
-    });
+  if (req.user.id == comment.author
+    && comment.id_task == req.params.id_task
+    && (!validator.isEmpty(comment.text) && comment.text !== " ")) {
+    Comments.create(comment)
+      .then(com => {
+        req.flash("success", "Comment has been created.");
+        res.redirect("back")
+      })
+      .catch(err => {
+        req.flash("error", err.message);
+        res.redirect("back")
+      });
+
+  } else {
+    req.flash("error", "Invalid form");
+    res.redirect("back")
+  }
 };
 
 
