@@ -29,32 +29,19 @@
                     <div class="user-information">
                         <div id="search-results">
                             <div class="row">
-                                <% if (firstnameResult.length == 0 && lastnameResult.length == 0) { %>
+                                <% if (result.length == 0) { %>
                                     <h4>Users not found!</h4>
                                 <% } else { %>
 
-                                    <% if (firstnameResult.length > 0) { %>
-                                        <% firstnameResult.forEach(finduser => { %>
-                                            <div class="col-sm-12 col-md-6" id="col-user-name">
-                                                <a href="/user/<%= finduser.id %>"><i class="far fa-user"></i></a>
-                                                <h4>
-                                                    <span style="font-size: 10px"><%= finduser.id %> </span>
-                                                    <%= finduser.firstname %> <%= finduser.lastname %>
-                                                </h4>
-                                            </div>
-                                        <% }) %>
-                                    <% } %>
-                                    <% if (lastnameResult.length > 0) { %>
-                                        <% lastnameResult.forEach(finduser => { %>
-                                            <div class="col-sm-12 col-md-6" id="col-user-name">
-                                                <a href="/user/<%= finduser.id %>"><i class="far fa-user"></i></a>
-                                                <h4>
-                                                    <span style="font-size: 10px"><%= finduser.id %> </span>
-                                                    <%= finduser.firstname %> <%= finduser.lastname %>
-                                                </h4>
-                                            </div>
-                                        <% }) %>
-                                    <% } %>
+                                    <% result.forEach(finduser => { %>
+                                        <div class="col-sm-12 col-md-6" id="col-user-name">
+                                            <a href="/user/<%= finduser.id %>"><i class="far fa-user"></i></a>
+                                            <h4>
+                                                <span style="font-size: 10px"><%= finduser.id %> </span>
+                                                <%= finduser.firstname %> <%= finduser.lastname %>
+                                            </h4>
+                                        </div>
+                                    <% }) %>
 
                                 <% } %>
                             </div>

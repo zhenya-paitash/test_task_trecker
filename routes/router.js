@@ -1,23 +1,22 @@
 const
-  index           = require("express").Router({mergeParams: true}),
-  project         = require("express").Router({mergeParams: true}),
-  indexRouter     = require("./index-router"),
-  projectRouter   = require("./project-router");
-
-const M           = require("../middleware/middleware");
+  index         = require("express").Router({mergeParams: true}),
+  project       = require("express").Router({mergeParams: true}),
+  indexRouter   = require("./index-router"),
+  projectRouter = require("./project-router"),
+  M             = require("../middleware/middleware");
 
 
 // ======================================== INDEX =================================================
 // "/"
-index.get("/",              M.login,            indexRouter.mainPage);
-index.get("/signup",        M.lgout,            indexRouter.signupPage);
-index.get("/login",         M.lgout,            indexRouter.loginPage);
-index.get("/logout",        M.login,            indexRouter.logout);
-index.get("/user",          M.login,            indexRouter.userSearchPage);
-index.get("/user/:id_user", M.login,            indexRouter.userPage);
-index.post("/signup",       M.lgout,            indexRouter.signup);
-index.post("/login",        M.lgout,            indexRouter.login);
-index.put("/user/:id_user", M.login, M.profile, indexRouter.userUpdate);
+index.get("/",              M.login,          indexRouter.mainPage);
+index.get("/signup",        M.lgout,          indexRouter.signupPage);
+index.get("/login",         M.lgout,          indexRouter.loginPage);
+index.get("/logout",        M.login,          indexRouter.logout);
+index.get("/user",          M.login,          indexRouter.userSearchPage);
+index.get("/user/:id_user", M.login,          indexRouter.userPage);
+index.post("/signup",       M.lgout,          indexRouter.signup);
+index.post("/login",        M.lgout,          indexRouter.login);
+index.put("/user/:id_user", M.login, M.profl, indexRouter.userUpdate);
 
 
 
@@ -32,8 +31,8 @@ project.post("/:id_project/createtask",                    M.login, M.tkcrt, pro
 project.post("/:id_project/:id_task/adduser",              M.login, M.tkusr, projectRouter.addUserTask);
 project.post("/:id_project/:id_task/createcomment",        M.login, M.cmcrt, projectRouter.createComment);
 project.put("/:id_project/:id_task/status",                M.login, M.tkstu, projectRouter.changeStatusTask);
-project.put("/:id_project/:id_task/:id_comment/edit",      M.login, M.cmaut, projectRouter.editComment);
-project.delete("/:id_project/:id_task/:id_comment/delete", M.login, M.cmaut, projectRouter.deleteComment);
+project.put("/:id_project/:id_task/:id_comment/edit",      M.login, M.cmedt, projectRouter.editComment);
+project.delete("/:id_project/:id_task/:id_comment/delete", M.login, M.cmdel, projectRouter.deleteComment);
 
 
 

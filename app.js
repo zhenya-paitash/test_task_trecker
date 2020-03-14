@@ -44,6 +44,8 @@ app.use(passport.session());
 app.use(flash());
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
+  console.log("\x1b[34m%s\x1b[0m",
+    `${new Date().toLocaleTimeString()}, ip: ${req.ip}, method: ${req.method}, URL: ${req.originalUrl}`);
   res.locals.currentUser  = req.user;
   res.locals.success      = req.flash("success");
   res.locals.error        = req.flash("error");
@@ -55,7 +57,8 @@ app.use((req, res, next) => {
 // ROUTES
 app.use("/",        router.index);
 app.use("/project", router.project);
-
+// 404
+app.use((req, res) => res.status(404).send("<h1>404, NOT FOUND</h1>"));
 
 
 // START APP

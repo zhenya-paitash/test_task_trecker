@@ -5,8 +5,7 @@ let
 
 
 // LOGIN or NOT LOGIN CHECK
-
-// check if the user is logged in
+// check if the user is LOGGED IN
 M.login = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
@@ -15,7 +14,7 @@ M.login = (req, res, next) => {
   res.redirect("/login")
 };
 
-// check if the user NOT is logged in
+// check if the user NOT is LOGGED IN
 M.lgout = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return next()
@@ -24,11 +23,8 @@ M.lgout = (req, res, next) => {
   res.redirect("/project")
 };
 
-
-// CHECK PROP
-
-// checking if the user has the right to edit the profile
-M.profile = (req, res, next) => {
+// checking if the user has the right to EDIT the PROFILE
+M.profl = (req, res, next) => {
   if (Number(req.user.id) === Number(req.body.id)) {
     return next()
   }
@@ -37,90 +33,25 @@ M.profile = (req, res, next) => {
 };
 
 
-// TODO объединить в одну
-M.pjcrt = async (req, res, next) => {
+// permission checks
+M.pjcrt = (req, res, next) => propCheck(req, res, next, "project_create");
+M.pjusr = (req, res, next) => propCheck(req, res, next, "project_users");
+M.tkcrt = (req, res, next) => propCheck(req, res, next, "task_create");
+M.tkusr = (req, res, next) => propCheck(req, res, next, "task_users");
+M.tkstu = (req, res, next) => propCheck(req, res, next, "task_status");
+M.cmcrt = (req, res, next) => propCheck(req, res, next, "comment_create");
+M.cmedt = (req, res, next) => propCheck(req, res, next, "comment_edit");
+M.cmdel = (req, res, next) => propCheck(req, res, next, "comment_delete");
+
+async function propCheck(req, res, next, callback) {
   let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  if (prop.project_create) {
+  if (prop[callback]) {
     return next()
   }
+
   req.flash("error", "You do not have access to this action!");
   res.redirect("back")
-};
-
-
-M.pjusr = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  if (prop.project_users) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-M.tkcrt = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  if (prop.task_create) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-M.tkusr = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  if (prop.task_users) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-M.tkstu = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: { id: req.user.role }});
-  if (req.isAuthenticated() && prop.task_status) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-M.cmcrt = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  if (prop.comment_create) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-M.cmaut = async (req, res, next) => {
-  let prop = await UserRoles.findOne({where: {id: req.user.role}});
-  let comment = await Comments.findOne({where: {id: req.params.id_comment}});
-  if (Number(req.user.id) === comment.author && prop.comment_edit && prop.comment_delete) {
-    return next()
-  }
-  req.flash("error", "You do not have access to this action!");
-  res.redirect("back")
-};
-
-
-
-
-
-// async function whatPropCheck(req, res, next, what) {
-//     M.login;
-//     let prop = await UserRoles.findOne({where: { id: req.user.role }});
-//   if (prop[what]) {
-//     return next()
-//   }
-//   req.flash("error", "You do not have access to this action!");
-//   res.redirect("back")
-// }
+}
 
 
 module.exports = M;

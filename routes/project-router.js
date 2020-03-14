@@ -101,7 +101,7 @@ projectRouter.projectTaskPage = (req, res) => {
 
 projectRouter.createProject = (req, res) => {
   let project = req.body.project;
-  if (req.user.id == project.author
+  if (Number(req.user.id) === Number(project.author)
     && !validator.isEmpty(project.name) && project.name !== " "
     && !validator.isEmpty(project.description) && project.description !== " "
     && (!project.deadline || validator.isAfter(project.deadline))
@@ -164,6 +164,7 @@ projectRouter.addUserTask = (req, res) => {
 
 projectRouter.createComment = (req, res) => {
   let comment = req.body.comment;
+  // TODO возможно лучше сделать приведение к одному типу данных Number()
   if (req.user.id == comment.author
     && comment.id_task == req.params.id_task
     && (!validator.isEmpty(comment.text) && comment.text !== " ")) {
@@ -187,26 +188,39 @@ projectRouter.createComment = (req, res) => {
 // PUT
 
 projectRouter.changeStatusTask = (req, res) => {
-  let newStatus = req.body.status;
-  Tasks.findOne({where: {id: req.params.id_task} })
-    .then(async task => {
-      await task.update(newStatus);
-      req.flash("info", "Status task has been changed.");
-      res.redirect("back")
-    })
-    .catch(err => {
-      req.flash("error", err.message);
-      res.redirect("back")
-    });
+  if (["waiting", "implementation", "verifyng", "releasing"].indexOf(req.body.status.status) !== -1) {
+    let newStatus = req.body.status;
+    Tasks.findOne({where: {id: req.params.id_task} })
+      .then(async task => {
+        await task.update(newStatus);
+        req.flash("info", "Status task has been changed.");
+        res.redirect("back")
+      })
+      .catch(err => {
+        req.flash("error", err.message);
+        res.redirect("back")
+      });
+
+  } else {
+    req.flash("error", "Invalid form");
+    res.redirect("back")
+  }
+
 };
 
 projectRouter.editComment = (req, res) => {
   let editComment = req.body.comment;
   Comments.findOne({where: {id: req.params.id_comment}})
     .then(async com => {
-      await com.update(editComment);
-      req.flash("info", "Comment has been edit.");
-      res.redirect("back")
+      if (Number(req.user.id) === com.author && Number(req.params.id_task) === com.id_task) {
+        await com.update(editComment);
+        req.flash("info", "Comment has been edit.");
+        res.redirect("back")
+
+      } else {
+        req.flash("error", "You do not have access to this action!");
+        res.redirect("back")
+      }
     })
     .catch(err => {
       req.flash("error", err.message);
@@ -221,9 +235,14 @@ projectRouter.editComment = (req, res) => {
 projectRouter.deleteComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment} })
     .then(async com => {
-      await com.destroy();
-      req.flash("success", "Comment has been deleted.");
-      res.redirect("back")
+      if (Number(req.user.id) === com.author && Number(req.params.id_task) === com.id_task) {
+        await com.destroy();
+        req.flash("success", "Comment has been deleted.");
+        res.redirect("back")
+      } else {
+        req.flash("error", "You do not have access to this action!");
+        res.redirect("back")
+      }
     })
     .catch(err => {
       req.flash("error", err.message);

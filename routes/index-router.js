@@ -23,12 +23,13 @@ indexRouter.logout      = (req, res) => {req.logOut();res.redirect("/login")};
 // /user
 indexRouter.userSearchPage = async (req, res) => {
   let search = req.query.search;
-  search ? search = search.toLowerCase() : search = "example";
+  // search ? search = search.toLowerCase() : search = "example";
   let firstnameResult = await Users.findAll({where: {firstname: { [Op.like]: "%" + search + "%" } }});
   let lastnameResult  = await Users.findAll({where: {lastname: { [Op.like]: "%" + search + "%" } }});
+  let result          = [...firstnameResult, ...lastnameResult];
 
   Users.findAll({ order: [ [ 'lastname', 'ASC' ] ]})
-    .then(users => res.render("index/usersearch", {search, users, firstnameResult, lastnameResult}))
+    .then(users => res.render("index/usersearch", {search, users, result}))
     .catch(err => {
       console.error(err);
       req.flash("error", err.message);

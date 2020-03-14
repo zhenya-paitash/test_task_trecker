@@ -9,7 +9,7 @@ let Projects = db.define("projects", {
   // image: {type: Sequelize.TEXT},
   category: {type: Sequelize.STRING, allowNull: false},
   deadline: {type: Sequelize.DATE},
-  author: {type: Sequelize.STRING, allowNull: false}
+  author: {type: Sequelize.INTEGER, allowNull: false}
 });
 
 // Projects.sync({force: true});
