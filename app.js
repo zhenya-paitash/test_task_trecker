@@ -58,9 +58,11 @@ app.use((req, res, next) => {
 app.use("/",        router.index);
 app.use("/project", router.project);
 // 404
-app.use((req, res) => res.status(404).send("<h1>404, NOT FOUND</h1>"));
+app.use((req, res) => res.status(404).send("<h1><a href='/'>404, NOT FOUND</a></h1>"));
 
 
 // START APP
 app.listen(process.env.PORT, process.env.IP, config.status());
 
+
+module.exports = app;

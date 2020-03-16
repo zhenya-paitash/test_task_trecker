@@ -244,7 +244,7 @@
                             <input class="form-control" type="hidden" value="<%= task.id %>" name="comment[id_task]">
                             <label for="text">Message:</label>
                             <textarea class="form-control" id="text" placeholder="Enter your comment"
-                                      name="comment[text]" rows="3" required></textarea>
+                                      name="comment[text]" rows="3" minlength="2" required></textarea>
                             <button class="button" type="submit" data-hover="Are you sure?">
                                 <span>Create comment</span>
                             </button>

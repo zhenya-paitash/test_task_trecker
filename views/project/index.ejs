@@ -162,10 +162,10 @@
                             <input class="form-control" type="hidden" value="<%= currentUser.id %>" name="project[author]">
                             <label>Name:</label>
                             <input class="form-control form-control-sm" placeholder="Name project"
-                                   type="text" name="project[name]" required>
+                                   type="text" name="project[name]" minlength="3" maxlength="200" required>
                             <label>Description:</label>
                             <textarea class="form-control form-control-sm" placeholder="Description project" rows="6"
-                                      name="project[description]" required></textarea>
+                                      name="project[description]" minlength="3" required></textarea>
                             <label>Deadline:</label>
                             <input class="form-control form-control-sm" name="project[deadline]"
                                    type="date" required>

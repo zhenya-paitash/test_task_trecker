@@ -12,7 +12,6 @@ let
 
 
 // GET
-
 projectRouter.projectAllPage = (req, res) => {
   Projects.findAll( { order: [ [ 'id', 'DESC' ] ]} )
     .then(async projects => {
@@ -98,34 +97,20 @@ projectRouter.projectTaskPage = (req, res) => {
 
 
 // POST
-
 projectRouter.createProject = (req, res) => {
-  let project = req.body.project;
-  if (Number(req.user.id) === Number(project.author)
-    && !validator.isEmpty(project.name) && project.name !== " "
-    && !validator.isEmpty(project.description) && project.description !== " "
-    && (!project.deadline || validator.isAfter(project.deadline))
-    && !validator.isEmpty(project.category) && project.category !== " "
-  ) {
-    Projects.create(project)
-      .then(project => {
-        req.flash("success", "Project has been created.");
-        res.redirect("/project")
-      })
-      .catch(err => {
-        req.flash("error", err.message);
-        res.redirect("/project")
-      });
-
-  } else {
-    req.flash("error", "Invalid form");
-    res.redirect("/project")
-  }
+  Projects.create(req.body.project)
+    .then(project => {
+      req.flash("success", "Project has been created.");
+      res.redirect("/project")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("/project")
+    });
 };
 
 projectRouter.addUserProject = (req, res) => {
-  let user = req.body.user;
-  ProjectUsers.create(user)
+  ProjectUsers.create(req.body.user)
     .then(user => {
       req.flash("info", "User has been added to the project.");
       res.redirect("back")
@@ -137,8 +122,7 @@ projectRouter.addUserProject = (req, res) => {
 };
 
 projectRouter.createTask = (req, res) => {
-  let task = req.body.task;
-  Tasks.create(task)
+  Tasks.create(req.body.task)
     .then(task => {
       req.flash("success", "Task has been created.");
       res.redirect("back")
@@ -150,8 +134,7 @@ projectRouter.createTask = (req, res) => {
 };
 
 projectRouter.addUserTask = (req, res) => {
-  let user = req.body.user;
-  TaskUsers.create(user)
+  TaskUsers.create(req.body.user)
     .then(user => {
       req.flash("info", "User has been added to the task.");
       res.redirect("back")
@@ -163,36 +146,25 @@ projectRouter.addUserTask = (req, res) => {
 };
 
 projectRouter.createComment = (req, res) => {
-  let comment = req.body.comment;
-  // TODO возможно лучше сделать приведение к одному типу данных Number()
-  if (req.user.id == comment.author
-    && comment.id_task == req.params.id_task
-    && (!validator.isEmpty(comment.text) && comment.text !== " ")) {
-    Comments.create(comment)
-      .then(com => {
-        req.flash("success", "Comment has been created.");
-        res.redirect("back")
-      })
-      .catch(err => {
-        req.flash("error", err.message);
-        res.redirect("back")
-      });
-
-  } else {
-    req.flash("error", "Invalid form");
-    res.redirect("back")
-  }
+  Comments.create(req.body.comment)
+    .then(com => {
+      req.flash("success", "Comment has been created.");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
 };
 
 
 // PUT
-
 projectRouter.changeStatusTask = (req, res) => {
   if (["waiting", "implementation", "verifyng", "releasing"].indexOf(req.body.status.status) !== -1) {
-    let newStatus = req.body.status;
+
     Tasks.findOne({where: {id: req.params.id_task} })
       .then(async task => {
-        await task.update(newStatus);
+        await task.update(req.body.status);
         req.flash("info", "Status task has been changed.");
         res.redirect("back")
       })
@@ -209,11 +181,10 @@ projectRouter.changeStatusTask = (req, res) => {
 };
 
 projectRouter.editComment = (req, res) => {
-  let editComment = req.body.comment;
   Comments.findOne({where: {id: req.params.id_comment}})
     .then(async com => {
       if (Number(req.user.id) === com.author && Number(req.params.id_task) === com.id_task) {
-        await com.update(editComment);
+        await com.update(req.body.comment);
         req.flash("info", "Comment has been edit.");
         res.redirect("back")
 
@@ -229,9 +200,7 @@ projectRouter.editComment = (req, res) => {
 };
 
 
-
 // DELETE
-
 projectRouter.deleteComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment} })
     .then(async com => {

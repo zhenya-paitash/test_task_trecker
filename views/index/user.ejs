@@ -62,10 +62,12 @@
                                                        name="id">
                                                 <label>Firstname:</label>
                                                 <input class="form-control form-control-sm" placeholder="enter you firstname"
-                                                       type="text" name="user[firstname]" value="<%= user.firstname %>" required>
+                                                       type="text" name="user[firstname]" value="<%= user.firstname %>"
+                                                       minlength="3" maxlength="200" required>
                                                 <label>Lastname:</label>
                                                 <input class="form-control form-control-sm" placeholder="enter you lastname"
-                                                       type="text" name="user[lastname]" value="<%= user.lastname %>" required>
+                                                       type="text" name="user[lastname]" value="<%= user.lastname %>"
+                                                       minlength="3" maxlength="200" required>
                                                 <label>Age:</label>
                                                 <input class="form-control form-control-sm" placeholder="age"
                                                        type="number" name="social[age]" value="<%= social.age %>" min="18" max="100">
