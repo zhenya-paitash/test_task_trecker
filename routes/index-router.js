@@ -27,43 +27,32 @@ indexRouter.userSearchPage = async (req, res) => {
   let firstnameResult = await Users.findAll({where: {firstname: { [Op.like]: "%" + search + "%" } }});
   let lastnameResult  = await Users.findAll({where: {lastname: { [Op.like]: "%" + search + "%" } }});
   let result          = [...firstnameResult, ...lastnameResult];
+  let users           = await Users.findAll({ order: [ [ 'lastname', 'ASC' ] ]});
 
-  Users.findAll({ order: [ [ 'lastname', 'ASC' ] ]})
-    .then(users => res.render("index/usersearch", {search, users, result}))
-    .catch(err => {
-      console.error(err);
-      req.flash("error", err.message);
-      res.redirect("back")
-    });
+  res.render("index/usersearch", {search, users, result})
 };
 
 // /user/:id_user
 indexRouter.userPage = (req, res) => {
-  let id_user = Number(req.params.id_user);
-  if (id_user && !isNaN(id_user)) {
-    Users.findOne({ where: { id: req.params.id_user } })
-      .then(async (user) => {
-        if (user) {
-          let social        = await  UserSocials.findOne({where: {id_user: user.id}});
-          let userProjects  = await ProjectUsers.findAll({where: {id_user: user.id}});
-          let userTasks     = await TaskUsers.findAll({where: {id_user: user.id}});
-          let userComments  = await Comments.findAll({where: {author: user.id}});
-          let role          = await UserRoles.findOne({where: {id: user.role}});
-          res.render("index/user", {user, role, social, userProjects, userTasks, userComments})
-        } else {
-          req.flash("info", "User with this ID not found!");
-          res.redirect('/user')
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        req.flash("error", err.message);
-        res.redirect("back")
-      })
-  } else {
-    req.flash("info", "Check ID field");
-    res.redirect('/user')
-  }
+  Users.findOne({ where: { id: req.params.id_user } })
+    .then(async (user) => {
+      if (user) {
+        let social        = await  UserSocials.findOne({where: {id_user: user.id}});
+        let userProjects  = await ProjectUsers.findAll({where: {id_user: user.id}});
+        let userTasks     = await TaskUsers.findAll({where: {id_user: user.id}});
+        let userComments  = await Comments.findAll({where: {author: user.id}});
+        let role          = await UserRoles.findOne({where: {id: user.role}});
+        res.render("index/user", {user, role, social, userProjects, userTasks, userComments})
+      } else {
+        req.flash("info", "User with this ID not found!");
+        res.redirect('/user')
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      req.flash("error", err.message);
+      res.redirect("back")
+    })
 };
 
 // POST

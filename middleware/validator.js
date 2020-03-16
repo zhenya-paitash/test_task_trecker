@@ -21,13 +21,20 @@ V.sgnup = (req, res, next) => {
   if (!validator.matches(password, paspattern)) {errors.push("Invalid field password")}
   if (!validator.isInt(role, {min:1, max:2})) {errors.push("Invalid field role")}
 
-  if (errors.length > 0) {
-    req.flash("error", errors);
-    return res.redirect("/signup")
-  } else {
-    next()
-  }
+  return checkErrors(req, res, next, errors);
 };
+
+
+V.usrch = (req, res, next) => {
+  let id_user = Number(req.params.id_user);
+  if (id_user && !isNaN(id_user)) {
+    return next()
+  }
+
+  req.flash("info", "Check ID field");
+  res.redirect('/user')
+};
+
 
 V.usupd = (req, res, next) => {
   let
@@ -42,16 +49,23 @@ V.usupd = (req, res, next) => {
   // if (!social.phone !== '' || !validator.isMobilePhone(social.phone, {strictMode: true})) {errors.push("Invalid field phone")}
   // if (!validator.isURL(social.github)) {errors.push("Invalid field github")}
 
-  if (errors.length > 0) {
-    req.flash("error", errors);
-    return res.redirect("back")
-  } else {
-    next()
-  }
+  return checkErrors(req, res, next, errors);
 };
 
 
 // ------------------------------------------- PROJECT -------------------------------------------
+V.pjspg = (req, res, next) => {
+  let id_project = Number(req.params.id_project);
+
+  if (id_project && !isNaN(id_project)) {
+    return next()
+  }
+
+  req.flash("error", "Invalid query.");
+  res.redirect("/project")
+};
+
+
 V.pjcrt = (req, res, next) => {
   let
     errors  = [],
@@ -62,16 +76,25 @@ V.pjcrt = (req, res, next) => {
   if (!validator.isLength(project.description, {min:3, max: undefined})) {errors.push("Invalid field description")}
   if (!validator.isAfter(project.deadline)) {errors.push("Invalid field deadline")}
 
-  if (errors.length > 0) {
-    req.flash("error", errors);
-    return res.redirect("back")
-  } else {
-    next()
-  }
+  return checkErrors(req, res, next, errors);
 };
 
 
 // ------------------------------------------- TASK -------------------------------------------
+V.tkspg = (req, res, next) => {
+  let
+    id_project = Number(req.params.id_project),
+    id_task    = Number(req.params.id_task);
+
+  if (id_project && !isNaN(id_project) && id_task && !isNaN(id_task)) {
+    return next()
+  }
+
+  req.flash("error", "Invalid query.");
+  res.redirect("/project")
+};
+
+
 V.tkcrt = (req, res, next) => {
   let
     errors  = [],
@@ -82,12 +105,18 @@ V.tkcrt = (req, res, next) => {
   if (!validator.isLength(task.name, {min:3, max: 200})) {errors.push("Invalid field name")}
   if (!validator.isLength(task.description, {min:3, max: undefined})) {errors.push("Invalid field description")}
 
-  if (errors.length > 0) {
-    req.flash("error", errors);
-    return res.redirect("back")
-  } else {
-    next()
+  return checkErrors(req, res, next, errors);
+};
+
+
+V.tksts = (req, res, next) => {
+  let status = req.body.status.status;
+  if (["waiting", "implementation", "verifyng", "releasing"].indexOf(status) !== -1) {
+    return next()
   }
+
+  req.flash("error", "This status does not exist");
+  res.redirect("back")
 };
 
 
@@ -101,13 +130,18 @@ V.cmcrt = (req, res, next) => {
   if (Number(req.params.id_task) !== Number(comment.id_task)) {errors.push("Invalid field id_task")}
   if (!validator.isLength(comment.text, {min:2, max: undefined})) {errors.push("Invalid field text")}
 
+  return checkErrors(req, res, next, errors);
+};
+
+
+function checkErrors(req, res, next, errors) {
   if (errors.length > 0) {
     req.flash("error", errors);
     return res.redirect("back")
-  } else {
-    next()
   }
-};
+
+  next()
+}
 
 
 module.exports = V;

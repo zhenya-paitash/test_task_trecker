@@ -7,19 +7,38 @@ let
   Tasks         = require("../models/task-model"),
   TaskUsers     = require("../models/taskuser-model"),
   Comments      = require("../models/comment-model"),
-  validator     = require("validator");
+  validator     = require("validator"),
+  moment        = require("moment");
 
 
 
 // GET
-projectRouter.projectAllPage = (req, res) => {
-  Projects.findAll( { order: [ [ 'id', 'DESC' ] ]} )
-    .then(async projects => {
-      let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-      let userList      = await Users.findAll();
-      let projectUsers  = await ProjectUsers.findAll();
+projectRouter.projectAllPage = async (req, res) => {
+  let projects     = await Projects.findAll({order: [ [ 'id', 'DESC' ] ]});
+  let prop         = await UserRoles.findOne({where: { id: req.user.role }});
+  let userList     = await Users.findAll();
+  let projectUsers = await ProjectUsers.findAll();
+  let dateNow      = await moment().format("YYYY-MM-DD");
 
-      res.render("project/index", {projects, userList, projectUsers, prop})
+  res.render("project/index", {projects, userList, projectUsers, prop, dateNow})
+};
+
+projectRouter.projectSinglePage = (req, res) => {
+  let id_project = Number(req.params.id_project);
+  Projects.findOne({where: {id: id_project}})
+    .then(async project => {
+      if (project) {
+        let prop          = await UserRoles.findOne({where: { id: req.user.role }});
+        let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
+        let projectUsers  = await ProjectUsers.findAll();  // TODO WHERE id_project: id_project
+        let tasks         = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
+        let taskUsers     = await TaskUsers.findAll();
+
+        res.render("project/project", {project, userList, projectUsers, tasks, taskUsers, prop})
+      } else {
+        req.flash("error", "Project with this ID was not found.");
+        res.redirect("/project")
+      }
     })
     .catch(err => {
       console.error(err);
@@ -28,70 +47,34 @@ projectRouter.projectAllPage = (req, res) => {
     });
 };
 
-projectRouter.projectSinglePage = (req, res) => {
-  let id_project = Number(req.params.id_project);
-  if (id_project && !isNaN(id_project)) {
-    Projects.findOne({where: {id: id_project}})
-      .then(async project => {
-        if (project) {
-          let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-          let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
-          let projectUsers  = await ProjectUsers.findAll();  // TODO WHERE id_project: id_project
-          let tasks         = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
-          let taskUsers     = await TaskUsers.findAll();
-
-          res.render("project/project", {project, userList, projectUsers, tasks, taskUsers, prop})
-        } else {
-          req.flash("error", "Project with this ID was not found.");
-          res.redirect("/project")
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        req.flash("error", err.message);
-        res.redirect("back")
-      });
-
-  } else {
-    // TODO ошибка при возврате назад
-    req.flash("error", "Invalid query.");
-    res.redirect("/project")
-  }
-};
-
 
 projectRouter.projectTaskPage = (req, res) => {
-  let id_project = Number(req.params.id_project);
-  let id_task = Number(req.params.id_task);
-  if (id_project && !isNaN(id_project) && id_task && !isNaN(id_task)) {
-    Tasks.findOne({where: {id: id_task, id_project: id_project}})
-      .then(async task => {
-        if (task) {
-          let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-          let project       = await Projects.findOne({where: {id: id_project}});
-          let taskAuthor    = await Users.findOne({where: {id: task.author}});
-          let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
-          let projectUsers  = await ProjectUsers.findAll({where: {id_project: id_project}});
-          let taskUsers     = await TaskUsers.findAll({where: {id_task: id_task}});
-          let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "DESC"] ]});
+  let
+    id_project = Number(req.params.id_project),
+    id_task    = Number(req.params.id_task);
+  Tasks.findOne({where: {id: id_task, id_project: id_project}})
+    .then(async task => {
+      if (task) {
+        let prop          = await UserRoles.findOne({where: { id: req.user.role }});
+        let project       = await Projects.findOne({where: {id: id_project}});
+        let taskAuthor    = await Users.findOne({where: {id: task.author}});
+        let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
+        let projectUsers  = await ProjectUsers.findAll({where: {id_project: id_project}});
+        let taskUsers     = await TaskUsers.findAll({where: {id_task: id_task}});
+        let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "DESC"] ]});
 
-          res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments, prop})
-        } else {
-          req.flash("error", "Task with this ID was not found.");
-          res.redirect("/project")
-        }
+        res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments, prop})
+      } else {
+        req.flash("error", "Task with this ID was not found.");
+        res.redirect("/project")
+      }
 
-      })
-      .catch(err => {
-        console.error(err);
-        req.flash("error", err.message);
-        res.redirect("back")
-      });
-
-  } else {
-    req.flash("error", "Invalid query.");
-    res.redirect("/project")
-  }
+    })
+    .catch(err => {
+      console.error(err);
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
 };
 
 
@@ -160,33 +143,36 @@ projectRouter.createComment = (req, res) => {
 
 // PUT
 projectRouter.changeStatusTask = (req, res) => {
-  if (["waiting", "implementation", "verifyng", "releasing"].indexOf(req.body.status.status) !== -1) {
-
-    Tasks.findOne({where: {id: req.params.id_task} })
-      .then(async task => {
+  Tasks.findOne({where: {id: req.params.id_task} })
+    .then(async task => {
+      if (task.status !== req.body.status.status) {
         await task.update(req.body.status);
-        req.flash("info", "Status task has been changed.");
+        req.flash("success", "Status task has been changed.");
         res.redirect("back")
-      })
-      .catch(err => {
-        req.flash("error", err.message);
+      } else {
+        req.flash("info", "Task already has this status.");
         res.redirect("back")
-      });
-
-  } else {
-    req.flash("error", "Invalid form");
-    res.redirect("back")
-  }
-
+      }
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    });
 };
 
 projectRouter.editComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment}})
     .then(async com => {
       if (Number(req.user.id) === com.author && Number(req.params.id_task) === com.id_task) {
-        await com.update(req.body.comment);
-        req.flash("info", "Comment has been edit.");
-        res.redirect("back")
+        if (validator.isLength(req.body.comment.text, {min:2, max:undefined})) {
+          console.log(req.body.comment.text);
+          await com.update(req.body.comment);
+          req.flash("info", "Comment has been edit.");
+          res.redirect("back")
+        } else {
+          req.flash("error", "Сomment does not meet the requirements.");
+          res.redirect("back")
+        }
 
       } else {
         req.flash("error", "You do not have access to this action!");

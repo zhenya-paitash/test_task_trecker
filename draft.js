@@ -106,3 +106,13 @@ let faker = require("faker");
 // let x = "1";
 // let y = "2";
 // x.equals(y);
+
+// .. ограничение даты текущей для инпут дедлайн
+// "18-12-31";
+// console.log(new Date().toLocaleDateString()); // формат не верен - вместо -03- выдаёт -3-
+// let D = new Date();
+// console.log(D.);
+
+// let now = require("moment");
+//
+// console.log(now().format("YYYY-MM-DD"));
