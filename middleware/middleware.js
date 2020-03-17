@@ -28,7 +28,7 @@ M.profl = (req, res, next) => {
   if (Number(req.user.id) === Number(req.body.id)) {
     return next()
   }
-  req.flash("info", "Access denied!");
+  req.flash("error", "Access denied!");
   res.redirect("back")
 };
 

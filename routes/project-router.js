@@ -18,9 +18,9 @@ projectRouter.projectAllPage = async (req, res) => {
   let prop         = await UserRoles.findOne({where: { id: req.user.role }});
   let userList     = await Users.findAll();
   let projectUsers = await ProjectUsers.findAll();
-  let dateNow      = await moment().format("YYYY-MM-DD");
+  let dateNow      = await moment().add(1,'days').format("YYYY-MM-DD");
 
-  res.render("project/index", {projects, userList, projectUsers, prop, dateNow})
+  res.render("project/index", {projects, userList, projectUsers, prop, dateNow, title:`Tasktrecker. Projects`})
 };
 
 projectRouter.projectSinglePage = (req, res) => {
@@ -28,13 +28,14 @@ projectRouter.projectSinglePage = (req, res) => {
   Projects.findOne({where: {id: id_project}})
     .then(async project => {
       if (project) {
-        let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-        let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
-        let projectUsers  = await ProjectUsers.findAll();  // TODO WHERE id_project: id_project
-        let tasks         = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
-        let taskUsers     = await TaskUsers.findAll();
+        let prop         = await UserRoles.findOne({where: { id: req.user.role }});
+        let userList     = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
+        let projectUsers = await ProjectUsers.findAll({where: {id_project: id_project}});
+        let tasks        = await Tasks.findAll({where: {id_project: id_project}, order: [ ["createdAt", "DESC"] ]});
+        let taskUsers    = await TaskUsers.findAll();
 
-        res.render("project/project", {project, userList, projectUsers, tasks, taskUsers, prop})
+        res.render("project/project", {project, userList, projectUsers, tasks, taskUsers, prop,
+          title:`Tasktrecker. ${project.name}`})
       } else {
         req.flash("error", "Project with this ID was not found.");
         res.redirect("/project")
@@ -55,15 +56,16 @@ projectRouter.projectTaskPage = (req, res) => {
   Tasks.findOne({where: {id: id_task, id_project: id_project}})
     .then(async task => {
       if (task) {
-        let prop          = await UserRoles.findOne({where: { id: req.user.role }});
-        let project       = await Projects.findOne({where: {id: id_project}});
-        let taskAuthor    = await Users.findOne({where: {id: task.author}});
-        let userList      = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
-        let projectUsers  = await ProjectUsers.findAll({where: {id_project: id_project}});
-        let taskUsers     = await TaskUsers.findAll({where: {id_task: id_task}});
-        let comments      = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "DESC"] ]});
+        let prop         = await UserRoles.findOne({where: { id: req.user.role }});
+        let project      = await Projects.findOne({where: {id: id_project}});
+        let taskAuthor   = await Users.findOne({where: {id: task.author}});
+        let userList     = await Users.findAll( {order: [ ["lastname", "ASC"] ]});
+        let projectUsers = await ProjectUsers.findAll({where: {id_project: id_project}});
+        let taskUsers    = await TaskUsers.findAll({where: {id_task: id_task}});
+        let comments     = await Comments.findAll({where: {id_task: id_task}, order: [ ["createdAt", "DESC"] ]});
 
-        res.render("project/task", {task, project, taskAuthor, userList, projectUsers, taskUsers, comments, prop})
+        res.render("project/task", {task, project, taskAuthor, userList, projectUsers,
+          taskUsers, comments, prop, title:`Tasktrecker. ${task.name}`})
       } else {
         req.flash("error", "Task with this ID was not found.");
         res.redirect("/project")
@@ -192,7 +194,7 @@ projectRouter.deleteComment = (req, res) => {
     .then(async com => {
       if (Number(req.user.id) === com.author && Number(req.params.id_task) === com.id_task) {
         await com.destroy();
-        req.flash("success", "Comment has been deleted.");
+        req.flash("info", "Comment has been deleted.");
         res.redirect("back")
       } else {
         req.flash("error", "You do not have access to this action!");

@@ -31,7 +31,7 @@ V.usrch = (req, res, next) => {
     return next()
   }
 
-  req.flash("info", "Check ID field");
+  req.flash("error", "Check ID field");
   res.redirect('/user')
 };
 

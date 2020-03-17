@@ -1,4 +1,4 @@
-let faker = require("faker");
+// let faker = require("faker");
 // let x;
 //
 // console.log(x);
@@ -113,6 +113,26 @@ let faker = require("faker");
 // let D = new Date();
 // console.log(D.);
 
-// let now = require("moment");
+// let moment = require("moment");
 //
-// console.log(now().format("YYYY-MM-DD"));
+// console.log(moment().format("YYYY-MM-DD"));
+// console.log(moment().add(1,'days').format("YYYY-MM-DD"));
+
+// let x = [
+//   {
+//     id_project:1,
+//     id_user: 31
+//   },
+//   {
+//     id_project:1,
+//     id_user: 35
+//   }
+// ];
+// let dev = [];
+// // x.forEach(i => dev.push(i.id_user));
+// dev = x.filter(i => i.id_user);
+// console.log(dev);
+
+// let x = ' ';
+//
+// if (x) console.log("yes");
