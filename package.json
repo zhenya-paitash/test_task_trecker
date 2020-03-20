@@ -1,7 +1,7 @@
 {
   "name": "task_trecker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Task: Prepare a simple task tracker.\nTechnologies: Node.js, Express, PostgreSQL, Sequelize ORM, Bootstrap, EJS, JWT.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
