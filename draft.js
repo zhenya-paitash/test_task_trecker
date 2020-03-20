@@ -136,3 +136,113 @@
 // let x = ' ';
 //
 // if (x) console.log("yes");
+
+// let bcrypt = require("bcrypt");
+//
+// async function hello(password) {
+//   let salt      = await bcrypt.genSalt(10);
+//   let hashPass  = await bcrypt.hash(password, salt);
+//   console.log(hashPass);
+// }
+//
+// let x = "$2b$10$C/X3f3BdPWIPQCDbIzSsIuntMP4Ym75qOZVvGXBcSruFgk0z.9DPm";
+// let y = "$2b$10$IgY55jKEhOWPoMCaGXtR2u/qLnu9ASnJSHkf0dYoHzH.tLyBXUMza";
+// console.log(x);
+// console.log(y);
+//
+// async function decode(a, b) {
+//   let x = await bcrypt.compare(a, "hello");
+//   let y = await bcrypt.compare(b, "hello");
+//   console.log(x);
+//   console.log(y);
+//
+// }
+//
+// decode(x, y);
+
+// let crypto = require("crypto");
+// //
+// // let text = "hello world";
+// //
+// // console.log(crypto);
+
+
+// const crypto = require('crypto');
+// const algorithm = 'aes-256-cbc';
+// const key = crypto.randomBytes(32);
+// const iv = crypto.randomBytes(16);
+// console.log(key)
+// console.log(iv)
+//
+// function encrypt(text) {
+//   let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+//   let encrypted = cipher.update(text);
+//   encrypted = Buffer.concat([encrypted, cipher.final()]);
+//   return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
+// }
+//
+// function decrypt(text) {
+//   let iv = Buffer.from(text.iv, 'hex');
+//   let encryptedText = Buffer.from(text.encryptedData, 'hex');
+//   let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+//   let decrypted = decipher.update(encryptedText);
+//   decrypted = Buffer.concat([decrypted, decipher.final()]);
+//   return decrypted.toString();
+// }
+//
+// var hw = encrypt("hello world")
+// console.log(hw)
+// // let hw = {
+// //   iv: 'ab0eb45836fc109ca4d427d5884c3657',
+// //   encryptedData: '7d6d0f2b6e22f3dbb9bdd4367b9ac94d'
+// // };
+// console.log(decrypt(hw))
+
+
+
+
+
+// console.log(SHA256("Message"));
+// function encrypt(data) {
+//   return CryptoJS.
+// }
+
+// function decrypt(data) {
+//   return CryptoJS.AES.decrypt(data, CRYPT_KEY).toString(CryptoJS.enc.Utf8)
+// }
+
+// console.log(encrypt("hello"));
+
+
+
+
+
+// const CryptoJS = require("crypto-js");
+// // const RC4 = require("crypto-js/de");
+//
+// function f1(data) {
+//   return CryptoJS.DES.encrypt(data, "Secret Passphrase").toString();
+// }
+// function f2(data) {
+//   return CryptoJS.DES.decrypt(data, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
+// }
+//
+// let hw = f1("hello");
+// console.log(hw);
+//
+//
+// console.log(f2(hw));
+
+
+// let x = '1231212421';
+// console.log(x.split('"')[1]);
+
+
+// const Cryptr = require('cryptr');
+// const cryptr = new Cryptr('myTotalySecretKey');
+//
+// const encryptedString = cryptr.encrypt('"U2FsdGVkX1/NPp6PdjL8HVK8Wm6a4iZ4UdJxmEUb8OJH9uqjFG3Sc5gDZkxZnILh2Zj2zyyP7Hthuykvcd5CFXt/V7dJMhDamPK74PKlD9sOt8PDtmlAuIjformLMSSgOxTpzKiiCm1RgfDbISM7tbLsednbsVyl3As7R9o5eLwwdHkol46VjQUJzbordssjuyq30t5HyB54s3LzJhLqLaRc1yRTu/WflhExGSI1sHbuOfmank34mw2OYqawXAFl/2eD2KqY475hIl6DcND5KgsP3KhwY9JqvXr42VkKlFKYESoVVBAkgfMOExCFNA95W3vH883gQdG/z9iTL8VoVKuPwqqiBO9CuBAN5UBfuAGvlhnikztQQG6dpLbReh44ipdX4069rBhSsRkG8cYPH/XJlhYrmTz9lnCLV8u1ZmznTI8W8ZkuYthUCvdllwjS4NtlctkXughhjrwxCLSC6w=="');
+// const decryptedString = cryptr.decrypt(encryptedString);
+//
+// console.log(encryptedString);
+// console.log(decryptedString);

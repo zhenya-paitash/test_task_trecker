@@ -7,6 +7,7 @@ let
   pgHstore        = require("pg-hstore"),
   passport        = require("passport"),
   bodyParser      = require("body-parser"),
+  cookieParser    = require("cookie-parser"),
   flash           = require("connect-flash"),
   methodOverride  = require("method-override"),
   config          = require("./config/config"),
@@ -20,7 +21,7 @@ let
 // TEST PostgeSQL CONNECTION
 db.authenticate()
   .then(() => console.log("\x1b[32m%s\x1b[0m", "DB connected..."))
-  .then(db.sync({force: false}))
+  // .then(db.sync({force: false}))
   // .then(database_init.create())
   .catch(err => console.error(err));
 
@@ -34,6 +35,7 @@ app.set("view engine", "ejs");
 app.set("views", `${__dirname}/views`);
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

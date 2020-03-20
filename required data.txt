@@ -1,0 +1,20 @@
+	! this data must be entered into the ".env" file for "localhost" !
+
+	==========
+
+PORT= { 3000 }
+PGDATABASE= { *name of your database* }
+PGUSER= { postgres }
+PGPASS= { *password of your database* }
+PGHOST= { localhost }
+	! email from "gmail" requires additional settings !
+POST_MAIL= { *E-mail address* testtasktrecker2020@gmail.com } 
+POST_HOST= { *email host* smtp.gmail.com }
+POST_PORT= { *email port* 587 }
+POST_USER= { *email user* testtasktrecker2020@gmail.com }
+POST_PASS= { *email password* --- }
+SESSION_SECRET= { reqire("crypto").randomBytes(64).toString("hex") }
+CRYPT_KEY= { reqire("crypto").randomBytes(64).toString("hex") }
+REGISTER_SECRET_TOKEN= { reqire("crypto").randomBytes(64).toString("hex") }
+ACCESS_SECRET_TOKEN= { reqire("crypto").randomBytes(64).toString("hex") }
+REFRESH_SECRET_TOKEN= { reqire("crypto").randomBytes(64).toString("hex") }

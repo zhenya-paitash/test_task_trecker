@@ -40,21 +40,15 @@ async function createUsers() {
       firstname:  faker.name.firstName().toLowerCase(),
       lastname:   faker.name.lastName().toLowerCase(),
       email:      faker.internet.email().toLowerCase(),
-      // age:        Math.floor(18 + Math.random() * 20),
-      // phone:      faker.phone.phoneNumber(),
       password:   faker.internet.password(),
-      role:       role
+      role:       role,
+      // rft:        faker.internet.password(),
     });
 
     await UserSocials.create({
       // id_user: i + 1,
       age: Math.floor(18 + Math.random() * 20),
       phone: faker.phone.phoneNumber(),
-      // github: {type: Sequelize.STRING},
-      // telegram: {type: Sequelize.STRING},
-      // vk: {type: Sequelize.STRING},
-      // facebook: {type: Sequelize.STRING},
-      // gmail: {type: Sequelize.STRING},
     })
   }
 }

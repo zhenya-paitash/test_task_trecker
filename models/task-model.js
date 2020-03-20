@@ -4,12 +4,12 @@ const
 
 
 let Tasks = db.define("tasks", {
-  name: {type: Sequelize.STRING, allowNull: false},
-  description: {type: Sequelize.TEXT, allowNull: false},
-  status: {type: Sequelize.STRING, allowNull: false},
-  author: {type: Sequelize.INTEGER, allowNull: false},
-  // deadline: {type: Sequelize.DATEONLY},
-  id_project: {type: Sequelize.INTEGER, allowNull: false}
+  name:         {type: Sequelize.STRING,  allowNull: false},
+  description:  {type: Sequelize.TEXT,    allowNull: false},
+  status:       {type: Sequelize.STRING,  allowNull: false},
+  author:       {type: Sequelize.INTEGER, allowNull: false},
+  // deadline:     {type: Sequelize.DATEONLY},
+  id_project:   {type: Sequelize.INTEGER, allowNull: false}
 });
 
 // Tasks.sync({force: true});

@@ -1,17 +1,42 @@
 let
   M         = {},
+  jwt       = require("jsonwebtoken"),
+  cookie    = require("cookie-parser"),
+  passport  = require("passport"),
   UserRoles = require("../models/userrole-model"),
   Comments  = require("../models/comment-model");
 
 
 // LOGIN or NOT LOGIN CHECK
-// check if the user is LOGGED IN
-M.login = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
+
+M.login = async (req, res, next) => {
+  if(req.isAuthenticated()) {
+    let token = req.cookies["jwt.sid"];
+    if(token) {
+      jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, {}, (er,data)=> {
+        if(!er) {
+          return next()
+        }
+
+        // TODO you can implement the creation of a new token,
+        //  after checking the decrypted Refresh token from the user’s database,
+        //  but I’m not sure about the security plan, so for now it’s easy if the token is invalid,
+        //  I disconnect its session *
+        req.logOut();
+        req.flash("info", "Your session has expired, please login.");
+        res.clearCookie("jwt.sid");
+        return res.redirect("/login")
+      });
+    } else {
+      req.logOut();
+      req.flash("error", "Something went wrong...");
+      res.clearCookie("jwt.sid");
+      res.redirect("/login")
+    }
+  } else {
+    req.flash("info", "You need be login.");
+    res.redirect("/login")
   }
-  req.flash("info", "You need be login.");
-  res.redirect("/login")
 };
 
 // check if the user NOT is LOGGED IN
@@ -20,7 +45,7 @@ M.lgout = (req, res, next) => {
     return next()
   }
   req.flash("info", "You are already logged in.");
-  res.redirect("/project")
+  res.redirect("back")
 };
 
 // checking if the user has the right to EDIT the PROFILE
@@ -31,6 +56,13 @@ M.profl = (req, res, next) => {
   req.flash("error", "Access denied!");
   res.redirect("back")
 };
+
+
+M.uauth = passport.authenticate("local", {
+  // successRedirect: "/project",
+  failureRedirect: "/login",
+  failureFlash: true
+});
 
 
 // permission checks

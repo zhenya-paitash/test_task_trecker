@@ -5,7 +5,8 @@ const
   projectRouter = require("./project-router"),
   M             = require("../middleware/middleware"),
   V             = require("../middleware/validator");
-
+// const {decrypt} = require("../middleware/crypt");
+// const jwt = require("jsonwebtoken");
 
 // ======================================== INDEX =================================================
 // "/"
@@ -15,8 +16,19 @@ index.get("/login",         M.lgout,                   indexRouter.loginPage);
 index.get("/logout",        M.login,                   indexRouter.logout);
 index.get("/user",          M.login,                   indexRouter.userSearchPage);
 index.get("/user/:id_user", M.login,          V.usrch, indexRouter.userPage);
+index.get("/api/activate",                             indexRouter.activate);
+// index.get("/test", (req, res) => {
+//   console.log(req.user)
+//   let rft = req.user.rft; 
+//   let token = decrypt(rft);
+//   jwt.verify(token, process.env.REFRESH_SECRET_TOKEN, (er,data) => {
+//     if (er) return res.send(token);
+//     console.log("================")
+//     res.send(data)
+//   })
+// })
 index.post("/signup",       M.lgout,          V.sgnup, indexRouter.signup);
-index.post("/login",        M.lgout,                   indexRouter.login);
+index.post("/login",        M.lgout, M.uauth,          indexRouter.login);
 index.put("/user/:id_user", M.login, M.profl, V.usupd, indexRouter.userUpdate);
 
 

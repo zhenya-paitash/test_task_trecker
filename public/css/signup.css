@@ -40,20 +40,25 @@
   color: inherit;
 }
 
-.login-dark form .btn-primary {
-  background: #FC4E59;
-  border: none;
-  border-radius: 4px;
-  padding: 11px;
+.login-dark form .button {
+  /*background: #FC4E59;*/
+  width: 100%;
+  border-color: #FC4E59;
+  /*border: none;*/
+  /*border-radius: 4px;*/
+  /*padding: 11px;*/
   box-shadow: none;
-  margin-top: 26px;
+  /*margin-top: 26px;*/
   text-shadow: none;
   outline: none;
 }
 
-.login-dark form .btn-primary:hover, .login-dark form .btn-primary:active {
-  background: #FC4E59;
+.login-dark form .button:hover, .login-dark form .button:active {
   outline: none;
+}
+
+.login-dark form .button:active {
+  transform: translateY(1px);
 }
 
 .login-dark form .forgot {
@@ -68,15 +73,6 @@
 .login-dark form .forgot:hover, .login-dark form .forgot:active {
   opacity: 1;
   text-decoration: none;
-}
-
-.login-dark form .btn-primary:active {
-  transform: translateY(1px);
-}
-
-.login-dark .button {
-  width: 100%;
-  border-color: #FC4E59;
 }
 
 #validation-email {

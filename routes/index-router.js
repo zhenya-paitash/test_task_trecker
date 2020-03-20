@@ -4,20 +4,28 @@ let
   Op           = Sequelize.Op,
   bcrypt       = require("bcrypt"),
   passport     = require("passport"),
+  jwt          = require("jsonwebtoken"),
+  mailer       = require("../middleware/nodemailer"),
 
   Users        = require("../models/user-model"),
   UserRoles    = require("../models/userrole-model"),
   UserSocials  = require("../models/usersocial-model"),
+  NewUsers     = require("../models/newusers-model"),
   ProjectUsers = require("../models/projectuser-model"),
   TaskUsers    = require("../models/taskuser-model"),
   Comments     = require("../models/comment-model");
 
+const { encrypt, decrypt } = require("../middleware/crypt");
 
 // GET
 indexRouter.mainPage   = (req, res) => res.redirect("/project");
 indexRouter.signupPage = (req, res) => res.render("index/signup", {title:"SIGN UP"});
 indexRouter.loginPage  = (req, res) => res.render("index/login", {title:"LOGIN"});
-indexRouter.logout     = (req, res) => {req.logOut(); res.redirect("/login")};
+indexRouter.logout     = (req, res) => {
+  req.logOut();
+  res.clearCookie("jwt.sid");
+  res.redirect("/login")
+};
 // /user
 indexRouter.userSearchPage = async (req, res) => {
   let search = req.query.search;
@@ -54,10 +62,66 @@ indexRouter.userPage = (req, res) => {
     })
 };
 
+
+indexRouter.activate = async (req, res) => {
+  let reqToken = req.query.token;
+  NewUsers.findOne({where: {jwt: reqToken}})
+    .then(token => {
+      if(token !== null) {
+        console.log(token);
+        jwt.verify(token.jwt, process.env.REGISTER_SECRET_TOKEN,  async (er, data) => {
+          await token.destroy();
+          if (er) {
+            req.flash("error", "This token has expired, please register again.");
+            res.redirect("/signup")
+          } else {
+            const newUser = {
+              email:      data.email,
+              firstname:  data.firstname,
+              lastname:   data.lastname,
+              password:   data.password,
+              role:       data.role
+            };
+            // const gap = await jwt.sign(newUser, process.env.REFRESH_SECRET_TOKEN);
+            // newUser.rft = encrypt(gap);
+
+            Users.create(newUser)
+              .then(async user => {
+                await UserSocials.create({id_user: user.id});
+                req.flash("success", "Registration completed. Account activated.");
+                res.redirect("/login")
+              })
+              .catch(err => {
+                req.flash("error", "User with this email is already registered.");
+                res.redirect("/signup")
+              });
+          }
+        })
+      } else {
+        req.flash("error", "Token not found.");
+        res.redirect("/signup")
+      }
+
+    })
+    .catch(er => {
+      req.flash("error", er.message);
+      res.redirect("/signup")
+    });
+};
+
+
 // POST
 indexRouter.signup = async (req, res) => {
   try {
-    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    let emailCheck = await Users.findOne({where: {email: req.body.email.toLowerCase() }});
+
+    if (emailCheck) {
+      req.flash("error", "User with this email is already registered");
+      return res.redirect("/signup")
+    }
+
+    const salt          = await bcrypt.genSalt(10);
+    const hashPassword  = await bcrypt.hash(req.body.password, salt);
     let newUser = {
       email:     req.body.email.toLowerCase(),
       firstname: req.body.firstname.toLowerCase(),
@@ -66,15 +130,29 @@ indexRouter.signup = async (req, res) => {
       role:      req.body.role
     };
 
-    Users.create(newUser)
-      .then(async user => {
-        await UserSocials.create({id_user: user.id});
+    const token = await jwt.sign(newUser, process.env.REGISTER_SECRET_TOKEN, {expiresIn: "24h"});
+    const mail = {
+      to: `${newUser.email}`,
+      subject: "Please complete the registration.",
+      html: `
+        <h1 style="font-size: 32px">Your account is being verified.</h1> 
+        <p style="font-size: 18px">To activate your account after completing registration, please simply click on the link.</p>
+        <p style="font-size: 12px">For this you have 24 hours from the date of registration.</p>
+        <hr>
+        <a href="http://localhost:3000/api/activate?token=${token}">Complete registration</a>`
+    };
+    mailer(mail);
+
+    NewUsers.create({jwt: token})
+      .then(row => {
+        req.flash("success", "To activate your account, follow the link in the letter sent to your mail.");
         res.redirect("/login")
       })
       .catch(err => {
-        req.flash("error", "User with this email is already registered");
+        console.error(err);
+        req.flash("error", err.message);
         res.redirect("/signup")
-      });
+      })
 
   } catch (e) {
     console.error(e);
@@ -82,12 +160,29 @@ indexRouter.signup = async (req, res) => {
   }
 };
 
+indexRouter.login = async (req, res) => {
+  let user = req.user;
+  // TODO throw permissions for this role into the payload *
+  let payload = {
+    id:         user.id,
+    firstname:  user.firstname,
+    lastname:   user.lastname,
+    role:       user.role
+  };
 
-indexRouter.login = passport.authenticate("local", {
-  successRedirect: "/project",
-  failureRedirect: "/login",
-  failureFlash: true
-});
+  // let refreshToken  = decrypt(user.rft);
+  let accessToken   = jwt.sign(payload, process.env.ACCESS_SECRET_TOKEN, {expiresIn: "15m"});
+  let refreshToken  = jwt.sign(payload, process.env.REFRESH_SECRET_TOKEN);
+  const rft         = encrypt(refreshToken);
+
+  let curUsr        = await Users.findOne({where: {id: user.id}});
+  await curUsr.update({rft});
+  // let verificate = await jwt.verify(rft, process.env.REFRESH_SECRET_TOKEN, (er,data)=> {
+  //   console.log(data)
+  // });
+  req.flash("info", "You are given a session for 15 minutes.");
+  res.cookie("jwt.sid", accessToken).redirect("/project");
+};
 
 
 // PUT
