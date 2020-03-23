@@ -39,7 +39,15 @@ app.use(cookieParser());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  // If you do not want redis to eat all the RAM in a couple of years,
+  // you need to take care of the timely deletion of session data.
+  // The maxAge parameter is responsible for this, which equally sets this value
+  // for both the cookie and the value stored in redis.
+  cookie: {
+    maxAge: 10 * 60 * 1000,
+    httpOnly: false,
+  },
 }));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -5,6 +5,7 @@ let
   bcrypt       = require("bcrypt"),
   passport     = require("passport"),
   jwt          = require("jsonwebtoken"),
+  jwtoken      = require("../middleware/jwtoken"),
   mailer       = require("../middleware/nodemailer"),
 
   Users        = require("../models/user-model"),
@@ -15,7 +16,6 @@ let
   TaskUsers    = require("../models/taskuser-model"),
   Comments     = require("../models/comment-model");
 
-const { encrypt, decrypt } = require("../middleware/crypt");
 
 // GET
 indexRouter.mainPage   = (req, res) => res.redirect("/project");
@@ -161,26 +161,9 @@ indexRouter.signup = async (req, res) => {
 };
 
 indexRouter.login = async (req, res) => {
-  let user = req.user;
-  // TODO throw permissions for this role into the payload *
-  let payload = {
-    id:         user.id,
-    firstname:  user.firstname,
-    lastname:   user.lastname,
-    role:       user.role
-  };
+  let accessToken = await jwtoken.refresh(req.user);
 
-  // let refreshToken  = decrypt(user.rft);
-  let accessToken   = jwt.sign(payload, process.env.ACCESS_SECRET_TOKEN, {expiresIn: "15m"});
-  let refreshToken  = jwt.sign(payload, process.env.REFRESH_SECRET_TOKEN);
-  const rft         = encrypt(refreshToken);
-
-  let curUsr        = await Users.findOne({where: {id: user.id}});
-  await curUsr.update({rft});
-  // let verificate = await jwt.verify(rft, process.env.REFRESH_SECRET_TOKEN, (er,data)=> {
-  //   console.log(data)
-  // });
-  req.flash("info", "You are given a session for 15 minutes.");
+  req.flash("info", `Welcome, mister ${req.user.firstname} ${req.user.lastname}`);
   res.cookie("jwt.sid", accessToken).redirect("/project");
 };
 

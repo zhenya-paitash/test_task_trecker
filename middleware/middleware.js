@@ -1,8 +1,10 @@
 let
   M         = {},
   jwt       = require("jsonwebtoken"),
+  jwtoken   = require("./jwtoken"),
   cookie    = require("cookie-parser"),
   passport  = require("passport"),
+  Users     = require("../models/user-model"),
   UserRoles = require("../models/userrole-model"),
   Comments  = require("../models/comment-model");
 
@@ -13,15 +15,35 @@ M.login = async (req, res, next) => {
   if(req.isAuthenticated()) {
     let token = req.cookies["jwt.sid"];
     if(token) {
-      jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, {}, (er,data)=> {
+      // token = decrypt(token);
+      jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, {}, async (er,data)=> {
         if(!er) {
           return next()
         }
 
-        // TODO you can implement the creation of a new token,
-        //  after checking the decrypted Refresh token from the user’s database,
-        //  but I’m not sure about the security plan, so for now it’s easy if the token is invalid,
-        //  I disconnect its session *
+        if (er instanceof jwt.TokenExpiredError) {
+          try {
+            const refreshToken = jwtoken.decrypt(req.user.rft);
+            const rftData = jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN);
+            if (rftData.id === req.user.id) {
+              const accessToken = await jwtoken.refresh(req.user);
+              res.cookie("jwt.sid", accessToken);
+
+              return next();
+            } else {
+              req.flash("error", "Data does not match.");
+              req.logOut();
+              res.clearCookie("jwt.sid");
+              return res.status(403).redirect("/login")
+            }
+          } catch (e) {
+            req.logOut();
+            req.flash("error", "Something went wrong...");
+            res.clearCookie("jwt.sid");
+            return res.status(403).redirect("/login")
+          }
+        }
+
         req.logOut();
         req.flash("info", "Your session has expired, please login.");
         res.clearCookie("jwt.sid");
@@ -29,12 +51,14 @@ M.login = async (req, res, next) => {
       });
     } else {
       req.logOut();
-      req.flash("error", "Something went wrong...");
+      req.flash("error", "Something is wrong with the token ...");
       res.clearCookie("jwt.sid");
       res.redirect("/login")
     }
+
   } else {
     req.flash("info", "You need be login.");
+    res.clearCookie("jwt.sid");
     res.redirect("/login")
   }
 };
