@@ -11,57 +11,6 @@ let
 
 // LOGIN or NOT LOGIN CHECK
 
-// M.login = async (req, res, next) => {
-//   if(req.isAuthenticated()) {
-//     let token = req.cookies["jwt.sid"];
-//     if(token) {
-//       // token = decrypt(token);
-//       jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, {}, async (er,data)=> {
-//         if(!er) {
-//           return next()
-//         }
-//
-//         if (er instanceof jwt.TokenExpiredError) {
-//           try {
-//             const refreshToken = jwtoken.decrypt(req.user.rft);
-//             const rftData = jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN);
-//             if (rftData.id === req.user.id) {
-//               const accessToken = await jwtoken.refresh(req.user);
-//               res.cookie("jwt.sid", accessToken);
-//
-//               return next();
-//             } else {
-//               req.flash("error", "Data does not match.");
-//               req.logOut();
-//               res.clearCookie("jwt.sid");
-//               return res.status(403).redirect("/login")
-//             }
-//           } catch (e) {
-//             req.logOut();
-//             req.flash("error", "Something went wrong...");
-//             res.clearCookie("jwt.sid");
-//             return res.status(403).redirect("/login")
-//           }
-//         }
-//
-//         req.logOut();
-//         req.flash("info", "Your session has expired, please login.");
-//         res.clearCookie("jwt.sid");
-//         return res.redirect("/login")
-//       });
-//     } else {
-//       req.logOut();
-//       req.flash("error", "Something is wrong with the token ...");
-//       res.clearCookie("jwt.sid");
-//       res.redirect("/login")
-//     }
-//
-//   } else {
-//     req.flash("info", "You need be login.");
-//     res.clearCookie("jwt.sid");
-//     res.redirect("/login")
-//   }
-// };
 M.login = async (req, res, next) => {
   if(req.isAuthenticated()) {
     let token = req.cookies["jwt.sid"];
@@ -120,6 +69,8 @@ M.login = async (req, res, next) => {
     res.redirect("/login")
   }
 };
+
+
 // check if the user NOT is LOGGED IN
 M.lgout = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -128,6 +79,7 @@ M.lgout = (req, res, next) => {
   req.flash("info", "You are already logged in.");
   res.redirect("back")
 };
+
 
 // checking if the user has the right to EDIT the PROFILE
 M.profl = (req, res, next) => {
