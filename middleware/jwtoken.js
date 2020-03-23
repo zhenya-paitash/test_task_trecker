@@ -16,8 +16,9 @@ jwtoken.refresh = async (user) => {
     lastname:   user.lastname,
     role:       user.role
   };
+  // TODO after checking the code, display the access/refresh token lifetime in the env environment variable*
   const accessToken  = jwt.sign(payload, process.env.ACCESS_SECRET_TOKEN, {expiresIn: "5m"});
-  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_TOKEN, {expiresIn: "10m"});
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_TOKEN, {expiresIn: "30m"});
   const rft          = jwtoken.encrypt(refreshToken);
 
   let curUsr = await Users.findOne({where: {id: user.id}});

@@ -78,7 +78,11 @@ M.login = async (req, res, next) => {
             jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN,
               async (err,usr) => {
                 if (err || usr.id !== req.user.id) {
-                  req.flash("error", "Data does not match.");
+                  if (err instanceof jwt.TokenExpiredError) {
+                    req.flash("info", "You have been away for too long.");
+                  } else {
+                    req.flash("error", "Data does not match.");
+                  }
                   req.logOut();
                   res.clearCookie("jwt.sid");
                   return res.status(403).redirect("/login")
