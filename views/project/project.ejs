@@ -81,6 +81,25 @@
                                                                         <span>Add developer in project</span>
                                                                     </button>
                                                                 </form>
+
+                                                                <hr>
+
+                                                                <form action="/project/<%= project.id %>/deleteuser?_method=DELETE" method="POST">
+                                                                    <input class="form-control" type="hidden" value="<%= project.id %>" name="user[id_project]">
+                                                                    <select class="form-control form-control-sm mdb-select text-capitalize"
+                                                                            name="user[id_user]" required>
+                                                                        <% projectUsers.forEach(i => { %>
+                                                                            <% let user = userList.find(usr => usr.id == i.id_user) %>
+                                                                            <option value="<%= user.id %>">
+                                                                                <%= user.lastname %> <%= user.firstname %>
+                                                                            </option>
+                                                                        <% }) %>
+                                                                    </select>
+                                                                    <button class="button" type="submit"
+                                                                            data-hover="Are you sure?">
+                                                                        <span>Delete developer from project</span>
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>

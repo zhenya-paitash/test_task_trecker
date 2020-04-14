@@ -34,6 +34,8 @@ project.post("/:id_project/:id_task/adduser",              M.login, M.tkusr,    
 project.post("/:id_project/:id_task/createcomment",        M.login, M.cmcrt, V.cmcrt, projectRouter.createComment);
 project.put("/:id_project/:id_task/status",                M.login, M.tkstu, V.tksts, projectRouter.changeStatusTask);
 project.put("/:id_project/:id_task/:id_comment/edit",      M.login, M.cmedt,          projectRouter.editComment);
+project.delete("/:id_project/deleteuser",                  M.login, M.pjusr,          projectRouter.deleteUserProject);
+project.delete("/:id_project/:id_task/deleteuser",         M.login, M.tkusr,          projectRouter.deleteUserTask);
 project.delete("/:id_project/:id_task/:id_comment/delete", M.login, M.cmdel,          projectRouter.deleteComment);
 
 

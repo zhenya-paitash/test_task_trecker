@@ -79,8 +79,11 @@
                                                             <i class="fas fa-plus"></i>
                                                         </a>
 
-                                                        <div class="modal fade" role="dialog" tabindex="-1"
-                                                             id="add-user-in-task">
+                                                        <div
+                                                                class="modal fade"
+                                                                role="dialog"
+                                                                tabindex="-1"
+                                                                id="add-user-in-task">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-body">
@@ -105,6 +108,25 @@
                                                                                     data-hover="Are you sure?"><span>Add developer in task</span>
                                                                             </button>
                                                                         </form>
+
+                                                                        <hr>
+
+                                                                        <form action="/project/<%= project.id %>/<%= task.id %>/deleteuser?_method=DELETE" method="POST">
+                                                                            <input class="form-control" type="hidden" value="<%= task.id %>" name="user[id_task]">
+                                                                            <select class="form-control form-control-sm mdb-select text-capitalize"
+                                                                                    name="user[id_user]" required>
+                                                                                <% taskUsers.forEach(i => { %>
+                                                                                    <% let user = userList.find(usr => usr.id == i.id_user) %>
+                                                                                    <option value="<%= user.id %>">
+                                                                                        <%= user.lastname %> <%= user.firstname %>
+                                                                                    </option>
+                                                                                <% }) %>
+                                                                            </select>
+                                                                            <button class="button" type="submit"
+                                                                                    data-hover="Are you sure?"><span>Delete developer from task</span>
+                                                                            </button>
+                                                                        </form>
+
                                                                     </div>
                                                                 </div>
                                                             </div>

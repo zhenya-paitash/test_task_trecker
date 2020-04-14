@@ -189,6 +189,32 @@ projectRouter.editComment = (req, res) => {
 
 
 // DELETE
+projectRouter.deleteUserProject = (req, res) => {
+  ProjectUsers.findOne({where: {id_project: req.params.id_project, id_user: req.body.user.id_user} })
+    .then(async developer => {
+      await developer.destroy();
+      req.flash("info", "User has been remove from project.");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    })
+};
+
+projectRouter.deleteUserTask = (req, res) => {
+  TaskUsers.findOne({where: {id_task: req.params.id_task, id_user: req.body.user.id_user} })
+    .then(async developer => {
+      await developer.destroy();
+      req.flash("info", "User has been deleted from task.");
+      res.redirect("back")
+    })
+    .catch(err => {
+      req.flash("error", err.message);
+      res.redirect("back")
+    })
+};
+
 projectRouter.deleteComment = (req, res) => {
   Comments.findOne({where: {id: req.params.id_comment} })
     .then(async com => {

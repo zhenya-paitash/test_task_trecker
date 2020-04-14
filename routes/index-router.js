@@ -28,8 +28,8 @@ indexRouter.logout     = (req, res) => {
 };
 // /user
 indexRouter.userSearchPage = async (req, res) => {
-  let search = req.query.search;
-  if (search) search = search.toLowerCase();
+  let search          = req.query.search;
+  if (search) search  = search.toLowerCase();
 
   let firstnameResult = await Users.findAll({where: {firstname: { [Op.like]: "%" + search + "%" } }});
   let lastnameResult  = await Users.findAll({where: {lastname: { [Op.like]: "%" + search + "%" } }});
@@ -170,10 +170,11 @@ indexRouter.login = async (req, res) => {
 
 // PUT
 indexRouter.userUpdate = async (req, res) => {
-  let user   = await Users.findOne({where: {id: req.body.id}});
-  let social = await UserSocials.findOne({where: {id_user: user.id}});
+  let user                = await Users.findOne({where: {id: req.body.id}});
+  let social              = await UserSocials.findOne({where: {id_user: user.id}});
   req.body.user.firstname = req.body.user.firstname.toLowerCase();
-  req.body.user.lastname = req.body.user.lastname.toLowerCase();
+  req.body.user.lastname  = req.body.user.lastname.toLowerCase();
+
   await user.update(req.body.user);
   await social.update(req.body.social);
   res.redirect("back")
