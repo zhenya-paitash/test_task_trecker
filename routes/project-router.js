@@ -193,6 +193,12 @@ projectRouter.deleteUserProject = (req, res) => {
   ProjectUsers.findOne({where: {id_project: req.params.id_project, id_user: req.body.user.id_user} })
     .then(async developer => {
       await developer.destroy();
+
+      let projectTasks = await Tasks.findAll({where: {id_project: req.params.id_project} });
+      projectTasks.forEach(task => {
+        TaskUsers.destroy({where: {id_task: task.id, id_user: req.body.user.id_user} });
+      });
+
       req.flash("info", "User has been remove from project.");
       res.redirect("back")
     })

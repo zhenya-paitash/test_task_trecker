@@ -83,6 +83,7 @@
                                                                     </button>
                                                                 </form>
 
+                                                                <% if (projectUsers.length > 0) { %>
                                                                 <hr>
 
                                                                 <form action="/project/<%= project.id %>/deleteuser?_method=DELETE" method="POST">
@@ -101,6 +102,8 @@
                                                                         <span>Delete developer from project</span>
                                                                     </button>
                                                                 </form>
+                                                                <% } %>
+
                                                             </div>
                                                         </div>
                                                     </div>

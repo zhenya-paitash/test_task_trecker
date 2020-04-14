@@ -111,6 +111,7 @@
                                                                             </button>
                                                                         </form>
 
+                                                                        <% if (taskUsers.length > 0) { %>
                                                                         <hr>
 
                                                                         <form action="/project/<%= project.id %>/<%= task.id %>/deleteuser?_method=DELETE" method="POST">
@@ -128,6 +129,7 @@
                                                                                     data-hover="Are you sure?"><span>Delete developer from task</span>
                                                                             </button>
                                                                         </form>
+                                                                        <% } %>
 
                                                                     </div>
                                                                 </div>
