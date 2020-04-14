@@ -23,12 +23,12 @@
   background-color: white;
 }
 
-#page-tasks .add-developer .fas.fa-plus {
+#page-tasks .add-developer .fas.fa-user-edit {
   color: white;
   opacity: 0.5;
 }
 
-#page-tasks .add-developer .fas.fa-plus:hover {
+#page-tasks .add-developer .fas.fa-user-edit:hover {
   opacity: 1;
 }
 
