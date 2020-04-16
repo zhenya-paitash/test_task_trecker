@@ -4,9 +4,12 @@ let
   jwtoken   = require("./jwtoken"),
   cookie    = require("cookie-parser"),
   passport  = require("passport"),
-  Users     = require("../models/user-model"),
-  UserRoles = require("../models/userrole-model"),
-  Comments  = require("../models/comment-model");
+  Users     = require("../models").User,
+  UserRoles = require("../models").UserRole,
+  Comments  = require("../models").Comment;
+  // Users     = require("../old-models/done/user-model"),
+  // UserRoles = require("../old-models/done/userrole-model"),
+  // Comments  = require("../old-models/done/comment-model");
 
 
 // LOGIN or NOT LOGIN CHECK

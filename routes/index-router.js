@@ -8,13 +8,20 @@ let
   jwtoken      = require("../middleware/jwtoken"),
   mailer       = require("../middleware/nodemailer"),
 
-  Users        = require("../models/user-model"),
-  UserRoles    = require("../models/userrole-model"),
-  UserSocials  = require("../models/usersocial-model"),
-  NewUsers     = require("../models/newusers-model"),
-  ProjectUsers = require("../models/projectuser-model"),
-  TaskUsers    = require("../models/taskuser-model"),
-  Comments     = require("../models/comment-model");
+  Users        = require("../models").User,
+  UserRoles    = require("../models").UserRole,
+  UserSocials  = require("../models").UserSocial,
+  NewUsers     = require("../models").NewUser,
+  ProjectUsers = require("../models").ProjectUser,
+  TaskUsers    = require("../models").TaskUser,
+  Comments     = require("../models").Comment;
+  // Users        = require("../old-models/done/user-model"),
+  // UserRoles    = require("../old-models/done/userrole-model"),
+  // UserSocials  = require("../old-models/done/usersocial-model"),
+  // NewUsers     = require("../old-models/done/newusers-model"),
+  // ProjectUsers = require("../old-models/done/projectuser-model"),
+  // TaskUsers    = require("../old-models/done/taskuser-model"),
+  // Comments     = require("../old-models/done/comment-model");
 
 
 // GET
@@ -68,7 +75,7 @@ indexRouter.activate = async (req, res) => {
   NewUsers.findOne({where: {jwt: reqToken}})
     .then(token => {
       if(token !== null) {
-        console.log(token);
+        // console.log(token);
         jwt.verify(token.jwt, process.env.REGISTER_SECRET_TOKEN,  async (er, data) => {
           await token.destroy();
           if (er) {

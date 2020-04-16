@@ -2,14 +2,14 @@ let
   Sequelize     = require("sequelize"),
   db            = require("./config/database"),
   faker         = require("faker"),
-  Users         = require("./models/user-model"),
-  UserRoles     = require("./models/userrole-model"),
-  UserSocials   = require("./models/usersocial-model"),
-  Projects      = require("./models/project-model"),
-  ProjectUsers  = require("./models/projectuser-model"),
-  Tasks         = require("./models/task-model"),
-  TaskUsers     = require("./models/taskuser-model"),
-  Comments      = require("./models/comment-model");
+  Users         = require("./old-models/done/user-model"),
+  UserRoles     = require("./old-models/done/userrole-model"),
+  UserSocials   = require("./old-models/done/usersocial-model"),
+  Projects      = require("./old-models/done/project-model"),
+  ProjectUsers  = require("./old-models/done/projectuser-model"),
+  Tasks         = require("./old-models/done/task-model"),
+  TaskUsers     = require("./old-models/done/taskuser-model"),
+  Comments      = require("./old-models/done/comment-model");
 
 
 // ============================ CREATE and FILL in a NEW DATABASE =================================

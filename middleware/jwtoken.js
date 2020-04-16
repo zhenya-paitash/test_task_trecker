@@ -3,7 +3,8 @@ const
   Cryptr  = require('cryptr'),
   cryptr  = new Cryptr(process.env.CRYPT_KEY),
   jwt     = require("jsonwebtoken"),
-  Users   = require("../models/user-model");
+  Users   = require("../models").User;
+  // Users   = require("../old-models/done/user-model");
 
 
 jwtoken.encrypt = (data) => cryptr.encrypt(data);

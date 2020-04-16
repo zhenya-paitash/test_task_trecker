@@ -1,6 +1,6 @@
 const
   Sequelize   = require("sequelize"),
-  db          = require("../config/database");
+  db          = require("../../config/database");
 
 
 let Comments = db.define("comments", {
