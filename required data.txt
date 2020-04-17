@@ -2,6 +2,8 @@
 
 	==========
 
+NODE_ENV= { dev }
+
 PORT= { 3000 }
 PGDATABASE= { *name of your database* }
 PGUSER= { postgres }

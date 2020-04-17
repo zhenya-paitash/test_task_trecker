@@ -8,13 +8,14 @@ let
   jwtoken      = require("../middleware/jwtoken"),
   mailer       = require("../middleware/nodemailer"),
 
-  Users        = require("../models").User,
-  UserRoles    = require("../models").UserRole,
-  UserSocials  = require("../models").UserSocial,
-  NewUsers     = require("../models").NewUser,
-  ProjectUsers = require("../models").ProjectUser,
-  TaskUsers    = require("../models").TaskUser,
-  Comments     = require("../models").Comment;
+  model        = require("../models"),
+  Users        = model.User,
+  UserRoles    = model.UserRole,
+  UserSocials  = model.UserSocial,
+  NewUsers     = model.NewUser,
+  ProjectUsers = model.ProjectUser,
+  TaskUsers    = model.TaskUser,
+  Comments     = model.Comment;
   // Users        = require("../old-models/done/user-model"),
   // UserRoles    = require("../old-models/done/userrole-model"),
   // UserSocials  = require("../old-models/done/usersocial-model"),
